@@ -16,9 +16,9 @@ func Search(data []interface{}, target interface{}) int {
 		}, data, target)
 }
 
-func SearchWith(compare func(a, b interface{}) bool, data []interface{}, target interface{}) int {
+func SearchWith(equals func(a, b interface{}) bool, data []interface{}, target interface{}) int {
 	for i, datum := range data {
-		if compare(datum, target) {
+		if equals(datum, target) {
 			return i
 		}
 	}
