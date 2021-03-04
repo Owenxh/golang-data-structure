@@ -7,8 +7,6 @@ import (
 func GenerateRandomIntSlice(length, bound int) []int {
 	res := make([]int, length, length)
 	for i := 0; i < length; i++ {
-		// It's wrong way
-		//res = append(res, rand.Intn(bound))
 		res[i] = rand.Intn(bound)
 	}
 	return res

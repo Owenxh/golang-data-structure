@@ -1,7 +1,7 @@
 package main
 
 import (
-	"io.vava.datastructure/sort/helper"
+	"io.vava.datastructure/helper"
 	"io.vava.datastructure/sort/selectsort"
 )
 

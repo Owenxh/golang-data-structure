@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"io.vava.datastructure/sort/helper"
+	"io.vava.datastructure/helper"
 )
 
 func testData() [][]int {
