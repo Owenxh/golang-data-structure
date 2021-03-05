@@ -10,11 +10,11 @@ type ArrayQueue struct {
 	array *array.Array
 }
 
-func New() *ArrayQueue {
+func NewArrayQueue() *ArrayQueue {
 	return &ArrayQueue{array.New()}
 }
 
-func NewWithCapacity(capacity int) *ArrayQueue {
+func NewArrayQueueWithCapacity(capacity int) *ArrayQueue {
 	return &ArrayQueue{array.NewWithCapacity(capacity)}
 }
 

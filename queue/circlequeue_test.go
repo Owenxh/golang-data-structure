@@ -7,10 +7,10 @@ import (
 	"io.vava.datastructure/queue"
 )
 
-func TestArrayQueue_Enqueue(t *testing.T) {
-	queue := queue.NewArrayQueueWithCapacity(8)
+func TestCircleQueue_Enqueue(t *testing.T) {
+	queue := queue.NewCircleQueueWithCapacity(10)
 
-	for i := 1; i <= 10; i++ {
+	for i := 0; i < 20; i++ {
 		queue.Enqueue(i)
 		fmt.Println(queue)
 	}
@@ -18,7 +18,7 @@ func TestArrayQueue_Enqueue(t *testing.T) {
 	fmt.Printf("Head element = %v\n", queue.Head())
 	fmt.Printf("Is empty = %v\n", queue.IsEmpty())
 
-	for i := 1; i <= 10; i++ {
+	for i := 0; i < 20; i++ {
 		queue.Dequeue()
 		fmt.Println(queue)
 	}
