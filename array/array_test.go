@@ -9,10 +9,10 @@ const N int = 10
 
 func generateSequentialArray(size int) *Array {
 	if size <= 0 {
-		panic("Array size must > 0")
+		panic("MyArray size must > 0")
 	}
 
-	arr := NewArrayWithCapacity(size)
+	arr := NewWithCapacity(size)
 	for i := 0; i < size; i++ {
 		arr.AddLast(i)
 	}

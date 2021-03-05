@@ -8,16 +8,16 @@ type Array struct {
 }
 
 func (array *Array) String() string {
-	return fmt.Sprintf("Array{elements: %v, size:%d}", array.elements, array.size)
+	return fmt.Sprintf("MyArray:{elements:%v, size:%d}", array.elements, array.size)
 }
 
-func NewArray() *Array {
-	return NewArrayWithCapacity(20)
+func New() *Array {
+	return NewWithCapacity(10)
 }
 
-func NewArrayWithCapacity(capacity int) *Array {
+func NewWithCapacity(capacity int) *Array {
 	if capacity <= 0 {
-		panic("Array capacity must > 0")
+		panic("MyArray capacity must > 0")
 	}
 
 	return &Array{make([]int, capacity, capacity), 0}
@@ -33,16 +33,16 @@ func (array *Array) resize(capacity int) {
 }
 
 func (array *Array) AddLast(e int) {
-	array.Insert(array.size, e)
+	array.Add(array.size, e)
 }
 
 func (array *Array) AddFirst(e int) {
-	array.Insert(0, e)
+	array.Add(0, e)
 }
 
-func (array *Array) Insert(index, e int) {
+func (array *Array) Add(index, e int) {
 	if index < 0 || index > array.size {
-		panic("Insert index mustn't less than 0 or large than Array's size")
+		panic("Add index mustn't less than 0 or large than MyArray's size")
 	}
 
 	if array.size >= len(array.elements) {
@@ -57,18 +57,20 @@ func (array *Array) Insert(index, e int) {
 	array.size++
 }
 
-func (array *Array) DeleteLast() {
-	array.Delete(array.size - 1)
+func (array *Array) RemoveLast() int {
+	return array.Remove(array.size - 1)
 }
 
-func (array *Array) DeleteFirst() {
-	array.Delete(0)
+func (array *Array) RemoveFirst() int {
+	return array.Remove(0)
 }
 
-func (array *Array) Delete(index int) {
+func (array *Array) Remove(index int) int {
 	if index < 0 || index >= array.size {
-		panic("Delete index must >= 0 and < Array's size")
+		panic("Remove index must >= 0 and < MyArray's size")
 	}
+
+	res := array.elements[index]
 
 	for i := index + 1; i < array.size; i++ {
 		array.elements[i-1] = array.elements[i]
@@ -79,6 +81,8 @@ func (array *Array) Delete(index int) {
 	if array.size > 0 && array.size <= len(array.elements)/4 {
 		array.resize(len(array.elements) / 2)
 	}
+
+	return res
 }
 
 func (array *Array) Contains(e int) bool {
@@ -95,13 +99,17 @@ func (array *Array) Find(e int) int {
 	return -1
 }
 
-func (array *Array) Size() int {
-	return array.size
+func (array *Array) GetFirst() int {
+	return array.Get(0)
+}
+
+func (array *Array) GetLast() int {
+	return array.Get(array.size - 1)
 }
 
 func (array *Array) Get(index int) int {
 	if index < 0 || index >= array.size {
-		panic("Find index must >= 0 and < Array's size")
+		panic("Find index must >= 0 and < MyArray's size")
 	}
 
 	return array.elements[index]
@@ -113,4 +121,12 @@ func (array *Array) GetAll() []int {
 		res[i] = array.elements[i]
 	}
 	return res
+}
+
+func (array *Array) Size() int {
+	return array.size
+}
+
+func (array *Array) IsEmpty() bool {
+	return array.size == 0
 }

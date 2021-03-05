@@ -15,14 +15,14 @@ func applyFn(fn func(int)) {
 }
 
 func main() {
-	arr := array.NewArrayWithCapacity(4)
+	arr := array.NewWithCapacity(4)
 	applyFn(func(i int) {
 		arr.AddLast(i)
 		fmt.Println(arr)
 	})
 
 	applyFn(func(i int) {
-		arr.DeleteFirst()
+		arr.RemoveFirst()
 		fmt.Println(arr)
 	})
 
@@ -32,17 +32,17 @@ func main() {
 	})
 
 	applyFn(func(i int) {
-		arr.DeleteLast()
+		arr.RemoveLast()
 		fmt.Println(arr)
 	})
 
 	applyFn(func(i int) {
-		arr.Insert(arr.Size()/2, i)
+		arr.Add(arr.Size()/2, i)
 		fmt.Println(arr)
 	})
 
 	applyFn(func(i int) {
-		arr.Delete(arr.Size() / 2)
+		arr.Remove(arr.Size() / 2)
 		fmt.Println(arr)
 	})
 }
