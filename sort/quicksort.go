@@ -17,7 +17,7 @@ func internalQuickSort(arr []int, l, r int) {
 func partition(arr []int, l, r int) int {
 	v := arr[l]
 	j := l
-	// 循环不变量：arr[l...j] < v && arr[j+1...n] >= v
+	// 循环不变量：arr[l...j] < v && arr[j+1...i-1] >= v
 	for i := l; i <= r; i++ {
 		if arr[i] < v {
 			j++
