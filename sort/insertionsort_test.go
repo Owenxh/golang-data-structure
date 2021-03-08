@@ -1,4 +1,4 @@
-package insertionsort
+package sort
 
 import (
 	"testing"
@@ -7,18 +7,13 @@ import (
 	"io.vava.datastructure/helper"
 )
 
-func testData() [][]int {
+func internalTestInsertionSort(sort func([]int), t *testing.T) {
 	arrays := [][]int{
 		helper.GenerateRandomIntSlice(1000, 1000),
 		helper.GenerateRandomIntSlice(10000, 10000),
 		helper.GenerateRandomIntSlice(100000, 100000),
 		helper.GenerateRandomIntSlice(200000, 200000),
 	}
-	return arrays
-}
-
-func internalTestSort(sort func([]int), t *testing.T) {
-	arrays := testData()
 
 	for _, arr := range arrays {
 		start := time.Now()
@@ -28,10 +23,10 @@ func internalTestSort(sort func([]int), t *testing.T) {
 	}
 }
 
-func TestSort(t *testing.T) {
-	internalTestSort(Sort, t)
+func TestInsertionSortSort(t *testing.T) {
+	internalTestInsertionSort(InsertionSort, t)
 }
 
-func TestSort2(t *testing.T) {
-	internalTestSort(Sort2, t)
+func TestInsertionSortSort2(t *testing.T) {
+	internalTestInsertionSort(InsertionSort2, t)
 }

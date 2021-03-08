@@ -1,6 +1,6 @@
-package insertionsort
+package sort
 
-//func Sort(arr []int) {
+//func InsertionSort(arr []int) {
 //	for i := 0; i < len(arr); i++ {
 //		for j := i; j-1 >= 0; j-- {
 //			if arr[j] < arr[i] {
@@ -12,7 +12,7 @@ package insertionsort
 //	}
 //}
 
-//func Sort(arr []int) {
+//func InsertionSort(arr []int) {
 //	for i := 0; i < len(arr); i++ {
 //		for j := i; j-1 >= 0 && arr[j] < arr[j-1]; j-- {
 //			swap(arr, j, j-1)
@@ -26,7 +26,7 @@ package insertionsort
 //	arr[j] = t
 //}
 
-func Sort(arr []int) {
+func InsertionSort(arr []int) {
 	for i := 0; i < len(arr); i++ {
 		t := arr[i]
 		var j int
@@ -39,7 +39,7 @@ func Sort(arr []int) {
 	}
 }
 
-func Sort2(arr []int) {
+func InsertionSort2(arr []int) {
 	for i := len(arr) - 1; i >= 0; i-- {
 		t := arr[i]
 		var j int

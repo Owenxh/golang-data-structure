@@ -4,14 +4,14 @@ import (
 	"fmt"
 	"strings"
 
-	"io.vava.datastructure/search/linearsearch"
+	"io.vava.datastructure/search"
 )
 
 type Student struct {
 	Name string
 }
 
-func compareStudent(one interface{}, other interface{}) bool {
+func isSameOneStudent(one interface{}, other interface{}) bool {
 	if one == other {
 		return true
 	}
@@ -38,16 +38,16 @@ func main() {
 	data = append(data, 32)
 	data = append(data, 4)
 
-	res := linearsearch.SearchInt(data, 16)
+	res := search.LinearSearchInt(data, 16)
 	fmt.Println(res)
 
 	var students []interface{}
 	students = append(students, Student{"Owen"})
 	students = append(students, Student{"Vava"})
 
-	res2 := linearsearch.Search(students, Student{"vava"})
+	res2 := search.LinearSearch(students, Student{"vava"})
 	fmt.Println(res2)
 
-	res3 := linearsearch.SearchWith(compareStudent, students, Student{"vava"})
+	res3 := search.LinearSearchWith(isSameOneStudent, students, Student{"vava"})
 	fmt.Println(res3)
 }
