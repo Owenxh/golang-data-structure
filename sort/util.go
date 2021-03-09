@@ -17,6 +17,14 @@ func randomIntSlice(length, bound int) []int {
 	return res
 }
 
+func orderedIntSlice(length, bound int) []int {
+	res := make([]int, length, length)
+	for i := 0; i < length; i++ {
+		res[i] = i
+	}
+	return res
+}
+
 func randomIntSlices(sizes ...int) [][]int {
 	var data [][]int
 	for _, size := range sizes {

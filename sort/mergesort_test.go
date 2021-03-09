@@ -24,4 +24,8 @@ func TestMergeSort(t *testing.T) {
 
 	applySortTest(MergeSort, t, data)
 	applySortTest(MergeSort2, t, copiedData)
+
+	data = make([][]int, 1)
+	data[0] = orderedIntSlice(5000000, 5000000)
+	applySortTest(MergeSort2, t, data)
 }

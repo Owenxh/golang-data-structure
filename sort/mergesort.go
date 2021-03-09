@@ -4,17 +4,17 @@ package sort
 func MergeSort(arr []int) {
 	tmp := make([]int, len(arr), len(arr))
 	copyArray(arr, 0, len(arr)-1, tmp)
-	internalMergeSort(arr, 0, len(arr)-1, tmp)
+	mergeSort(arr, 0, len(arr)-1, tmp)
 }
 
-func internalMergeSort(arr []int, l, r int, tmp []int) {
+func mergeSort(arr []int, l, r int, tmp []int) {
 	if l >= r {
 		return
 	}
 	m := (r-l)/2 + l
 
-	internalMergeSort(arr, l, m, tmp)
-	internalMergeSort(arr, m+1, r, tmp)
+	mergeSort(arr, l, m, tmp)
+	mergeSort(arr, m+1, r, tmp)
 	if arr[m] > arr[m+1] {
 		merge(arr, l, m, r, tmp)
 	}
@@ -23,11 +23,11 @@ func internalMergeSort(arr []int, l, r int, tmp []int) {
 func MergeSort2(arr []int) {
 	tmp := make([]int, len(arr), len(arr))
 	copyArray(arr, 0, len(arr)-1, tmp)
-	internalMergeSort2(arr, 0, len(arr)-1, tmp)
+	mergeSort2(arr, 0, len(arr)-1, tmp)
 }
 
 // 排序个数 16 以内使用插入排序以提高性能
-func internalMergeSort2(arr []int, l, r int, tmp []int) {
+func mergeSort2(arr []int, l, r int, tmp []int) {
 	if l >= r {
 		return
 	}
@@ -46,8 +46,8 @@ func internalMergeSort2(arr []int, l, r int, tmp []int) {
 
 	m := (r-l)/2 + l
 
-	internalMergeSort2(arr, l, m, tmp)
-	internalMergeSort2(arr, m+1, r, tmp)
+	mergeSort2(arr, l, m, tmp)
+	mergeSort2(arr, m+1, r, tmp)
 	if arr[m] > arr[m+1] {
 		merge(arr, l, m, r, tmp)
 	}
