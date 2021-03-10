@@ -9,10 +9,26 @@ import (
 	"time"
 )
 
-func randomIntSlice(length, bound int) []int {
+func randomIntSlice(length int) []int {
+	res := make([]int, length, length)
+	for i := 0; i < length; i++ {
+		res[i] = rand.Intn(1<<31 - 1)
+	}
+	return res
+}
+
+func randomIntSliceWithBound(length, bound int) []int {
 	res := make([]int, length, length)
 	for i := 0; i < length; i++ {
 		res[i] = rand.Intn(bound)
+	}
+	return res
+}
+
+func reversedIntSlice(length int) []int {
+	res := make([]int, length, length)
+	for i := 0; i < length; i++ {
+		res[i] = length - i - 1
 	}
 	return res
 }
@@ -28,7 +44,7 @@ func orderedIntSlice(length, bound int) []int {
 func randomIntSlices(sizes ...int) [][]int {
 	var data [][]int
 	for _, size := range sizes {
-		data = append(data, randomIntSlice(size, size))
+		data = append(data, randomIntSliceWithBound(size, size))
 	}
 	return data
 }

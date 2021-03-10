@@ -87,4 +87,5 @@ func main() {
 	if !reflect.DeepEqual(res, answer) {
 		panic("Resolve problem smallestK failed")
 	}
+
 }

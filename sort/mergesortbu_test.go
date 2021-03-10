@@ -6,11 +6,11 @@ import (
 
 func TestMergeSortBU(t *testing.T) {
 	data := [][]int{
-		randomIntSlice(5, 5),
-		randomIntSlice(100000, 100000),
-		randomIntSlice(1000000, 1000000),
-		randomIntSlice(2000000, 2000000),
-		randomIntSlice(5000000, 5000000),
+		randomIntSliceWithBound(5, 5),
+		randomIntSliceWithBound(100000, 100000),
+		randomIntSliceWithBound(1000000, 1000000),
+		randomIntSliceWithBound(2000000, 2000000),
+		randomIntSliceWithBound(5000000, 5000000),
 	}
 
 	copiedData := make([][]int, len(data), cap(data))
