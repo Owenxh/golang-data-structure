@@ -58,13 +58,7 @@ func merge(arr []int, l, m, r int, tmp []int) {
 
 	i, j := l, m+1
 	for k := l; i <= m || j <= r; k++ {
-		if i > m {
-			arr[k] = tmp[j]
-			j++
-		} else if j > r {
-			arr[k] = tmp[i]
-			i++
-		} else if tmp[i] < tmp[j] {
+		if j > r || (i <= m && tmp[i] < tmp[j]) {
 			arr[k] = tmp[i]
 			i++
 		} else {
@@ -72,6 +66,21 @@ func merge(arr []int, l, m, r int, tmp []int) {
 			j++
 		}
 	}
+	//for k := l; i <= m || j <= r; k++ {
+	//	if i > m {
+	//		arr[k] = tmp[j]
+	//		j++
+	//	} else if j > r {
+	//		arr[k] = tmp[i]
+	//		i++
+	//	} else if tmp[i] < tmp[j] {
+	//		arr[k] = tmp[i]
+	//		i++
+	//	} else {
+	//		arr[k] = tmp[j]
+	//		j++
+	//	}
+	//}
 }
 
 func copyArray(source []int, l, r int, dest []int) {
