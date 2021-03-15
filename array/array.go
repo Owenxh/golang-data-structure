@@ -99,6 +99,13 @@ func (array *Array) Find(e int) int {
 	return -1
 }
 
+func (array *Array) Set(index, e int) {
+	if index < 0 || index >= array.size {
+		panic("Set index must >= 0 and < MyArray's size")
+	}
+	array.elements[index] = e
+}
+
 func (array *Array) GetFirst() int {
 	return array.Get(0)
 }
