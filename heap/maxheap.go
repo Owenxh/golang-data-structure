@@ -7,23 +7,31 @@ import (
 )
 
 type MaxHeap struct {
-	array *array.Array
+	arr *array.Array
 }
 
 func NewMaxHeap() *MaxHeap {
-	return &MaxHeap{array: array.New()}
+	return &MaxHeap{arr: array.New()}
+}
+
+func (h MaxHeap) get(i int) int {
+	return h.arr.Get(i)
+}
+
+func (h MaxHeap) set(i, e int) {
+	h.arr.Set(i, e)
 }
 
 func (h MaxHeap) IsEmpty() bool {
-	return h.array.IsEmpty()
+	return h.arr.IsEmpty()
 }
 
 func (h MaxHeap) Size() int {
-	return h.array.Size()
+	return h.arr.Size()
 }
 
 func (h MaxHeap) ExtractMax() (int, error) {
-	if h.array.IsEmpty() {
+	if h.arr.IsEmpty() {
 		return 0, errors.New("can't extract max value from empty h")
 	}
 
@@ -33,23 +41,23 @@ func (h MaxHeap) ExtractMax() (int, error) {
 	}
 
 	h.swap(0, h.Size()-1)
-	h.array.RemoveLast()
+	h.arr.RemoveLast()
 	h.siftDown(0)
 
 	return res, nil
 }
 
 func (h MaxHeap) FindMax() (int, error) {
-	if h.array.IsEmpty() {
+	if h.IsEmpty() {
 		return 0, errors.New("can't extract max value from empty h")
 	}
 
-	return h.array.GetFirst(), nil
+	return h.arr.GetFirst(), nil
 }
 
 func (h MaxHeap) Add(e int) {
-	h.array.AddLast(e)
-	h.siftUp(h.array.Size() - 1)
+	h.arr.AddLast(e)
+	h.siftUp(h.arr.Size() - 1)
 }
 
 // 返回完全二叉树的数组表示中，一个索引所表示的元素的父节点的索引
@@ -68,19 +76,19 @@ func rightChild(i int) int {
 }
 
 func (h MaxHeap) siftUp(i int) {
-	for i > 0 && h.array.Get(parent(i)) < h.array.Get(i) {
+	for i > 0 && h.get(parent(i)) < h.get(i) {
 		h.swap(parent(i), i)
 		i = parent(i)
 	}
 }
 
 func (h MaxHeap) siftDown(i int) {
-	for leftChild(i) < h.array.Size() {
+	for leftChild(i) < h.arr.Size() {
 		j := leftChild(i)
-		if j+1 < h.array.Size() && h.array.Get(j+1) > h.array.Get(j) {
+		if j+1 < h.Size() && h.get(j+1) > h.get(j) {
 			j += 1
 		}
-		if h.array.Get(i) > h.array.Get(j) {
+		if h.get(i) > h.get(j) {
 			break
 		}
 		h.swap(i, j)
@@ -89,7 +97,7 @@ func (h MaxHeap) siftDown(i int) {
 }
 
 func (h MaxHeap) swap(i, j int) {
-	t := h.array.Get(i)
-	h.array.Set(i, h.array.Get(j))
-	h.array.Set(j, t)
+	t := h.get(i)
+	h.set(i, h.get(j))
+	h.set(j, t)
 }
