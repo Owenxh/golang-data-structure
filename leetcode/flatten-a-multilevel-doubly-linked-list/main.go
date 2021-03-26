@@ -8,30 +8,54 @@ type Node struct {
 	Child *Node
 }
 
+//func flatten(root *Node) *Node {
+//	if root == nil {
+//		return root
+//	}
+//	var res, prev *Node
+//	var tmp []*Node
+//	curr := root
+//	for curr != nil {
+//		var next *Node
+//		if curr.Child != nil {
+//			tmp = append(tmp, curr.Next)
+//			next = curr.Child
+//		} else {
+//			next = curr.Next
+//			for next == nil && len(tmp) > 0 {
+//				next = tmp[len(tmp)-1]
+//				tmp = tmp[0 : len(tmp)-1]
+//			}
+//		}
+//		if prev != nil {
+//			prev.Next = curr
+//		}
+//		if res == nil {
+//			res = curr
+//		}
+//		curr.Prev, curr.Next, curr.Child = prev, nil, nil
+//		prev, curr = curr, next
+//	}
+//	return res
+//}
+
+// 给定一个链表，返回其 head, tail 结点
 func flatten(root *Node) *Node {
-	var tmp []*Node
+	flatten0(root, nil)
+	return root
+}
 
-	curr := root
-	var prev *Node
-	for curr != nil {
-		next := &Node{Val: curr.Val}
-		if prev != nil {
-			prev.Next = next
-		}
-		next.Prev = prev
-		prev = next
-
-		if curr.Child != nil {
-			tmp = append(tmp, next)
-			curr = curr.Child
-		} else {
-			curr = curr.Next
-		}
-		if curr == nil && len(tmp) > 0 {
-			// TODO
-		}
+func flatten0(node, prev *Node) *Node {
+	if node == nil {
+		return prev
 	}
-	return nil
+	child, next := node.Child, node.Next
+	node.Prev, node.Next, node.Child = prev, nil, nil
+	if prev != nil {
+		prev.Next = node
+	}
+	prev = flatten0(child, node)
+	return flatten0(next, prev)
 }
 
 func main() {

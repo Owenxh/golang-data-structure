@@ -1,7 +1,10 @@
 // link: https://leetcode-cn.com/problems/rotate-list/
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"reflect"
+)
 
 type ListNode struct {
 	Val  int
@@ -9,13 +12,13 @@ type ListNode struct {
 }
 
 func (l *ListNode) String() string {
-	var values []int
+	var r []int
 	c := l
 	for c != nil {
-		values = append(values, c.Val)
+		r = append(r, c.Val)
 		c = c.Next
 	}
-	return fmt.Sprint(values)
+	return fmt.Sprint(r)
 }
 
 /**
@@ -54,38 +57,39 @@ func rotateRightUsingTempSlice(head *ListNode, k int) *ListNode {
 }
 
 func rotateRight(head *ListNode, k int) *ListNode {
-	if head == nil {
-		return nil
+	if head == nil || k == 0 {
+		return head
 	}
-	size := 0
-	cur, last := head, head
-	for cur != nil {
+	size := 1
+	tail := head
+	for tail.Next != nil {
 		size++
-		last = cur
-		cur = cur.Next
+		tail = tail.Next
 	}
 
 	if k%size == 0 {
 		return head
 	}
 
-	last.Next = head
-	retPrev := head
-	h := size - (k % size)
-	for i := 0; i < h-1; i++ {
-		retPrev = retPrev.Next
+	tail.Next = head
+	temp := head
+	for i, h := 1, size-(k%size); i < h; i++ {
+		temp = temp.Next
 	}
 
-	retHead := retPrev.Next
-	retPrev.Next = nil
-
-	return retHead
+	res := temp.Next
+	temp.Next = nil
+	return res
 }
 
 func main() {
-	head := &ListNode{0, &ListNode{1, &ListNode{2, &ListNode{3, &ListNode{4, &ListNode{5, &ListNode{6, &ListNode{7, nil}}}}}}}}
-	//for i := 0; i < 16; i++ {
-	//	fmt.Println(rotateRight(head, i))
-	//}
-	fmt.Println(rotateRight(head, 1))
+	for i := 0; i < 16; i++ {
+		head := &ListNode{0, &ListNode{1, &ListNode{2, &ListNode{3, &ListNode{4, &ListNode{5, &ListNode{6, &ListNode{7, nil}}}}}}}}
+		res1 := rotateRightUsingTempSlice(head, i)
+		res2 := rotateRight(head, i)
+		if !reflect.DeepEqual(res1, res2) {
+			panic("The two algorithm implementation are not same")
+		}
+		fmt.Printf("rotate %2d => %v\n", i, res1)
+	}
 }
