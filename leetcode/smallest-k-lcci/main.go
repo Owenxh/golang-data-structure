@@ -1,4 +1,4 @@
-// https://leetcode-cn.com/problems/smallest-k-lcci/
+// link: https://leetcode-cn.com/problems/smallest-k-lcci/
 
 package main
 

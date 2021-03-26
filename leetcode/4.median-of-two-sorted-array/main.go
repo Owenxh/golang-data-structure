@@ -1,4 +1,4 @@
-// https://leetcode-cn.com/problems/median-of-two-sorted-arrays
+// link: https://leetcode-cn.com/problems/median-of-two-sorted-arrays
 
 package main
 

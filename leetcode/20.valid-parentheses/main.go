@@ -1,4 +1,4 @@
-// https://leetcode-cn.com/problems/valid-parentheses/
+// link: https://leetcode-cn.com/problems/valid-parentheses/
 
 package main
 
