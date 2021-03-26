@@ -40,7 +40,6 @@ type Node struct {
 //	return res
 //}
 
-// 给定一个链表，返回其 head, tail 结点
 func flatten(root *Node) *Node {
 	flatten0(root, nil)
 	return root
