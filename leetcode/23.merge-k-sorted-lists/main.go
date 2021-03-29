@@ -65,9 +65,10 @@ func merge0(l1, l2 *ListNode) *ListNode {
 }
 
 func main() {
-	h1 := &ListNode{1, &ListNode{4, &ListNode{5, nil}}}
-	h2 := &ListNode{1, &ListNode{3, &ListNode{4, nil}}}
-	h3 := &ListNode{2, &ListNode{6, nil}}
-	lists := []*ListNode{h1, h2, h3}
+	lists := []*ListNode{
+		{1, &ListNode{4, &ListNode{5, nil}}},
+		{1, &ListNode{3, &ListNode{4, nil}}},
+		{2, &ListNode{6, nil}},
+	}
 	fmt.Println(mergeKLists(lists))
 }
