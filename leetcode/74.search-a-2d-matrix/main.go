@@ -4,24 +4,24 @@ func searchMatrix(matrix [][]int, target int) bool {
 	if matrix == nil || len(matrix) < 1 {
 		return false
 	}
-	return searchMatrix0(matrix, target, 0, len(matrix)-1)
+	return search(matrix, target, 0, len(matrix)-1)
 }
 
-func searchMatrix0(matrix [][]int, target int, h, t int) bool {
+func search(matrix [][]int, target int, h, t int) bool {
 	if h > t {
 		return false
 	}
 	m := (h + t) / 2
 	if matrix[m][0] > target {
-		return searchMatrix0(matrix, target, h, m-1)
+		return search(matrix, target, h, m-1)
 	} else if matrix[m][len(matrix[m])-1] < target {
-		return searchMatrix0(matrix, target, m+1, t)
+		return search(matrix, target, m+1, t)
 	} else {
-		return search(matrix[m], target, 0, len(matrix[m])-1)
+		return searchInRow(matrix[m], target, 0, len(matrix[m])-1)
 	}
 }
 
-func search(arr []int, target, l, r int) bool {
+func searchInRow(arr []int, target, l, r int) bool {
 	if l > r {
 		return false
 	}
@@ -29,9 +29,9 @@ func search(arr []int, target, l, r int) bool {
 	if arr[m] == target {
 		return true
 	} else if arr[m] > target {
-		return search(arr, target, l, m-1)
+		return searchInRow(arr, target, l, m-1)
 	} else {
-		return search(arr, target, m+1, r)
+		return searchInRow(arr, target, m+1, r)
 	}
 }
 
