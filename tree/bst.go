@@ -75,9 +75,19 @@ func (t *BST) remove(node *BSTNode, e string) *BSTNode {
 		if node.left == nil && node.right == nil {
 			t.size--
 			return nil
+		} else if node.left == nil {
+			t.size--
+			return node.right
+		} else if node.right == nil {
+			t.size--
+			return node.left
+		} else {
+			successor := t.minNode(node.right)
+			t.Remove(successor.val)
+			successor.left, successor.right = node.left, node.right
+			node.left, node.right = nil, nil
+			return successor
 		}
-		// TODO
-		return nil
 	}
 }
 
@@ -92,18 +102,38 @@ func (t *BST) Size() int {
 
 // Returns min value in the tree.
 func (t *BST) minimum() string {
-	min := t.root
+	if t.root == nil {
+		panic("tree is empty")
+	}
+	return t.minNode(t.root).val
+}
+
+func (t *BST) minNode(node *BSTNode) *BSTNode {
+	if node == nil {
+		return nil
+	}
+	min := node
 	for min.left != nil {
 		min = min.left
 	}
-	return min.val
+	return min
 }
 
 // Returns max value in the tree.
 func (t *BST) maximum() string {
-	max := t.root
+	if t.root == nil {
+		panic("tree is empty")
+	}
+	return t.maxNode(t.root).val
+}
+
+func (t *BST) maxNode(node *BSTNode) *BSTNode {
+	if node == nil {
+		return nil
+	}
+	max := node
 	for max.right != nil {
 		max = max.right
 	}
-	return max.val
+	return max
 }
