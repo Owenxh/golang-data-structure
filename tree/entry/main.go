@@ -32,10 +32,15 @@ func main() {
 			panic("error implementation of BST")
 		}
 	}
+	size := bst.Size()
+	for _, word := range words {
+		bst.Remove(strings.ToLower(word))
+	}
+	if bst.Size() != 0 {
+		panic("error implementation of BST")
+	}
 
 	fmt.Printf("[BST] cost time:%v\n", time.Now().Sub(start))
-	fmt.Printf("[pride-and-prejudice] words count: %d\n", len(words))
-	fmt.Printf("[pride-and-prejudice] different words count: %d\n", bst.Size())
 
 	start = time.Now()
 	theMap := make(map[string]int)
@@ -47,8 +52,11 @@ func main() {
 			panic("error implementation of BST")
 		}
 	}
+	for _, word := range words {
+		delete(theMap, strings.ToLower(word))
+	}
 
 	fmt.Printf("[MAP] cost time:%v\n", time.Now().Sub(start))
 	fmt.Printf("[pride-and-prejudice] words count: %d\n", len(words))
-	fmt.Printf("[pride-and-prejudice] different words count: %d\n", bst.Size())
+	fmt.Printf("[pride-and-prejudice] different words count: %d\n", size)
 }

@@ -67,24 +67,25 @@ func (t *BST) remove(node *BSTNode, e string) *BSTNode {
 	}
 	if node.val > e {
 		node.left = t.remove(node.left, e)
-		return node.left
+		return node
 	} else if node.val < e {
 		node.right = t.remove(node.right, e)
-		return node.right
+		return node
 	} else {
-		if node.left == nil && node.right == nil {
+		if node.left == nil {
+			right := node.right
+			node.right = nil
 			t.size--
-			return nil
-		} else if node.left == nil {
-			t.size--
-			return node.right
+			return right
 		} else if node.right == nil {
+			left := node.left
+			node.left = nil
 			t.size--
-			return node.left
+			return left
 		} else {
 			successor := t.minNode(node.right)
-			t.Remove(successor.val)
-			successor.left, successor.right = node.left, node.right
+			//successor.right = t.remove(node.right, successor.val)
+			successor.right, successor.left = t.removeMin(node.right), node.left
 			node.left, node.right = nil, nil
 			return successor
 		}
@@ -136,4 +137,44 @@ func (t *BST) maxNode(node *BSTNode) *BSTNode {
 		max = max.right
 	}
 	return max
+}
+
+func (t *BST) RemoveMin() (val string) {
+	val = t.minimum()
+	t.root = t.removeMin(t.root)
+	return
+}
+
+func (t *BST) removeMin(node *BSTNode) *BSTNode {
+	if node == nil {
+		return nil
+	}
+	if node.left == nil {
+		r := node.right
+		node.right = nil
+		t.size--
+		return r
+	}
+	node.left = t.removeMin(node.left)
+	return node
+}
+
+func (t *BST) RemoveMax() (val string) {
+	val = t.maximum()
+	t.root = t.removeMax(t.root)
+	return
+}
+
+func (t *BST) removeMax(node *BSTNode) *BSTNode {
+	if node == nil {
+		return nil
+	}
+	if node.right == nil {
+		l := node.left
+		node.left = nil
+		t.size--
+		return l
+	}
+	node.right = t.removeMax(node.right)
+	return node
 }
