@@ -33,7 +33,7 @@ func main() {
 		}
 	}
 
-	fmt.Printf("cost time:%v\n", time.Now().Sub(start))
+	fmt.Printf("[BST] cost time:%v\n", time.Now().Sub(start))
 	fmt.Printf("[pride-and-prejudice] words count: %d\n", len(words))
 	fmt.Printf("[pride-and-prejudice] different words count: %d\n", bst.Size())
 
@@ -48,7 +48,7 @@ func main() {
 		}
 	}
 
-	fmt.Printf("cost time:%v\n", time.Now().Sub(start))
+	fmt.Printf("[MAP] cost time:%v\n", time.Now().Sub(start))
 	fmt.Printf("[pride-and-prejudice] words count: %d\n", len(words))
 	fmt.Printf("[pride-and-prejudice] different words count: %d\n", bst.Size())
 }

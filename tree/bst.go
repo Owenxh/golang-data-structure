@@ -58,7 +58,27 @@ func (t *BST) add(node *BSTNode, e string) *BSTNode {
 
 // Remove the element from the tree.
 func (t *BST) Remove(e string) {
-	// TODO
+	t.root = t.remove(t.root, e)
+}
+
+func (t *BST) remove(node *BSTNode, e string) *BSTNode {
+	if node == nil {
+		return node
+	}
+	if node.val > e {
+		node.left = t.remove(node.left, e)
+		return node.left
+	} else if node.val < e {
+		node.right = t.remove(node.right, e)
+		return node.right
+	} else {
+		if node.left == nil && node.right == nil {
+			t.size--
+			return nil
+		}
+		// TODO
+		return nil
+	}
 }
 
 // Returns the if the tree is empty.
