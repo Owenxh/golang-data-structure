@@ -26,7 +26,7 @@ func (l *ListNode) String() string {
 //func (l *ListNode) String() string {
 //	var res string
 //	for c := l; c != nil; c = c.Next {
-//		res += strconv.Itoa(c.Val) + "->"
+//		res += strconv.Itoa(c.val) + "->"
 //	}
 //	res += "NULL"
 //	return res

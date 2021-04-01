@@ -11,11 +11,11 @@ type BST struct {
 // The node element of the BST.
 type BSTNode struct {
 	// The value
-	Val string
+	val string
 	// The left child
-	Left *BSTNode
-	// The Right child
-	Right *BSTNode
+	left *BSTNode
+	// The right child
+	right *BSTNode
 }
 
 // Returns true if the tree contains element.
@@ -27,12 +27,12 @@ func (t *BST) contains(node *BSTNode, e string) bool {
 	if node == nil {
 		return false
 	}
-	if node.Val == e {
+	if node.val == e {
 		return true
-	} else if node.Val > e {
-		return t.contains(node.Left, e)
+	} else if node.val > e {
+		return t.contains(node.left, e)
 	}
-	return t.contains(node.Right, e)
+	return t.contains(node.right, e)
 }
 
 // Add the element to the tree.
@@ -45,13 +45,13 @@ func (t *BST) add(node *BSTNode, e string) *BSTNode {
 		t.size++
 		return &BSTNode{e, nil, nil}
 	}
-	if node.Val == e {
+	if node.val == e {
 		return node
-	} else if node.Val > e {
-		node.Left = t.add(node.Left, e)
+	} else if node.val > e {
+		node.left = t.add(node.left, e)
 		return node
 	} else {
-		node.Right = t.add(node.Right, e)
+		node.right = t.add(node.right, e)
 		return node
 	}
 }
@@ -73,17 +73,17 @@ func (t *BST) Size() int {
 // Returns min value in the tree.
 func (t *BST) minimum() string {
 	min := t.root
-	for min.Left != nil {
-		min = min.Left
+	for min.left != nil {
+		min = min.left
 	}
-	return min.Val
+	return min.val
 }
 
 // Returns max value in the tree.
 func (t *BST) maximum() string {
 	max := t.root
-	for max.Right != nil {
-		max = max.Right
+	for max.right != nil {
+		max = max.right
 	}
-	return max.Val
+	return max.val
 }

@@ -24,7 +24,7 @@ func (l *ListNode) String() string {
 /**
  * Definition for singly-linked list.
  * type ListNode struct {
- *     Val int
+ *     val int
  *     Next *ListNode
  * }
  */
