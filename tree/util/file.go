@@ -7,12 +7,12 @@ import (
 	"regexp"
 )
 
-var wordReg, _ = regexp.Compile(`[a-zA-Z]+`)
+func ReadFile(fileName string) (words []string) {
+	wordReg, err := regexp.Compile(`[a-zA-Z]+`)
+	if err != nil {
+		panic(err)
+	}
 
-type FileOperation struct {
-}
-
-func (f *FileOperation) ReadFile(fileName string) (words []string) {
 	file, err := os.Open(fileName)
 	if err != nil {
 		panic(err)
