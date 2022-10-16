@@ -18,7 +18,9 @@ func main() {
 		panic(err)
 	}
 
-	filePath := path + "/tree/data/pride-and-prejudice.txt"
+	filePath := path + "/../data/pride-and-prejudice.txt"
+	filePath = strings.ReplaceAll(filePath, "\\", "/")
+
 	words := util.ReadFile(filePath)
 	for i, word := range words {
 		words[i] = strings.ToLower(word)
@@ -29,9 +31,9 @@ func main() {
 		return words[i] < words[j]
 	})
 
-	bst := &tree.BST{}
+	bst := &tree.BST[string, int]{}
 	for _, word := range words {
-		bst.Add(word)
+		bst.Add(word, 1)
 	}
 
 	start := time.Now()
