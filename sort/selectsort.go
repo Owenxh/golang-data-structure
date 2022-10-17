@@ -19,10 +19,3 @@ func SelectSort2(arr []int) {
 		}
 	}
 }
-
-func swap(arr []int, i, j int) {
-	//t := arr[i]
-	//arr[i] = arr[j]
-	//arr[j] = t
-	arr[i], arr[j] = arr[j], arr[i]
-}

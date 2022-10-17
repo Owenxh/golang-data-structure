@@ -76,3 +76,10 @@ func sortFnName(sort func([]int)) string {
 	res = string([]rune(res)[index:])
 	return res
 }
+
+func swap(arr []int, i, j int) {
+	//t := arr[i]
+	//arr[i] = arr[j]
+	//arr[j] = t
+	arr[i], arr[j] = arr[j], arr[i]
+}
