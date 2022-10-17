@@ -1,6 +1,7 @@
 package sort
 
 import (
+	"math/rand"
 	"testing"
 )
 
@@ -45,6 +46,7 @@ func internalQuickSort3Ways(arr []int, l, r int) {
 	if l >= r {
 		return
 	}
+
 	lt, gt := internalPartition3Ways(arr, l, r)
 	internalQuickSort3Ways(arr, l, lt-1)
 	internalQuickSort3Ways(arr, gt, r)
@@ -55,7 +57,10 @@ func internalQuickSort3Ways(arr []int, l, r int) {
 // ② [lt + 1, i - 1] == v
 // ③ [gt, r] > v
 func internalPartition3Ways(arr []int, l, r int) (int, int) {
+	k := l + rand.Intn(r-l+1)
+	arr[l], arr[k] = arr[k], arr[l]
 	v := arr[l]
+
 	lt, gt := l, r+1
 
 	for i := l + 1; i < gt; {
