@@ -1,6 +1,6 @@
 package sort
 
-// 自顶向下归并排序
+// MergeSort 自顶向下归并排序
 func MergeSort(arr []int) {
 	tmp := make([]int, len(arr), len(arr))
 	copyArray(arr, 0, len(arr)-1, tmp)
@@ -84,7 +84,12 @@ func merge(arr []int, l, m, r int, tmp []int) {
 }
 
 func copyArray(source []int, l, r int, dest []int) {
-	for i := l; i <= r; i++ {
-		dest[i] = source[i]
+	arraycopy(source, l, dest, l, r-l+1)
+}
+
+func arraycopy(src []int, srcPos int, dest []int, destPos, length int) {
+	for i, j := srcPos, 0; i < srcPos+length; i++ {
+		dest[destPos+j] = src[i]
+		j++
 	}
 }

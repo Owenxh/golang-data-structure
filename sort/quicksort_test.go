@@ -31,3 +31,45 @@ func TestQuickSort3Ways(t *testing.T) {
 	data := quickSortData()
 	applySortTest(QuickSort3Ways, t, data)
 }
+
+func TestInternalQuickSort3Ways(t *testing.T) {
+	data := quickSortData()
+	applySortTest(InternalQuickSort3Ways, t, data)
+}
+
+func InternalQuickSort3Ways(arr []int) {
+	internalQuickSort3Ways(arr, 0, len(arr)-1)
+}
+
+func internalQuickSort3Ways(arr []int, l, r int) {
+	if l >= r {
+		return
+	}
+	lt, gt := internalPartition3Ways(arr, l, r)
+	internalQuickSort3Ways(arr, l, lt-1)
+	internalQuickSort3Ways(arr, gt, r)
+}
+
+// 循环不变量
+// ① [l+1, lt] < v
+// ② [lt + 1, i - 1] == v
+// ③ [gt, r] > v
+func internalPartition3Ways(arr []int, l, r int) (int, int) {
+	v := arr[l]
+	lt, gt := l, r+1
+
+	for i := l + 1; i < gt; {
+		if arr[i] < v {
+			lt++
+			arr[lt], arr[i] = arr[i], arr[lt]
+			i++
+		} else if arr[i] > v {
+			gt--
+			arr[gt], arr[i] = arr[i], arr[gt]
+		} else {
+			i++
+		}
+	}
+	arr[lt], arr[l] = arr[l], arr[lt]
+	return lt, gt
+}
