@@ -280,7 +280,7 @@ func internalPrint(msg string, arr []int, l, r int) {
 
 func TestSorts(t *testing.T) {
 	rand.Seed(time.Now().UnixMilli())
-	data := util.RandomIntSliceWithBound(8, 100)
+	data := util.RandomIntSliceWithBound(9, 100)
 
 	util.DoSortTest(BubbleSort, t, util.Copy(data))
 	util.DoSortTest(SelectSort, t, util.Copy(data))
