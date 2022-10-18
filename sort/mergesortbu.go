@@ -1,11 +1,14 @@
 package sort
 
-import "math"
+import (
+	"io.vava.datastructure/util"
+	"math"
+)
 
 // MergeSortBU 自底向上归并排序
 func MergeSortBU(arr []int) {
 	tmp := make([]int, len(arr), len(arr))
-	CopyArray(arr, 0, len(arr)-1, tmp)
+	util.CopyArray(arr, 0, len(arr)-1, tmp)
 
 	n := len(arr)
 	for sz := 1; sz < n; sz += sz {
@@ -18,7 +21,7 @@ func MergeSortBU(arr []int) {
 }
 
 func mergeBU(arr []int, l, m, r int, tmp []int) {
-	CopyArray(arr, l, r, tmp)
+	util.CopyArray(arr, l, r, tmp)
 
 	i, j := l, m+1
 	for k := l; i <= m || j <= r; k++ {

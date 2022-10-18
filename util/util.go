@@ -1,4 +1,4 @@
-package sort
+package util
 
 import (
 	"math/rand"
@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-func randomIntSlice(length int) []int {
+func RandomIntSlice(length int) []int {
 	res := make([]int, length, length)
 	for i := 0; i < length; i++ {
 		res[i] = rand.Intn(1<<31 - 1)
@@ -17,7 +17,7 @@ func randomIntSlice(length int) []int {
 	return res
 }
 
-func randomIntSliceWithBound(length, bound int) []int {
+func RandomIntSliceWithBound(length, bound int) []int {
 	res := make([]int, length, length)
 	for i := 0; i < length; i++ {
 		res[i] = rand.Intn(bound)
@@ -25,7 +25,7 @@ func randomIntSliceWithBound(length, bound int) []int {
 	return res
 }
 
-func reversedIntSlice(length int) []int {
+func ReversedIntSlice(length int) []int {
 	res := make([]int, length, length)
 	for i := 0; i < length; i++ {
 		res[i] = length - i - 1
@@ -33,7 +33,7 @@ func reversedIntSlice(length int) []int {
 	return res
 }
 
-func orderedIntSlice(length, bound int) []int {
+func OrderedIntSlice(length, bound int) []int {
 	res := make([]int, length, length)
 	for i := 0; i < length; i++ {
 		res[i] = i
@@ -41,15 +41,15 @@ func orderedIntSlice(length, bound int) []int {
 	return res
 }
 
-func randomIntSlices(sizes ...int) [][]int {
+func RandomIntSlices(sizes ...int) [][]int {
 	var data [][]int
 	for _, size := range sizes {
-		data = append(data, randomIntSliceWithBound(size, size))
+		data = append(data, RandomIntSliceWithBound(size, size))
 	}
 	return data
 }
 
-func verifyIsSorted(arr []int) {
+func VerifyIsSorted(arr []int) {
 	var prev int
 	for i, v := range arr {
 		if i > 0 && v < prev {
@@ -59,14 +59,21 @@ func verifyIsSorted(arr []int) {
 	}
 }
 
-func applySortTest(sort func([]int), t *testing.T, data [][]int) {
+func DoSortTest(sort func([]int), t *testing.T, data []int) {
+	DoSortTests(sort, t, [][]int{data})
+}
+
+func DoSortTests(sort func([]int), t *testing.T, data [][]int) {
 	for _, arr := range data {
+		sortFnName := sortFnName(sort)
+
+		t.Logf("sort slice(length %9d) using %16v", len(arr), sortFnName)
 		start := time.Now()
 		sort(arr)
 		cost := time.Now().Sub(start)
-		sortFnName := sortFnName(sort)
+		
 		t.Logf("sort slice(length %9d) using %16v cost %v", len(arr), sortFnName, cost)
-		verifyIsSorted(arr)
+		VerifyIsSorted(arr)
 	}
 }
 
@@ -77,18 +84,28 @@ func sortFnName(sort func([]int)) string {
 	return res
 }
 
-func swap(arr []int, i, j int) {
+func Swap(arr []int, i, j int) {
 	//t := arr[i]
 	//arr[i] = arr[j]
 	//arr[j] = t
 	arr[i], arr[j] = arr[j], arr[i]
 }
 
-func CopyArray(source []int, l, r int, dest []int) {
-	copyArray(source, l, dest, l, r-l+1)
+func Copy(src []int) []int {
+	return CopyArrayFrom(src, 0, len(src)-1)
 }
 
-func copyArray(src []int, srcPos int, dest []int, destPos, length int) {
+func CopyArrayFrom(src []int, l, r int) []int {
+	ret := make([]int, r-l+1, r-l+1)
+	CopyArray(src, l, r, ret)
+	return ret
+}
+
+func CopyArray(src []int, l, r int, dest []int) {
+	internalCopyArray(src, l, dest, l, r-l+1)
+}
+
+func internalCopyArray(src []int, srcPos int, dest []int, destPos, length int) {
 	for i, j := srcPos, 0; i < srcPos+length; i++ {
 		dest[destPos+j] = src[i]
 		j++

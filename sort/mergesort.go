@@ -1,9 +1,11 @@
 package sort
 
+import "io.vava.datastructure/util"
+
 // MergeSort 自顶向下归并排序
 func MergeSort(arr []int) {
 	tmp := make([]int, len(arr), len(arr))
-	CopyArray(arr, 0, len(arr)-1, tmp)
+	util.CopyArray(arr, 0, len(arr)-1, tmp)
 	mergeSort(arr, 0, len(arr)-1, tmp)
 }
 
@@ -22,7 +24,7 @@ func mergeSort(arr []int, l, r int, tmp []int) {
 
 func MergeSort2(arr []int) {
 	tmp := make([]int, len(arr), len(arr))
-	CopyArray(arr, 0, len(arr)-1, tmp)
+	util.CopyArray(arr, 0, len(arr)-1, tmp)
 	mergeSort2(arr, 0, len(arr)-1, tmp)
 }
 
@@ -54,7 +56,7 @@ func mergeSort2(arr []int, l, r int, tmp []int) {
 }
 
 func merge(arr []int, l, m, r int, tmp []int) {
-	CopyArray(arr, l, r, tmp)
+	util.CopyArray(arr, l, r, tmp)
 
 	i, j := l, m+1
 	for k := l; i <= m || j <= r; k++ {

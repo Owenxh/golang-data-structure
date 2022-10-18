@@ -1,16 +1,17 @@
 package sort
 
 import (
+	"io.vava.datastructure/util"
 	"testing"
 )
 
 func TestMergeSortBU(t *testing.T) {
 	data := [][]int{
-		randomIntSliceWithBound(5, 5),
-		randomIntSliceWithBound(100000, 100000),
-		randomIntSliceWithBound(1000000, 1000000),
-		randomIntSliceWithBound(2000000, 2000000),
-		randomIntSliceWithBound(5000000, 5000000),
+		util.RandomIntSliceWithBound(5, 5),
+		util.RandomIntSliceWithBound(100000, 100000),
+		util.RandomIntSliceWithBound(1000000, 1000000),
+		util.RandomIntSliceWithBound(2000000, 2000000),
+		util.RandomIntSliceWithBound(5000000, 5000000),
 	}
 
 	copiedData := make([][]int, len(data), cap(data))
@@ -22,6 +23,6 @@ func TestMergeSortBU(t *testing.T) {
 		copiedData[i] = copiedItem
 	}
 
-	applySortTest(MergeSortBU, t, data)
-	applySortTest(MergeSort, t, copiedData)
+	util.DoSortTests(MergeSortBU, t, data)
+	util.DoSortTests(MergeSort, t, copiedData)
 }
