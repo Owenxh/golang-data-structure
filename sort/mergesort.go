@@ -3,7 +3,7 @@ package sort
 // MergeSort 自顶向下归并排序
 func MergeSort(arr []int) {
 	tmp := make([]int, len(arr), len(arr))
-	copyArray(arr, 0, len(arr)-1, tmp)
+	CopyArray(arr, 0, len(arr)-1, tmp)
 	mergeSort(arr, 0, len(arr)-1, tmp)
 }
 
@@ -22,7 +22,7 @@ func mergeSort(arr []int, l, r int, tmp []int) {
 
 func MergeSort2(arr []int) {
 	tmp := make([]int, len(arr), len(arr))
-	copyArray(arr, 0, len(arr)-1, tmp)
+	CopyArray(arr, 0, len(arr)-1, tmp)
 	mergeSort2(arr, 0, len(arr)-1, tmp)
 }
 
@@ -54,7 +54,7 @@ func mergeSort2(arr []int, l, r int, tmp []int) {
 }
 
 func merge(arr []int, l, m, r int, tmp []int) {
-	copyArray(arr, l, r, tmp)
+	CopyArray(arr, l, r, tmp)
 
 	i, j := l, m+1
 	for k := l; i <= m || j <= r; k++ {
@@ -81,15 +81,4 @@ func merge(arr []int, l, m, r int, tmp []int) {
 	//		j++
 	//	}
 	//}
-}
-
-func copyArray(source []int, l, r int, dest []int) {
-	arraycopy(source, l, dest, l, r-l+1)
-}
-
-func arraycopy(src []int, srcPos int, dest []int, destPos, length int) {
-	for i, j := srcPos, 0; i < srcPos+length; i++ {
-		dest[destPos+j] = src[i]
-		j++
-	}
 }

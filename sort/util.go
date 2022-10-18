@@ -83,3 +83,14 @@ func swap(arr []int, i, j int) {
 	//arr[j] = t
 	arr[i], arr[j] = arr[j], arr[i]
 }
+
+func CopyArray(source []int, l, r int, dest []int) {
+	copyArray(source, l, dest, l, r-l+1)
+}
+
+func copyArray(src []int, srcPos int, dest []int, destPos, length int) {
+	for i, j := srcPos, 0; i < srcPos+length; i++ {
+		dest[destPos+j] = src[i]
+		j++
+	}
+}

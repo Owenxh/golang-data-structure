@@ -2,10 +2,10 @@ package sort
 
 import "math"
 
-// 自底向上归并排序
+// MergeSortBU 自底向上归并排序
 func MergeSortBU(arr []int) {
 	tmp := make([]int, len(arr), len(arr))
-	copyArray(arr, 0, len(arr)-1, tmp)
+	CopyArray(arr, 0, len(arr)-1, tmp)
 
 	n := len(arr)
 	for sz := 1; sz < n; sz += sz {
@@ -18,7 +18,7 @@ func MergeSortBU(arr []int) {
 }
 
 func mergeBU(arr []int, l, m, r int, tmp []int) {
-	copyArray(arr, l, r, tmp)
+	CopyArray(arr, l, r, tmp)
 
 	i, j := l, m+1
 	for k := l; i <= m || j <= r; k++ {
