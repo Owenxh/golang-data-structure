@@ -1,7 +1,7 @@
 package tree
 
 // BST Binary search tree implementation.
-type BST[K Ordered, V any] struct {
+type BST[K any, V any] struct {
 	// The root of the tree
 	root *BSTNode[K, V]
 	// The tree size
@@ -9,7 +9,7 @@ type BST[K Ordered, V any] struct {
 }
 
 // BSTNode The node element of the BST.
-type BSTNode[K Ordered, V any] struct {
+type BSTNode[K any, V any] struct {
 	// The value
 	key K
 	// The value

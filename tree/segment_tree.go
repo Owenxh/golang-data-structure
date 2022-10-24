@@ -2,18 +2,25 @@ package tree
 
 import "fmt"
 
+type Merger[E any] func(l, r E) E
+
 type SegmentTree[E any] struct {
 	tree   []E
 	data   []E
 	merger func(E, E) E
 }
 
-type Merger[E any] func(l, r E) E
+func (st *SegmentTree[E]) String() string {
+	return fmt.Sprint(st.tree)
+}
 
 func NewSegmentTree[E any](data []E, merger func(E, E) E) *SegmentTree[E] {
-	st := SegmentTree[E]{}
+	st := SegmentTree[E]{
+		data:   make([]E, len(data), len(data)),
+		tree:   make([]E, 4*len(data), 4*len(data)),
+		merger: merger,
+	}
 	copy(st.data, data)
-	st.merger = merger
 	st.tree = make([]E, 4*len(data), 4*len(data))
 	st.buildSegmentTree(0, 0, len(st.data)-1)
 	return &st
@@ -35,7 +42,7 @@ func (st *SegmentTree[E]) buildSegmentTree(treeIndex int, l, r int) {
 
 func (st *SegmentTree[E]) Get(index int) E {
 	if index < 0 || index >= len(st.data) {
-		panic("index is illegal")
+		panic(fmt.Sprintf("index %v is illegal", index))
 	}
 	return st.data[index]
 }
@@ -57,7 +64,7 @@ func (st *SegmentTree[E]) rightChild(index int) int {
 // 	return (index - 1) / 2
 // }
 
-// 查询区间范围 [queryL, queryR] 的值
+// Query 查询区间范围 [queryL, queryR] 的值
 func (st *SegmentTree[E]) Query(queryL, queryR int) E {
 	if queryL > queryR || queryL < 0 || queryR >= len(st.data) {
 		panic(fmt.Sprintf("illegal query range [%v, %v]", queryL, queryR))
@@ -93,4 +100,31 @@ func (st *SegmentTree[E]) query(treeIndex, l, r, queryL, queryR int) E {
 	rightRet := st.query(rightChildIndex, m+1, r, m+1, queryR)
 
 	return st.merger(leftRet, rightRet)
+}
+
+func (st *SegmentTree[E]) Set(index int, e E) {
+	if index < 0 || index >= len(st.data) {
+		panic(fmt.Sprintf("index %v is illegal", index))
+	}
+	st.set(0, 0, len(st.data)-1, index, e)
+}
+
+// 在以 treeIndex 为根的线段树中更新 index 的值为 e
+func (st *SegmentTree[E]) set(treeIndex, l, r, index int, e E) {
+	if l == r {
+		st.tree[treeIndex] = e
+		return
+	}
+
+	leftTreeIndex := st.leftChild(treeIndex)
+	rightTreeIndex := st.rightChild(treeIndex)
+
+	m := l + (r - l) + 1
+	if index <= m {
+		st.set(leftTreeIndex, l, m, index, e)
+	} else {
+		st.set(rightTreeIndex, m+1, r, index, e)
+	}
+
+	st.tree[treeIndex] = st.merger(st.tree[leftTreeIndex], st.tree[rightTreeIndex])
 }
