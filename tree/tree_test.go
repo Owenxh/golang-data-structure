@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-func TestTreePerformance(t *testing.T) {
+func wordsData() []string {
 	path, err := os.Getwd()
 	if err != nil {
 		panic(err)
@@ -21,6 +21,11 @@ func TestTreePerformance(t *testing.T) {
 		words[i] = strings.ToLower(word)
 	}
 	fmt.Printf("[Pride-And-Prejudice] words count: %d\n", len(words))
+	return words
+}
+
+func TestTreePerformance(t *testing.T) {
+	words := wordsData()
 
 	//sort.Slice(words, func(i, j int) bool {
 	//	return words[i] < words[j]
@@ -96,4 +101,32 @@ func testMap(m map[string]int, words []string) {
 			m[word] = 1
 		}
 	}
+}
+
+func TestTrie(t *testing.T) {
+	words := wordsData()
+
+	bst := &BST[string, int]{}
+
+	start := time.Now()
+	for _, word := range words {
+		bst.Add(word, 1)
+	}
+	for _, word := range words {
+		bst.Contains(word)
+	}
+	fmt.Printf("[BST] cost time:%v\n", time.Now().Sub(start))
+	fmt.Printf("Total different words:%v\n", bst.Size())
+
+	trie := NewTrie()
+
+	start = time.Now()
+	for _, word := range words {
+		trie.Add(word)
+	}
+	for _, word := range words {
+		trie.Contains(word)
+	}
+	fmt.Printf("[Trie] cost time:%v\n", time.Now().Sub(start))
+	fmt.Printf("Total different words:%v\n", trie.Size())
 }
