@@ -2,9 +2,9 @@ package tree
 
 import "fmt"
 
-type Merger[E any] func(l, r E) E
+type Merger[E Ordered] func(l, r E) E
 
-type SegmentTree[E any] struct {
+type SegmentTree[E Ordered] struct {
 	tree   []E
 	data   []E
 	merger func(E, E) E
@@ -14,7 +14,7 @@ func (st *SegmentTree[E]) String() string {
 	return fmt.Sprint(st.tree)
 }
 
-func NewSegmentTree[E any](data []E, merger func(E, E) E) *SegmentTree[E] {
+func NewSegmentTree[E Ordered](data []E, merger func(E, E) E) *SegmentTree[E] {
 	st := SegmentTree[E]{
 		data:   make([]E, len(data), len(data)),
 		tree:   make([]E, 4*len(data), 4*len(data)),

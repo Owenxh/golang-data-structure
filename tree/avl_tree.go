@@ -5,7 +5,7 @@ import (
 )
 
 // AVLTree implementation
-type AVLTree[K any, V any] struct {
+type AVLTree[K Ordered, V Ordered] struct {
 	// The root of the tree
 	root *Node[K, V]
 	// The tree size
@@ -13,7 +13,7 @@ type AVLTree[K any, V any] struct {
 }
 
 // Node the node element of the AVL
-type Node[K any, V any] struct {
+type Node[K Ordered, V Ordered] struct {
 	// The value
 	key K
 	// The value
@@ -145,14 +145,14 @@ func (t *AVLTree[K, V]) leftRightRotate(y *Node[K, V]) *Node[K, V] {
 	return t.rightRotate(y)
 }
 
-func getHeight[K any, V any](n *Node[K, V]) int {
+func getHeight[K Ordered, V Ordered](n *Node[K, V]) int {
 	if n == nil {
 		return 0
 	}
 	return n.height
 }
 
-func getBalanceFactor[K any, V any](n *Node[K, V]) int {
+func getBalanceFactor[K Ordered, V Ordered](n *Node[K, V]) int {
 	return getHeight(n.left) - getHeight(n.right)
 }
 
@@ -160,7 +160,7 @@ func (t *AVLTree[K, V]) IsValidBST() bool {
 	return isValidBST(t.root)
 }
 
-func isValidBST[K any, V any](n *Node[K, V]) bool {
+func isValidBST[K Ordered, V Ordered](n *Node[K, V]) bool {
 	if n == nil {
 		return true
 	}
@@ -177,7 +177,7 @@ func (t *AVLTree[K, V]) IsBalanced() bool {
 	return isBalanced(t.root)
 }
 
-func isBalanced[K any, V any](n *Node[K, V]) bool {
+func isBalanced[K Ordered, V Ordered](n *Node[K, V]) bool {
 	if n == nil {
 		return true
 	}
