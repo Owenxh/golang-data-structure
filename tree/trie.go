@@ -95,3 +95,21 @@ func (t *Trie) Contains(word string) bool {
 	}
 	return cur.isWord
 }
+
+// 查询是否在 Trie 中有单词以 prefix为 前缀
+func (t *Trie) startsWith(prefix string) bool {
+	if prefix == "" {
+		return false
+	}
+	cur := t.root
+	runes := []rune(prefix)
+	for i := 0; i < len(runes); i++ {
+		r := runes[i]
+		next, ok := cur.next[r]
+		if !ok {
+			return false
+		}
+		cur = next
+	}
+	return true
+}
