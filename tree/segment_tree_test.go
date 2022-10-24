@@ -9,7 +9,7 @@ func TestSegmentTree(t *testing.T) {
 
 	nums := []int{-2, 0, 3, -5, 2, -1}
 
-	st := NewSegmentTree[int](nums,
+	st := NewSegmentTree(nums,
 		func(l, r int) int {
 			return l + r
 		})
