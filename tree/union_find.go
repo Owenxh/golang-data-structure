@@ -227,6 +227,7 @@ func (u *UnionFind5) find(p int) int {
 	return p
 }
 
+// O(long*n) iterated logarithm
 // Path Compression
 type UnionFind6 struct {
 	parent []int
