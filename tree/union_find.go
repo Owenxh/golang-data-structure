@@ -48,6 +48,7 @@ func (u *UnionFind1) UnionElements(p, q int) {
 		}
 	}
 }
+<<<<<<< HEAD
 
 type UnionFind2 struct {
 	parent []int
@@ -336,3 +337,5 @@ func (u *UnionFind6) find(p int) int {
 	}
 	return u.parent[p]
 }
+=======
+>>>>>>> a4ba8b8 (Union Find)
