@@ -2,6 +2,53 @@ package tree
 
 import "fmt"
 
+// UnionFind1 本质是一个数组
+type UnionFind1 struct {
+	id []int
+}
+
+func NewUnionFind1(size int) *UnionFind1 {
+	id := make([]int, size, size)
+
+	// 初始化, 每一个 id[i] 指向自己, 没有合并的元素
+	for i := 0; i < size; i++ {
+		id[i] = i
+	}
+
+	return &UnionFind1{id: id}
+}
+
+func (u *UnionFind1) GetSize() int {
+	return len(u.id)
+}
+
+// 查找元素p所对应的集合编号
+// O(1)复杂度
+func (u *UnionFind1) find(p int) int {
+	if p < 0 || p >= len(u.id) {
+		panic(fmt.Sprintf("p %v is not found", p))
+	}
+	return u.id[p]
+}
+
+func (u *UnionFind1) IsConnected(p, q int) bool {
+	return u.find(p) == u.find(q)
+}
+
+func (u *UnionFind1) UnionElements(p, q int) {
+	pID, qID := u.find(p), u.find(q)
+	if pID == qID {
+		return
+	}
+
+	// 合并过程需要遍历一遍所有元素, 将两个元素的所属集合编号合并
+	for i := 0; i < len(u.id); i++ {
+		if u.id[i] == pID {
+			u.id[i] = qID
+		}
+	}
+}
+
 type UnionFind2 struct {
 	parent []int
 }
