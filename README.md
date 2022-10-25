@@ -26,10 +26,14 @@
 |冒泡排序 | O(n^2) | O(1) |数组完全有序时，时间复杂度 O(n)|
 |希尔排序 | O(nlogN)-O(n^2)|O(1)|不同增长序列会影响性能|
 
-### 动态数组
-### 链表
-### 栈
-### 队列
+### 动态数组 Dynamic Array
+### 链表 Linked List
+### 栈 Stack
+### 队列 Queue
 - 基于动态数组实现
 - 基于循环数组实现
+### 堆 Heap
+### 线段树 Segment Tree 
+### 字典树 Trie
+### 并查集 Union Find
 
