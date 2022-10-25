@@ -212,7 +212,7 @@ func (u *UnionFind4) find(p int) int {
 	return p
 }
 
-// Path Compression
+// UnionFind5 use Path Compression
 type UnionFind5 struct {
 	parent []int
 	rank   []int
@@ -274,6 +274,7 @@ func (u *UnionFind5) find(p int) int {
 	return p
 }
 
+// UnionFind6
 // O(long*n) iterated logarithm
 // Path Compression
 type UnionFind6 struct {
