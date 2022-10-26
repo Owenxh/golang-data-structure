@@ -24,7 +24,7 @@ func TestUnionFind(t *testing.T) {
 	uf5 := NewUnionFind5(count)
 	testUF(t, uf5, count)
 
-	uf6 := NewUnionFind5(count)
+	uf6 := NewUnionFind6(count)
 	testUF(t, uf6, count)
 }
 
