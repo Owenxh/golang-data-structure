@@ -71,7 +71,7 @@ func DoSortTests(sort func([]int), t *testing.T, data [][]int) {
 		start := time.Now()
 		sort(arr)
 		cost := time.Now().Sub(start)
-		
+
 		t.Logf("sort slice(length %9d) using %16v cost %v", len(arr), sortFnName, cost)
 		VerifyIsSorted(arr)
 	}

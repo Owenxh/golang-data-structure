@@ -1,9 +1,30 @@
 package tree
 
-import "fmt"
+import (
+	"fmt"
+)
 
 type Merger[E any] func(l, r E) E
 
+// example 1
+//      [1, 6]
+//      /    \
+//   [1, 3]   [4, 6]
+//    /  \     /   \
+//  [1,2] [3] [4,5] [6]
+//	/  \       /  \
+// [1] [2]    [4] [5]
+
+// example 2
+//      [0, 7]
+//      /     \
+//   [0, 3]    [4, 7]
+//    / \       /   \
+//[0,1] [2,3] [4,5] [6,7]
+//	/\    /\    /\    /\
+//[0][1][2][3][4][5][6][7]
+
+// SegmentTree O(longN)
 type SegmentTree[E any] struct {
 	tree   []E
 	data   []E
@@ -21,7 +42,6 @@ func NewSegmentTree[E any](data []E, merger func(E, E) E) *SegmentTree[E] {
 		merger: merger,
 	}
 	copy(st.data, data)
-	st.tree = make([]E, 4*len(data), 4*len(data))
 	st.buildSegmentTree(0, 0, len(st.data)-1)
 	return &st
 }

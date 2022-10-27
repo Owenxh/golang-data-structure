@@ -31,7 +31,7 @@ func getSkyline0(buildings [][]int, l, r int) [][]int {
 	left := getSkyline0(buildings, l, mid)
 	right := getSkyline0(buildings, mid+1, r)
 	ret := merge(left, right)
-//	fmt.Println(ret)
+	//	fmt.Println(ret)
 	return ret
 }
 
