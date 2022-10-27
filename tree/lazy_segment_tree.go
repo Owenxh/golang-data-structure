@@ -73,8 +73,6 @@ func (st *LazySegmentTree) Query(queryL, queryR int) int {
 }
 
 func (st *LazySegmentTree) query(root, l, r, queryL, queryR int) int {
-	st.lazyUpdate(root, l, r)
-
 	// 区间 [queryL, queryR] 正好相等
 	if l == queryL && r == queryR {
 		return st.tree[root]
@@ -85,6 +83,14 @@ func (st *LazySegmentTree) query(root, l, r, queryL, queryR int) int {
 	left := st.leftChild(root)
 	right := st.rightChild(root)
 
+	if st.lazy[root] != 0 {
+		st.tree[left] += (m - l + 1) * st.lazy[root]
+		st.tree[right] += (r - m) * st.lazy[root]
+		st.lazy[left] += st.lazy[root]
+		st.lazy[right] += st.lazy[root]
+		st.lazy[root] = 0
+	}
+
 	if queryR <= m {
 		return st.query(left, l, m, queryL, queryR)
 	}
@@ -93,10 +99,10 @@ func (st *LazySegmentTree) query(root, l, r, queryL, queryR int) int {
 		return st.query(right, m+1, r, queryL, queryR)
 	}
 
-	leftRet := st.query(left, l, m, queryL, m)
-	rightRet := st.query(right, m+1, r, m+1, queryR)
+	lRet := st.query(left, l, m, queryL, m)
+	rRet := st.query(right, m+1, r, m+1, queryR)
 
-	return st.merger(leftRet, rightRet)
+	return st.merger(lRet, rRet)
 }
 
 // UpdateRange update segment tree from range [updateL, updateR], every element need to add diff
@@ -109,7 +115,7 @@ func (st *LazySegmentTree) UpdateRange(updateL, updateR int, diff int) {
 
 func (st *LazySegmentTree) lazyUpdate(root int, l int, r int) {
 	if st.lazy[root] != 0 {
-		fmt.Println(fmt.Sprintf("==== update range [%v, %v] = %v", l, r, st.lazy[root]))
+
 		// update self
 		st.tree[root] += (r - l + 1) * st.lazy[root]
 
@@ -124,29 +130,32 @@ func (st *LazySegmentTree) lazyUpdate(root int, l int, r int) {
 }
 
 func (st *LazySegmentTree) updateRange(root int, l int, r int, updateL int, updateR int, diff int) {
-	st.lazyUpdate(root, l, r)
-
-	// current segment is fully in range
-	if l == updateL && r == updateR {
+	fmt.Println(fmt.Sprintf(">>> update range [%v, %v] = %v", updateL, updateR, diff))
+	if updateL == l && updateR == r {
 		// update self
 		st.tree[root] += (r - l + 1) * diff
-
-		// not a leaf node
-		if l != r {
-			st.lazy[st.leftChild(root)] += diff
-			st.lazy[st.rightChild(root)] += diff
-		}
+		st.lazy[root] += diff
 		return
 	}
 
-	left := st.leftChild(root)
-	right := st.rightChild(root)
-
 	mid := l + (r-l)/2
 
-	if mid >= updateR {
+	left, right := st.leftChild(root), st.rightChild(root)
+
+	// 更新子节点的值并传递懒惰标记值
+	if st.lazy[root] != 0 && l != r {
+		st.tree[left] += (mid - l + 1) * st.lazy[root]
+		st.tree[right] += (r - mid) * st.lazy[root]
+
+		st.lazy[left] += st.lazy[root]
+		st.lazy[right] += st.lazy[root]
+
+		st.lazy[root] = 0
+	}
+
+	if updateR <= mid {
 		st.updateRange(left, l, mid, updateL, updateR, diff)
-	} else if mid+1 <= updateL {
+	} else if updateL > mid+1 {
 		st.updateRange(right, mid+1, r, updateL, updateR, diff)
 	} else {
 		st.updateRange(left, l, mid, updateL, mid, diff)
@@ -154,36 +163,3 @@ func (st *LazySegmentTree) updateRange(root int, l int, r int, updateL int, upda
 	}
 	st.tree[root] = st.merger(st.tree[left], st.tree[right])
 }
-
-//func (st *LazySegmentTree) updateRange2(root int, l int, r int, updateL int, updateR int, diff int) {
-//	st.lazyUpdate(root, l, r)
-//
-//	// out of range
-//	if l > r || l > updateR || r < updateL {
-//		return
-//	}
-//
-//	// current segment is fully in range
-//	if l >= updateL && r <= updateR {
-//		// update self
-//		st.tree[root] += (r - l + 1) * diff
-//
-//		// not a leaf node
-//		if l != r {
-//			leftTreeIndex, rightTreeIndex := st.leftChild(root), st.rightChild(root)
-//			st.lazy[leftTreeIndex] = diff
-//			st.lazy[rightTreeIndex] = diff
-//		}
-//		return
-//	}
-//
-//	leftChild := st.leftChild(root)
-//	rightChild := st.rightChild(root)
-//
-//	mid := l + (r-l)/2
-//
-//	st.updateRange(leftChild, l, mid, updateL, updateR, diff)
-//	st.updateRange(rightChild, mid+1, r, updateL, updateR, diff)
-//
-//	st.tree[root] = st.merger(st.tree[leftChild], st.tree[rightChild])
-//}

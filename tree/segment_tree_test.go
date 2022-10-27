@@ -18,35 +18,28 @@ func TestSegmentTree(t *testing.T) {
 
 }
 
+func execQuery(st *LazySegmentTree, l, r int) {
+	fmt.Printf(" Query range [%v, %v] = %v\n", l, r, st.Query(l, r))
+}
+
+func execUpdate(st *LazySegmentTree, l, r, diff int) {
+	fmt.Printf("Update range [%v, %v] = %v\n", l, r, diff)
+	st.UpdateRange(l, r, diff)
+}
+
 func TestLazySegmentTree(t *testing.T) {
-	nums := []int{-2, 0, 3, -5, 2, -1}
+	nums := []int{1, 2, 3, 4, 5, 6}
 	st := NewLazySegmentTree(nums)
 
-	var l, r, diff int
+	execQuery(st, 0, 2)
+	execQuery(st, 3, 5)
+	execQuery(st, 0, 5)
 
-	l, r = 0, 2
-	fmt.Printf("[%v, %v] = %v\n", l, r, st.Query(l, r))
+	execUpdate(st, 0, 5, 5)
+	execQuery(st, 0, 5)
+	execQuery(st, 0, 2)
 
-	l, r = 3, 5
-	fmt.Printf("[%v, %v] = %v\n", l, r, st.Query(l, r))
-
-	l, r = 0, 5
-	fmt.Printf("[%v, %v] = %v\n", l, r, st.Query(l, r))
-
-	l, r, diff = 0, 5, 5
-	fmt.Printf("update range [%v, %v] = %v\n", l, r, diff)
-	st.UpdateRange(l, r, diff)
-
-	l, r = 0, 2
-	fmt.Printf("[%v, %v] = %v\n", l, r, st.Query(l, r))
-
-	l, r, diff = 0, 4, 5
-	fmt.Printf("update range [%v, %v] = %v\n", l, r, diff)
-	st.UpdateRange(l, r, diff)
-
-	l, r = 3, 5
-	fmt.Printf("[%v, %v] = %v\n", l, r, st.Query(l, r))
-
-	l, r = 0, 5
-	fmt.Printf("[%v, %v] = %v\n", l, r, st.Query(l, r))
+	execUpdate(st, 0, 4, 5)
+	execQuery(st, 3, 5)
+	execQuery(st, 0, 5)
 }
