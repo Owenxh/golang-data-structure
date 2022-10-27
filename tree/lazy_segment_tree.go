@@ -6,9 +6,17 @@ import (
 )
 
 type LazySegmentTree struct {
-	tree   []int
-	lazy   []int
-	size   int
+
+	// tree 节点数据
+	tree []int
+
+	// lazy 坐标与值的关系，值不为 0 表示左右子结点待更新
+	lazy []int
+
+	// size 原始数据大小
+	size int
+
+	// merger 合并函数
 	merger func(int, int) int
 }
 
