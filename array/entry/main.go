@@ -15,7 +15,7 @@ func applyFn(fn func(int)) {
 }
 
 func main() {
-	arr := array.NewWithCapacity(4)
+	arr := array.NewWithCapacity[int](4)
 	applyFn(func(i int) {
 		arr.AddLast(i)
 		fmt.Println(arr)

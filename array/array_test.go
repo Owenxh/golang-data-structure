@@ -7,12 +7,12 @@ import (
 
 const N int = 10
 
-func generateSequentialArray(size int) *Array {
+func generateSequentialArray(size int) *Array[int] {
 	if size <= 0 {
 		panic("MyArray size must > 0")
 	}
 
-	arr := NewWithCapacity(size)
+	arr := NewWithCapacity[int](size)
 	for i := 0; i < size; i++ {
 		arr.AddLast(i)
 	}

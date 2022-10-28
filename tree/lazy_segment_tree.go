@@ -2,6 +2,8 @@ package tree
 
 import (
 	"fmt"
+	"io.vava.datastructure/queue"
+	"io.vava.datastructure/stack"
 	"math"
 )
 
@@ -75,43 +77,43 @@ func (st *LazySegmentTree) rightChild(index int) int {
 // Query 查询区间范围 [queryL, queryR] 的值
 func (st *LazySegmentTree) Query(queryL, queryR int) int {
 	if queryL > queryR || queryL < 0 || queryR >= st.size {
-		panic(fmt.Sprintf("illegal query range [%v, %v]", queryL, queryR))
+		panic(fmt.Sprintf("illegal query0 range [%v, %v]", queryL, queryR))
 	}
 	return st.query(0, 0, st.size-1, queryL, queryR)
 }
 
-func (st *LazySegmentTree) query(root, l, r, queryL, queryR int) int {
-	// 区间 [queryL, queryR] 正好相等
-	if l == queryL && r == queryR {
-		return st.tree[root]
-	}
-
-	m := l + (r-l)/2
-
-	left := st.leftChild(root)
-	right := st.rightChild(root)
-
-	if st.lazy[root] != 0 {
-		st.tree[left] += (m - l + 1) * st.lazy[root]
-		st.tree[right] += (r - m) * st.lazy[root]
-		st.lazy[left] += st.lazy[root]
-		st.lazy[right] += st.lazy[root]
-		st.lazy[root] = 0
-	}
-
-	if queryR <= m {
-		return st.query(left, l, m, queryL, queryR)
-	}
-
-	if queryL > m {
-		return st.query(right, m+1, r, queryL, queryR)
-	}
-
-	lRet := st.query(left, l, m, queryL, m)
-	rRet := st.query(right, m+1, r, m+1, queryR)
-
-	return st.merger(lRet, rRet)
-}
+//func (st *LazySegmentTree) query0(root, l, r, queryL, queryR int) int {
+//	// 区间 [queryL, queryR] 正好相等
+//	if l == queryL && r == queryR {
+//		return st.tree[root]
+//	}
+//
+//	m := l + (r-l)/2
+//
+//	left := st.leftChild(root)
+//	right := st.rightChild(root)
+//
+//	if st.lazy[root] != 0 {
+//		st.tree[left] += (m - l + 1) * st.lazy[root]
+//		st.tree[right] += (r - m) * st.lazy[root]
+//		st.lazy[left] += st.lazy[root]
+//		st.lazy[right] += st.lazy[root]
+//		st.lazy[root] = 0
+//	}
+//
+//	if queryR <= m {
+//		return st.query0(left, l, m, queryL, queryR)
+//	}
+//
+//	if queryL > m {
+//		return st.query0(right, m+1, r, queryL, queryR)
+//	}
+//
+//	lRet := st.query0(left, l, m, queryL, m)
+//	rRet := st.query0(right, m+1, r, m+1, queryR)
+//
+//	return st.merger(lRet, rRet)
+//}
 
 // UpdateRange update segment tree from range [updateL, updateR], every element need to add diff
 func (st *LazySegmentTree) UpdateRange(updateL, updateR int, diff int) {
@@ -137,10 +139,43 @@ func (st *LazySegmentTree) lazyUpdate(root int, l int, r int) {
 	}
 }
 
+//func (st *LazySegmentTree) updateRange0(root int, l int, r int, updateL int, updateR int, diff int) {
+//	fmt.Println(fmt.Sprintf(">>> update range [%v, %v] = %v", updateL, updateR, diff))
+//	if updateL == l && updateR == r {
+//		// update self
+//		st.tree[root] += (r - l + 1) * diff
+//		st.lazy[root] += diff
+//		return
+//	}
+//
+//	mid := l + (r-l)/2
+//
+//	left, right := st.leftChild(root), st.rightChild(root)
+//
+//	// 更新子节点的值并传递懒惰标记值
+//	if st.lazy[root] != 0 && l != r {
+//		st.tree[left] += (mid - l + 1) * st.lazy[root]
+//		st.tree[right] += (r - mid) * st.lazy[root]
+//
+//		st.lazy[left] += st.lazy[root]
+//		st.lazy[right] += st.lazy[root]
+//
+//		st.lazy[root] = 0
+//	}
+//
+//	if updateR <= mid {
+//		st.updateRange0(left, l, mid, updateL, updateR, diff)
+//	} else if updateL > mid+1 {
+//		st.updateRange0(right, mid+1, r, updateL, updateR, diff)
+//	} else {
+//		st.updateRange0(left, l, mid, updateL, mid, diff)
+//		st.updateRange0(right, mid+1, r, mid+1, updateR, diff)
+//	}
+//	st.tree[root] = st.merger(st.tree[left], st.tree[right])
+//}
+
 func (st *LazySegmentTree) updateRange(root int, l int, r int, updateL int, updateR int, diff int) {
-	fmt.Println(fmt.Sprintf(">>> update range [%v, %v] = %v", updateL, updateR, diff))
-	if updateL == l && updateR == r {
-		// update self
+	if updateL <= l && updateR >= r {
 		st.tree[root] += (r - l + 1) * diff
 		st.lazy[root] += diff
 		return
@@ -154,20 +189,114 @@ func (st *LazySegmentTree) updateRange(root int, l int, r int, updateL int, upda
 	if st.lazy[root] != 0 && l != r {
 		st.tree[left] += (mid - l + 1) * st.lazy[root]
 		st.tree[right] += (r - mid) * st.lazy[root]
-
 		st.lazy[left] += st.lazy[root]
 		st.lazy[right] += st.lazy[root]
-
 		st.lazy[root] = 0
 	}
 
-	if updateR <= mid {
+	if updateL <= mid {
 		st.updateRange(left, l, mid, updateL, updateR, diff)
-	} else if updateL > mid+1 {
+	}
+	if updateR > mid {
 		st.updateRange(right, mid+1, r, updateL, updateR, diff)
-	} else {
-		st.updateRange(left, l, mid, updateL, mid, diff)
-		st.updateRange(right, mid+1, r, mid+1, updateR, diff)
 	}
 	st.tree[root] = st.merger(st.tree[left], st.tree[right])
+}
+
+func (st *LazySegmentTree) query(root, l, r, queryL, queryR int) int {
+	// [l, r] 正好是 [queryL, queryR] 的子集
+	if queryL <= l && queryR >= r {
+		return st.tree[root]
+	}
+
+	m := l + (r-l)/2
+
+	left := st.leftChild(root)
+	right := st.rightChild(root)
+
+	if st.lazy[root] != 0 {
+		st.tree[left] += (m - l + 1) * st.lazy[root]
+		st.tree[right] += (r - m) * st.lazy[root]
+		st.lazy[left] += st.lazy[root]
+		st.lazy[right] += st.lazy[root]
+		st.lazy[root] = 0
+	}
+
+	var lRet, rRet int
+	if queryL <= m {
+		lRet = st.query(left, l, m, queryL, queryR)
+	}
+	if queryR > m {
+		rRet = st.query(right, m+1, r, queryL, queryR)
+	}
+	return st.merger(lRet, rRet)
+}
+
+type stNode struct {
+	i int
+	v int
+	l int
+	r int
+}
+
+func rootSTNode(st *LazySegmentTree) stNode {
+	return stNode{
+		i: 0,
+		v: st.Query(0, st.size-1),
+		l: 0,
+		r: st.size - 1,
+	}
+}
+
+func (node *stNode) getChildren(st *LazySegmentTree) (bool, *stNode, *stNode) {
+	if node.l == node.r {
+		return false, nil, nil
+	}
+	mid := node.l + ((node.r - node.l) >> 1)
+	return true,
+		&stNode{i: node.i*2 + 1, v: st.Query(node.l, mid), l: node.l, r: mid},
+		&stNode{i: node.i*2 + 2, v: st.Query(mid+1, node.r), l: mid + 1, r: node.r}
+}
+
+func (st *LazySegmentTree) RankVisit(fn func(index, v int, l, r int)) {
+	q := queue.NewArrayQueue[stNode]()
+	q.Enqueue(rootSTNode(st))
+	st.rankVisit(q, fn)
+}
+
+func (st *LazySegmentTree) rankVisit(q queue.Interface[stNode], fn func(index, v int, l, r int)) {
+	for !q.IsEmpty() {
+		node := q.Dequeue()
+		fn(node.i, node.v, node.l, node.r)
+		ok, left, right := node.getChildren(st)
+		if ok {
+			q.Enqueue(*left)
+			q.Enqueue(*right)
+		}
+	}
+}
+
+func (st *LazySegmentTree) ReversedRankVisit(fn func(index, v int, l, r int)) {
+	q := queue.NewArrayQueue[stNode]()
+	q.Enqueue(rootSTNode(st))
+	st.reversedRankVisit(q, fn)
+}
+
+func (st *LazySegmentTree) reversedRankVisit(q queue.Interface[stNode], fn func(index, v int, l, r int)) {
+	s := stack.New[stNode]()
+	for !q.IsEmpty() {
+		node := q.Dequeue()
+		s.Push(node)
+
+		ok, left, right := node.getChildren(st)
+		if ok {
+			q.Enqueue(*right)
+			q.Enqueue(*left)
+		}
+	}
+
+	for !s.IsEmpty() {
+		node := s.Pop()
+		fn(node.i, node.v, node.l, node.r)
+	}
 }

@@ -1,7 +1,9 @@
 package tree
 
+import "io.vava.datastructure/types"
+
 // BST Binary search tree implementation.
-type BST[K Ordered, V Ordered] struct {
+type BST[K types.Comparable, V types.Comparable] struct {
 	// The root of the tree
 	root *BSTNode[K, V]
 	// The tree size
@@ -9,7 +11,7 @@ type BST[K Ordered, V Ordered] struct {
 }
 
 // BSTNode The node element of the BST.
-type BSTNode[K Ordered, V Ordered] struct {
+type BSTNode[K types.Comparable, V types.Comparable] struct {
 	// The value
 	key K
 	// The value
@@ -113,7 +115,7 @@ func (t *BST[K, V]) remove(node *BSTNode[K, V], k K) *BSTNode[K, V] {
 }
 
 // IsEmpty returns the if the tree is empty.
-func (t *BST[K, V]) IsEmpty(e string) bool {
+func (t *BST[K, V]) IsEmpty() bool {
 	return t.size == 0
 }
 

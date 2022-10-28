@@ -2,9 +2,10 @@ package tree
 
 import (
 	"fmt"
+	"io.vava.datastructure/types"
 )
 
-type Merger[E any] func(l, r E) E
+type Merger[E types.Comparable] func(l, r E) E
 
 // example 1
 //      [1, 6]
@@ -25,7 +26,7 @@ type Merger[E any] func(l, r E) E
 //[0][1][2][3][4][5][6][7]
 
 // SegmentTree O(longN)
-type SegmentTree[E any] struct {
+type SegmentTree[E types.Comparable] struct {
 	tree   []E
 	data   []E
 	merger func(E, E) E
@@ -35,7 +36,7 @@ func (st *SegmentTree[E]) String() string {
 	return fmt.Sprint(st.tree)
 }
 
-func NewSegmentTree[E any](data []E, merger func(E, E) E) *SegmentTree[E] {
+func NewSegmentTree[E types.Comparable](data []E, merger func(E, E) E) *SegmentTree[E] {
 	st := SegmentTree[E]{
 		data:   make([]E, len(data), len(data)),
 		tree:   make([]E, 4*len(data), 4*len(data)),
@@ -87,7 +88,7 @@ func (st *SegmentTree[E]) rightChild(index int) int {
 // Query 查询区间范围 [queryL, queryR] 的值
 func (st *SegmentTree[E]) Query(queryL, queryR int) E {
 	if queryL > queryR || queryL < 0 || queryR >= len(st.data) {
-		panic(fmt.Sprintf("illegal query range [%v, %v]", queryL, queryR))
+		panic(fmt.Sprintf("illegal query0 range [%v, %v]", queryL, queryR))
 	}
 	return st.query(0, 0, len(st.data)-1, queryL, queryR)
 }

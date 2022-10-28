@@ -17,7 +17,7 @@ func main() {
 	benchmarkDequeue(queue.NewLoopQueueWithCapacity(c), c)
 }
 
-func benchmarkDequeue(q queue.IntQueue, c int) {
+func benchmarkDequeue(q queue.Interface, c int) {
 	for i := 0; i < c; i++ {
 		q.Enqueue(i)
 	}

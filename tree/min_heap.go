@@ -3,58 +3,60 @@ package tree
 import (
 	"errors"
 	"io.vava.datastructure/array"
+	"io.vava.datastructure/types"
 )
 
-type MinHeap struct {
-	arr *array.Array
+type MinHeap[E types.Comparable] struct {
+	arr *array.Array[E]
 }
 
-func NewMinHeap() *MinHeap {
-	return &MinHeap{arr: array.New()}
+func NewMinHeap[E types.Comparable]() *MinHeap[E] {
+	return &MinHeap[E]{arr: array.New[E]()}
 }
 
-func (h *MinHeap) get(i int) int {
+func (h *MinHeap[E]) get(i int) E {
 	return h.arr.Get(i)
 }
 
-func (h *MinHeap) set(i, e int) {
+func (h *MinHeap[E]) set(i int, e E) {
 	h.arr.Set(i, e)
 }
 
-func (h *MinHeap) IsEmpty() bool {
+func (h *MinHeap[E]) IsEmpty() bool {
 	return h.arr.IsEmpty()
 }
 
-func (h *MinHeap) Size() int {
+func (h *MinHeap[E]) Size() int {
 	return h.arr.Size()
 }
 
-func (h *MinHeap) swap(i, j int) {
+func (h *MinHeap[E]) swap(i, j int) {
 	t := h.get(i)
 	h.set(i, h.get(j))
 	h.set(j, t)
 }
 
-func (h *MinHeap) FindMin() (int, error) {
+func (h *MinHeap[E]) FindMin() (E, error) {
 	if h.IsEmpty() {
-		return 0, errors.New("can't extract min value from empty array")
+		var e E
+		return e, errors.New("can't extract min value from empty array")
 	}
 	return h.arr.GetFirst(), nil
 }
 
-func (h *MinHeap) Add(e int) {
+func (h *MinHeap[E]) Add(e E) {
 	h.arr.AddLast(e)
 	h.siftUp(h.arr.Size() - 1)
 }
 
-func (h *MinHeap) siftUp(i int) {
+func (h *MinHeap[E]) siftUp(i int) {
 	for i > 0 && h.get(i) < h.get(parent(i)) {
 		h.swap(i, parent(i))
 		i = parent(i)
 	}
 }
 
-func (h *MinHeap) siftDown(i int) {
+func (h *MinHeap[E]) siftDown(i int) {
 	for leftChild(i) < h.arr.Size() {
 		j := leftChild(i)
 
@@ -71,10 +73,11 @@ func (h *MinHeap) siftDown(i int) {
 	}
 }
 
-func (h *MinHeap) ExtractMin() (int, error) {
+func (h *MinHeap[E]) ExtractMin() (E, error) {
 	min, err := h.FindMin()
 	if err != nil {
-		return 0, err
+		var e E
+		return e, err
 	}
 
 	h.swap(0, h.Size()-1)
