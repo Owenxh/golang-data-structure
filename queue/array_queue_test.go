@@ -8,7 +8,7 @@ import (
 )
 
 func TestArrayQueue_Enqueue(t *testing.T) {
-	queue := queue.NewArrayQueueWithCapacity(8)
+	queue := queue.NewArrayQueueWithCapacity[int](8)
 
 	for i := 1; i <= 10; i++ {
 		queue.Enqueue(i)
