@@ -1,10 +1,11 @@
 package sort
 
 import (
-	"io.vava.datastructure/util"
 	"testing"
+
+	"io.vava.datastructure/util"
 )
 
 func TestBubbleSort(t *testing.T) {
-	util.DoSortTests(BubbleSort, t, util.RandomIntSlices(10000, 100000, 200000))
+	util.DoSortTests(BubbleSort, t, [][]int{util.RandomIntSlice(10000)})
 }
