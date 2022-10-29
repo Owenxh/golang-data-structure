@@ -6,7 +6,7 @@ import (
 )
 
 func TestMaxHeap_ExtractMax(t *testing.T) {
-	n, h := 500, NewMaxHeap()
+	n, h := 500, NewMaxHeap[int]()
 	for i := 0; i < n; i++ {
 		h.Add(rand.Intn(10000))
 	}
@@ -29,7 +29,7 @@ func TestMaxHeap_ExtractMax(t *testing.T) {
 }
 
 func TestMinHeap_ExtractMin(t *testing.T) {
-	n, h := 500, NewMinHeap()
+	n, h := 500, NewMinHeap[int]()
 	for i := 0; i < n; i++ {
 		h.Add(rand.Intn(10000))
 	}

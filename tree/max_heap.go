@@ -2,37 +2,39 @@ package tree
 
 import (
 	"errors"
+	"io.vava.datastructure/types"
 
 	"io.vava.datastructure/array"
 )
 
-type MaxHeap struct {
-	arr *array.Array
+type MaxHeap[E types.Comparable] struct {
+	arr *array.Array[E]
 }
 
-func NewMaxHeap() *MaxHeap {
-	return &MaxHeap{arr: array.New()}
+func NewMaxHeap[E types.Comparable]() *MaxHeap[E] {
+	return &MaxHeap[E]{arr: array.New[E]()}
 }
 
-func (h *MaxHeap) get(i int) int {
+func (h *MaxHeap[E]) get(i int) E {
 	return h.arr.Get(i)
 }
 
-func (h *MaxHeap) set(i, e int) {
+func (h *MaxHeap[E]) set(i int, e E) {
 	h.arr.Set(i, e)
 }
 
-func (h *MaxHeap) IsEmpty() bool {
+func (h *MaxHeap[E]) IsEmpty() bool {
 	return h.arr.IsEmpty()
 }
 
-func (h *MaxHeap) Size() int {
+func (h *MaxHeap[E]) Size() int {
 	return h.arr.Size()
 }
 
-func (h *MaxHeap) ExtractMax() (int, error) {
+func (h *MaxHeap[E]) ExtractMax() (E, error) {
 	if h.arr.IsEmpty() {
-		return 0, errors.New("can't extract max value from empty h")
+		var e E
+		return e, errors.New("can't extract max value from empty h")
 	}
 
 	res, err := h.FindMax()
@@ -47,15 +49,16 @@ func (h *MaxHeap) ExtractMax() (int, error) {
 	return res, nil
 }
 
-func (h *MaxHeap) FindMax() (int, error) {
+func (h *MaxHeap[E]) FindMax() (E, error) {
 	if h.IsEmpty() {
-		return 0, errors.New("can't extract max value from empty h")
+		var ret E
+		return ret, errors.New("can't extract max value from empty h")
 	}
 
 	return h.arr.GetFirst(), nil
 }
 
-func (h *MaxHeap) Add(e int) {
+func (h *MaxHeap[E]) Add(e E) {
 	h.arr.AddLast(e)
 	h.siftUp(h.arr.Size() - 1)
 }
@@ -75,14 +78,14 @@ func rightChild(i int) int {
 	return i*2 + 2
 }
 
-func (h *MaxHeap) siftUp(i int) {
+func (h *MaxHeap[E]) siftUp(i int) {
 	for i > 0 && h.get(parent(i)) < h.get(i) {
 		h.swap(parent(i), i)
 		i = parent(i)
 	}
 }
 
-func (h *MaxHeap) siftDown(i int) {
+func (h *MaxHeap[E]) siftDown(i int) {
 	for leftChild(i) < h.arr.Size() {
 		j := leftChild(i)
 		if j+1 < h.Size() && h.get(j+1) > h.get(j) {
@@ -96,7 +99,7 @@ func (h *MaxHeap) siftDown(i int) {
 	}
 }
 
-func (h *MaxHeap) swap(i, j int) {
+func (h *MaxHeap[E]) swap(i, j int) {
 	t := h.get(i)
 	h.set(i, h.get(j))
 	h.set(j, t)

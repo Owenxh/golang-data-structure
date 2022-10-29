@@ -1,6 +1,6 @@
-// 二分查找前提：数组中元素必须有序
 package search
 
+// BinarySearch 二分查找前提：数组中元素必须有序
 func BinarySearch(arr []int, target int) int {
 	return binarySearch(arr, 0, len(arr), target)
 }

@@ -40,6 +40,21 @@ func TestLazySegmentTree(t *testing.T) {
 	execQuery(st, 0, 2)
 
 	execUpdate(st, 0, 4, 5)
+	execUpdate(st, 3, 4, 4)
 	execQuery(st, 3, 5)
 	execQuery(st, 0, 5)
+	execQuery(st, 2, 3)
+	execQuery(st, 0, 2)
+	execQuery(st, 3, 4)
+	execQuery(st, 5, 5)
+
+	st.RankVisit(func(index, v int, l, r int) {
+		fmt.Printf("Node %d range [%v, %v] = %v\n", index, l, r, v)
+	})
+
+	fmt.Println("reversed rank visit")
+	st.ReversedRankVisit(func(index, v int, l, r int) {
+		fmt.Printf("Node %d range [%v, %v] = %v\n", index, l, r, v)
+	})
+
 }

@@ -2,6 +2,16 @@ package tree
 
 import "fmt"
 
+// UF Union Find
+type UF interface {
+	// GetSize returns elements count of UF
+	GetSize() int
+	// IsConnected indicates whether the element p & q is connected
+	IsConnected(p, q int) bool
+	// UnionElements connects element p & q
+	UnionElements(p, q int)
+}
+
 // UnionFind1 本质是一个数组
 type UnionFind1 struct {
 	id []int

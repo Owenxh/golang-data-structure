@@ -1,11 +1,12 @@
 package tree
 
 import (
+	"io.vava.datastructure/types"
 	"math"
 )
 
 // AVLTree implementation
-type AVLTree[K Ordered, V Ordered] struct {
+type AVLTree[K types.Comparable, V types.Comparable] struct {
 	// The root of the tree
 	root *Node[K, V]
 	// The tree size
@@ -13,7 +14,7 @@ type AVLTree[K Ordered, V Ordered] struct {
 }
 
 // Node the node element of the AVL
-type Node[K Ordered, V Ordered] struct {
+type Node[K types.Comparable, V types.Comparable] struct {
 	// The value
 	key K
 	// The value
@@ -145,14 +146,14 @@ func (t *AVLTree[K, V]) leftRightRotate(y *Node[K, V]) *Node[K, V] {
 	return t.rightRotate(y)
 }
 
-func getHeight[K Ordered, V Ordered](n *Node[K, V]) int {
+func getHeight[K types.Comparable, V types.Comparable](n *Node[K, V]) int {
 	if n == nil {
 		return 0
 	}
 	return n.height
 }
 
-func getBalanceFactor[K Ordered, V Ordered](n *Node[K, V]) int {
+func getBalanceFactor[K types.Comparable, V types.Comparable](n *Node[K, V]) int {
 	return getHeight(n.left) - getHeight(n.right)
 }
 
@@ -160,7 +161,7 @@ func (t *AVLTree[K, V]) IsValidBST() bool {
 	return isValidBST(t.root)
 }
 
-func isValidBST[K Ordered, V Ordered](n *Node[K, V]) bool {
+func isValidBST[K types.Comparable, V types.Comparable](n *Node[K, V]) bool {
 	if n == nil {
 		return true
 	}
@@ -177,7 +178,7 @@ func (t *AVLTree[K, V]) IsBalanced() bool {
 	return isBalanced(t.root)
 }
 
-func isBalanced[K Ordered, V Ordered](n *Node[K, V]) bool {
+func isBalanced[K types.Comparable, V types.Comparable](n *Node[K, V]) bool {
 	if n == nil {
 		return true
 	}
