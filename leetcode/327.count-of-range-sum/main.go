@@ -70,12 +70,11 @@ func merge(sum []int, l int, m int, r int, temp []int) {
 		// } else if i > m {
 		// 	sum[k] = temp[j]
 		// 	j++
-		// } else if temp[i] <= temp[j] {
+		// } else if (temp[i] <= temp[j]) {
 		// 	sum[k] = temp[i]
 		// 	i++
 		// } else {
-		// 	sum[k] = temp[j]
-		// 	j++
+
 		// }
 	}
 
