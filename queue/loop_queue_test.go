@@ -8,28 +8,28 @@ import (
 )
 
 func TestLoopQueue_Enqueue(t *testing.T) {
-	queue := queue.NewLoopQueueWithCapacity(8)
+	q := queue.NewLoopQueueWithCapacity[int](8)
 
 	n := 16
 	for i := 0; i < n; i++ {
-		queue.Enqueue(i)
-		fmt.Println(queue)
+		q.Enqueue(i)
+		fmt.Println(q)
 	}
-	fmt.Printf("Head = %v, empty = %v\n", queue.Head(), queue.IsEmpty())
+	fmt.Printf("Head = %v, empty = %v\n", q.Head(), q.IsEmpty())
 
 	for i := 0; i < n; i++ {
-		queue.Dequeue()
-		fmt.Println(queue)
+		q.Dequeue()
+		fmt.Println(q)
 	}
 
 	for i := 0; i < n; i++ {
-		queue.Enqueue(i)
-		fmt.Println(queue)
+		q.Enqueue(i)
+		fmt.Println(q)
 	}
-	fmt.Printf("Head = %v, empty = %v\n", queue.Head(), queue.IsEmpty())
+	fmt.Printf("Head = %v, empty = %v\n", q.Head(), q.IsEmpty())
 
 	for i := 0; i < n; i++ {
-		queue.Dequeue()
-		fmt.Println(queue)
+		q.Dequeue()
+		fmt.Println(q)
 	}
 }

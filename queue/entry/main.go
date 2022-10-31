@@ -10,11 +10,11 @@ import (
 func main() {
 	c := 10000
 	benchmarkDequeue(queue.NewArrayQueueWithCapacity[int](c), c)
-	benchmarkDequeue(queue.NewLoopQueueWithCapacity(c), c)
+	benchmarkDequeue(queue.NewLoopQueueWithCapacity[int](c), c)
 
 	c = 100000
 	benchmarkDequeue(queue.NewArrayQueueWithCapacity[int](c), c)
-	benchmarkDequeue(queue.NewLoopQueueWithCapacity(c), c)
+	benchmarkDequeue(queue.NewLoopQueueWithCapacity[int](c), c)
 }
 
 func benchmarkDequeue(q queue.Interface[int], c int) {

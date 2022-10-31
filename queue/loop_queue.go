@@ -2,36 +2,35 @@ package queue
 
 import (
 	"fmt"
-	"strconv"
 	"strings"
 )
 
-type LoopQueue struct {
-	array []int
+type LoopQueue[E any] struct {
+	array []E
 	size  int
 	head  int
 	tail  int
 }
 
-func NewLoopQueue() *LoopQueue {
-	return NewLoopQueueWithCapacity(8)
+func NewLoopQueue[E any]() *LoopQueue[E] {
+	return NewLoopQueueWithCapacity[E](8)
 }
 
-func NewLoopQueueWithCapacity(c int) *LoopQueue {
-	return &LoopQueue{
-		array: make([]int, c, c),
+func NewLoopQueueWithCapacity[E any](c int) *LoopQueue[E] {
+	return &LoopQueue[E]{
+		array: make([]E, c, c),
 		size:  0,
 		head:  0,
 		tail:  0,
 	}
 }
 
-func (q *LoopQueue) capacity() int {
+func (q *LoopQueue[E]) capacity() int {
 	return len(q.array)
 }
 
-func (q *LoopQueue) resize(c int) {
-	newArr := make([]int, c, c)
+func (q *LoopQueue[E]) resize(c int) {
+	newArr := make([]E, c, c)
 
 	for i := 0; i < q.size; i++ {
 		newArr[i] = q.array[(i+q.head)%q.capacity()]
@@ -41,7 +40,7 @@ func (q *LoopQueue) resize(c int) {
 	q.head, q.tail = 0, q.size
 }
 
-func (q *LoopQueue) Enqueue(e int) {
+func (q *LoopQueue[E]) Enqueue(e E) {
 	if q.size == q.capacity() {
 		q.resize((q.capacity()) * 2)
 	}
@@ -50,7 +49,7 @@ func (q *LoopQueue) Enqueue(e int) {
 	q.size++
 }
 
-func (q *LoopQueue) Dequeue() int {
+func (q *LoopQueue[E]) Dequeue() E {
 	if q.IsEmpty() {
 		panic("Queue is empty.")
 	}
@@ -67,7 +66,7 @@ func (q *LoopQueue) Dequeue() int {
 	return res
 }
 
-func (q *LoopQueue) Head() int {
+func (q *LoopQueue[E]) Head() E {
 	if q.IsEmpty() {
 		panic("Queue is empty.")
 	}
@@ -75,15 +74,15 @@ func (q *LoopQueue) Head() int {
 	return q.array[q.head]
 }
 
-func (q *LoopQueue) Size() int {
+func (q *LoopQueue[E]) Size() int {
 	return q.size
 }
 
-func (q *LoopQueue) IsEmpty() bool {
+func (q *LoopQueue[E]) IsEmpty() bool {
 	return q.size == 0
 }
 
-func (q *LoopQueue) String() string {
+func (q *LoopQueue[E]) String() string {
 	builder := strings.Builder{}
 	//index := q.head
 	builder.WriteString("[")
@@ -97,7 +96,7 @@ func (q *LoopQueue) String() string {
 	//}
 	for i := 0; i < q.size; i++ {
 		v := q.array[(i+q.head)%q.capacity()]
-		builder.WriteString(strconv.Itoa(v))
+		builder.WriteString(fmt.Sprintf("%v", v))
 
 		if (i+1)%q.capacity() != q.tail {
 			builder.WriteString(",")
