@@ -20,10 +20,10 @@ func preSumSlice(nums []int) []int {
 func countRangeSum(nums []int, lower int, upper int) int {
 	sum := preSumSlice(nums)
 	temp := make([]int, len(sum))
-	return countRangeSumRecuresive(sum, 0, len(sum)-1, lower, upper, temp)
+	return countRangeSumRecursive(sum, 0, len(sum)-1, lower, upper, temp)
 }
 
-func countRangeSumRecuresive(sum []int, l int, r int, lower int, upper int, temp []int) int {
+func countRangeSumRecursive(sum []int, l int, r int, lower int, upper int, temp []int) int {
 	if l >= r {
 		return 0
 	}
@@ -31,8 +31,8 @@ func countRangeSumRecuresive(sum []int, l int, r int, lower int, upper int, temp
 	var ret int
 
 	mid := l + (r-l)/2
-	ret += countRangeSumRecuresive(sum, l, mid, lower, upper, temp)
-	ret += countRangeSumRecuresive(sum, mid+1, r, lower, upper, temp)
+	ret += countRangeSumRecursive(sum, l, mid, lower, upper, temp)
+	ret += countRangeSumRecursive(sum, mid+1, r, lower, upper, temp)
 
 	lt, gt := mid+1, mid+1
 
@@ -43,7 +43,7 @@ func countRangeSumRecuresive(sum []int, l int, r int, lower int, upper int, temp
 		for gt <= r && sum[gt]-sum[i] <= upper {
 			gt++
 		}
-		ret += (gt - lt)
+		ret += gt - lt
 	}
 
 	merge(sum, l, mid, r, temp)
