@@ -1,6 +1,7 @@
 package util
 
 import (
+	"io.vava.datastructure/types"
 	"math/rand"
 	"reflect"
 	"runtime"
@@ -49,8 +50,8 @@ func RandomIntSlices(sizes ...int) [][]int {
 	return data
 }
 
-func VerifyIsSorted(arr []int) {
-	var prev int
+func VerifyIsSorted[T types.Comparable](arr []T) {
+	var prev T
 	for i, v := range arr {
 		if i > 0 && v < prev {
 			panic("Not a sorted slice")
@@ -110,4 +111,18 @@ func internalCopyArray(src []int, srcPos int, dest []int, destPos, length int) {
 		dest[destPos+j] = src[i]
 		j++
 	}
+}
+
+func RandomStringSliceWithBound(length, bound int) []string {
+	rand.Seed(time.Now().UnixNano())
+	res := make([]string, length)
+	for i := 0; i < length; i++ {
+		sb := strings.Builder{}
+		for j := 0; j < bound; j++ {
+			// 33-126
+			sb.WriteRune(rune(rand.Intn(94) + 33))
+		}
+		res[i] = sb.String()
+	}
+	return res
 }
