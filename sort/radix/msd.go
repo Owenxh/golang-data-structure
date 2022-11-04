@@ -1,5 +1,6 @@
 package radix
 
+// MSDSort most significant digit
 func MSDSort(arr []string) {
 	// 额外开辟空间用于排序
 	temp := make([]string, len(arr))

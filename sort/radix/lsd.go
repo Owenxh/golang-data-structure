@@ -1,5 +1,6 @@
 package radix
 
+// LSDSort least significant digit
 func LSDSort(arr []string, W int) {
 	for i := 0; i < len(arr); i++ {
 		if len(arr[i]) != W {
