@@ -1,6 +1,9 @@
 package radix
 
 // MSDSort most significant digit
+// O(w * n)
+// w: 字符串长度，n: 排序数组大小；会有大量的递归提前结束的情况
+// Golang 没有尾递归优化，递归性能较差
 func MSDSort(arr []string) {
 	// 额外开辟空间用于排序
 	temp := make([]string, len(arr))
