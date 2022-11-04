@@ -17,8 +17,8 @@ func TestShellSort(t *testing.T) {
 		copiedData[i] = copiedItem
 	}
 
-	util.DoSortTests(ShellSort, t, data)
-	util.DoSortTests(QuickSort3Ways, t, copiedData)
+	util.TestSort(t, ShellSort, data...)
+	util.TestSort(t, QuickSort3Ways, copiedData...)
 	if !reflect.DeepEqual(data, copiedData) {
 		t.Fatal("invalid sort implementation")
 	}

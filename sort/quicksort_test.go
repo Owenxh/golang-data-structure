@@ -20,15 +20,15 @@ func quickSortData() [][]int {
 
 func TestQuickSort1Way(t *testing.T) {
 	data := quickSortData()
-	util.DoSortTests(QuickSort1Way, t, data)
+	util.TestSort(t, QuickSort1Way, data...)
 }
 
 func TestQuickSort2Ways(t *testing.T) {
 	data := quickSortData()
-	util.DoSortTests(QuickSort2Ways, t, data)
+	util.TestSort(t, QuickSort2Ways, data...)
 }
 
 func TestQuickSort3Ways(t *testing.T) {
 	data := quickSortData()
-	util.DoSortTests(QuickSort3Ways, t, data)
+	util.TestSort(t, QuickSort3Ways, data...)
 }

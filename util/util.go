@@ -60,53 +60,57 @@ func VerifyIsSorted[T types.Comparable](arr []T) {
 	}
 }
 
-func DoSortTest(sort func([]int), t *testing.T, data []int) {
-	DoSortTests(sort, t, [][]int{data})
-}
+type Sorter[E types.Comparable] func([]E)
 
-func DoSortTests(sort func([]int), t *testing.T, data [][]int) {
-	for _, arr := range data {
-		sortFnName := sortFnName(sort)
-
-		t.Logf("sort slice(length %9d) using %16v", len(arr), sortFnName)
-		start := time.Now()
-		sort(arr)
-		cost := time.Now().Sub(start)
-
-		t.Logf("sort slice(length %9d) using %16v cost %v", len(arr), sortFnName, cost)
-		VerifyIsSorted(arr)
-	}
-}
-
-func sortFnName(sort func([]int)) string {
-	res := runtime.FuncForPC(reflect.ValueOf(sort).Pointer()).Name()
+func (s Sorter[E]) Name() string {
+	res := runtime.FuncForPC(reflect.ValueOf(s).Pointer()).Name()
 	index := strings.LastIndex(res, ".") + 1
 	res = string([]rune(res)[index:])
 	return res
 }
 
-func Swap(arr []int, i, j int) {
+func TestSort[E types.Comparable](t *testing.T, sorter Sorter[E], data ...[]E) {
+	name := sorter.Name()
+	for _, arr := range data {
+		t.Logf("sort slice(length %9d) using %16v", len(arr), name)
+		start := time.Now()
+		sorter(arr)
+		cost := time.Now().Sub(start)
+
+		t.Logf("sort slice(length %9d) using %16v cost %v", len(arr), name, cost)
+		VerifyIsSorted(arr)
+	}
+}
+
+func TestSortWithName[E types.Comparable](t *testing.T, name string, sorter func([]E), data ...[]E) {
+	for _, arr := range data {
+		t.Logf("sort slice(length %9d) using %16v", len(arr), name)
+		start := time.Now()
+		sorter(arr)
+		cost := time.Now().Sub(start)
+		t.Logf("sort slice(length %9d) using %16v cost %v", len(arr), name, cost)
+		VerifyIsSorted(arr)
+	}
+}
+
+func Swap[E any](arr []E, i, j int) {
 	//t := arr[i]
 	//arr[i] = arr[j]
 	//arr[j] = t
 	arr[i], arr[j] = arr[j], arr[i]
 }
 
-func Copy(src []int) []int {
-	return CopyArrayFrom(src, 0, len(src)-1)
+func Copy[E any](src []E) []E {
+	dst := make([]E, len(src))
+	RangeCopy(src, 0, len(src)-1, dst)
+	return dst
 }
 
-func CopyArrayFrom(src []int, l, r int) []int {
-	ret := make([]int, r-l+1, r-l+1)
-	CopyArray(src, l, r, ret)
-	return ret
+func RangeCopy[E any](src []E, l, r int, dest []E) {
+	ArrayCopy(src, l, dest, l, r-l+1)
 }
 
-func CopyArray(src []int, l, r int, dest []int) {
-	internalCopyArray(src, l, dest, l, r-l+1)
-}
-
-func internalCopyArray(src []int, srcPos int, dest []int, destPos, length int) {
+func ArrayCopy[E any](src []E, srcPos int, dest []E, destPos, length int) {
 	for i, j := srcPos, 0; i < srcPos+length; i++ {
 		dest[destPos+j] = src[i]
 		j++

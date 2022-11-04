@@ -7,21 +7,23 @@ import (
 )
 
 func TestBucketSort(t *testing.T) {
-	arr := util.RandomIntSlice(100_000)
+	// arr1 := util.RandomIntSliceWithBound(100, 1000)
+	arr1 := util.RandomIntSlice(1_000_000)
+	arr2 := util.Copy(arr1)
+	arr3 := util.Copy(arr1)
+	arr4 := util.Copy(arr1)
 
-	arr2 := make([]int, len(arr))
-	copy(arr2, arr)
-
-	arr3 := make([]int, len(arr))
-	copy(arr3, arr)
-
-	util.DoSortTest(func(arr []int) {
+	util.TestSortWithName(t, "BucketSort", func(arr []int) {
 		BucketSort(arr, 100)
-	}, t, arr)
+	}, arr1)
 
-	util.DoSortTest(func(arr []int) {
-		BucketSort(arr, 100)
-	}, t, arr2)
+	util.TestSortWithName(t, "BucketSort", func(arr []int) {
+		BucketSort(arr, 11)
+	}, arr2)
 
-	util.DoSortTest(sort.QuickSort2Ways, t, arr3)
+	util.TestSortWithName(t, "BucketSort2", func(arr []int) {
+		BucketSort2(arr, 100)
+	}, arr3)
+
+	util.TestSort(t, sort.QuickSort2Ways, arr4)
 }

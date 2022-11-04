@@ -23,6 +23,6 @@ func TestMergeSortBU(t *testing.T) {
 		copiedData[i] = copiedItem
 	}
 
-	util.DoSortTests(MergeSortBU, t, data)
-	util.DoSortTests(MergeSort, t, copiedData)
+	util.TestSort(t, MergeSortBU, data...)
+	util.TestSort(t, MergeSort, copiedData...)
 }

@@ -7,5 +7,5 @@ import (
 )
 
 func TestBubbleSort(t *testing.T) {
-	util.DoSortTests(BubbleSort, t, [][]int{util.RandomIntSlice(10000)})
+	util.TestSort(t, BubbleSort, util.RandomIntSlice(10000))
 }

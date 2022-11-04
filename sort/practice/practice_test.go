@@ -136,7 +136,7 @@ func partition2Ways(arr []int, l, r int) int {
 
 func MergeSort(arr []int) {
 	temp := make([]int, len(arr), len(arr))
-	util.CopyArray(arr, 0, len(arr)-1, temp)
+	util.RangeCopy(arr, 0, len(arr)-1, temp)
 	mergeSort(arr, 0, len(arr)-1, temp)
 }
 
@@ -159,7 +159,7 @@ func mergeSort(arr []int, l, r int, temp []int) {
 // ③ i <= k <= r
 // ④ arr[k - 1] <= arr[k]
 func merge(arr []int, l, m, r int, temp []int) {
-	util.CopyArray(arr, l, r, temp)
+	util.RangeCopy(arr, l, r, temp)
 	i, j, k := l, m+1, l
 	for ; i <= m || j <= r; k++ {
 		if j > r || (i <= m && temp[i] <= temp[j]) {
@@ -282,13 +282,13 @@ func TestSorts(t *testing.T) {
 	rand.Seed(time.Now().UnixMilli())
 	data := util.RandomIntSliceWithBound(20, 100)
 
-	util.DoSortTest(BubbleSort, t, util.Copy(data))
-	util.DoSortTest(SelectSort, t, util.Copy(data))
-	util.DoSortTest(InsertSort, t, util.Copy(data))
+	util.TestSort(t, BubbleSort, util.Copy(data))
+	util.TestSort(t, SelectSort, util.Copy(data))
+	util.TestSort(t, InsertSort, util.Copy(data))
 
-	util.DoSortTest(MergeSort, t, util.Copy(data))
+	util.TestSort(t, MergeSort, util.Copy(data))
 
-	util.DoSortTest(QuickSort, t, util.Copy(data))
-	util.DoSortTest(QuickSort2Ways, t, util.Copy(data))
-	util.DoSortTest(QuickSort3Ways, t, util.Copy(data))
+	util.TestSort(t, QuickSort, util.Copy(data))
+	util.TestSort(t, QuickSort2Ways, util.Copy(data))
+	util.TestSort(t, QuickSort3Ways, util.Copy(data))
 }

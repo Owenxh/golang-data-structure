@@ -1,6 +1,9 @@
 package radix
 
-import "math"
+import (
+	"io.vava.datastructure/sort"
+	"math"
+)
 
 func BucketSort(arr []int, B int) {
 	if B <= 1 {
@@ -73,5 +76,51 @@ func bucketSort(arr []int, left int, right int, B int, temp []int) {
 	// 从第二个桶开始，对后面所有的桶内元素进行排序
 	for i := 0; i < B-1; i++ {
 		bucketSort(arr, left+index[i], left+index[i+1]-1, B, temp)
+	}
+}
+
+// BucketSort2 c 表示每个桶里多少个元素
+func BucketSort2(arr []int, c int) {
+	// 递归到底的情况
+	if c <= 0 {
+		panic("c must > 0")
+	}
+
+	min, max := math.MaxInt32, math.MinInt32
+	for i := 0; i < len(arr); i++ {
+		if arr[i] < min {
+			min = arr[i]
+		}
+		if arr[i] > max {
+			max = arr[i]
+		}
+	}
+
+	// arr 中的数据范围
+	rng := max - min + 1
+
+	// 根据数据范围决定桶的个数
+	B := rng / c
+	if rng%c > 0 {
+		B += 1
+	}
+
+	buckets := make([][]int, B)
+
+	for i := 0; i < len(arr); i++ {
+		p := (arr[i] - min) / c
+		buckets[p] = append(buckets[p], arr[i])
+	}
+
+	for i := 0; i < B; i++ {
+		sort.BubbleSort(buckets[i])
+	}
+
+	var index int
+	for i := 0; i < B; i++ {
+		for j := 0; j < len(buckets[i]); j++ {
+			arr[index] = buckets[i][j]
+			index++
+		}
 	}
 }

@@ -23,10 +23,10 @@ func TestMergeSort(t *testing.T) {
 		copiedData[i] = copiedItem
 	}
 
-	util.DoSortTests(MergeSort, t, data)
-	util.DoSortTests(MergeSort2, t, copiedData)
+	util.TestSort(t, MergeSort, data...)
+	util.TestSort(t, MergeSort2, copiedData...)
 
 	data = make([][]int, 1)
 	data[0] = util.OrderedIntSlice(5000000, 5000000)
-	util.DoSortTests(MergeSort2, t, data)
+	util.TestSort(t, MergeSort2, data...)
 }

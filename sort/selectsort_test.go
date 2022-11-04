@@ -20,5 +20,5 @@ func selectSortData() [][]int {
 
 func TestSelectSort(t *testing.T) {
 	data := selectSortData()
-	util.DoSortTests(SelectSort, t, data)
+	util.TestSort(t, SelectSort, data...)
 }
