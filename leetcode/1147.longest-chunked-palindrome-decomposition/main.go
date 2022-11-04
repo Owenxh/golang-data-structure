@@ -22,6 +22,7 @@ func solve(s []rune, left, right int) int {
 }
 
 func matches(a []rune, b []rune) bool {
+	// return reflect.DeepEqual(a, b)
 	for i := 0; i < len(a); i++ {
 		if a[i] != b[i] {
 			return false
