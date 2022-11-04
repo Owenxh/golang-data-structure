@@ -26,7 +26,7 @@ func internalMSDSort(arr []string, left int, right int, r int, temp []string) {
 		var j int
 		// j >= len(arr[i]) 时表示字符串长度不够，视为空，算到 cnt 中第一个元素
 		if r < len(arr[i]) {
-			j = int([]rune(arr[i])[r]) + 1
+			j = int(arr[i][r]) + 1
 		}
 		cnt[j]++
 	}
@@ -41,7 +41,7 @@ func internalMSDSort(arr []string, left int, right int, r int, temp []string) {
 		var j int
 		// j >= len(arr[i]) 时表示字符串长度不够，视为空，算到 cnt 中第一个元素
 		if r < len(arr[i]) {
-			j = int([]rune(arr[i])[r]) + 1
+			j = int(arr[i][r]) + 1
 		}
 
 		temp[left+index[j]] = arr[i]
