@@ -21,7 +21,7 @@ func TestMatch(t *testing.T) {
 	targes := []string{
 		"o", "w", "e", "n", "文", "❤", "欧文雪", "Owen",
 	}
-	fns := []func(string, string) int{BruteForce, RabinKarp, KMP}
+	fns := []func(string, string) int{BruteForce, RabinKarp, KMP, strings.Index}
 
 	for _, target := range targes {
 		for _, fn := range fns {
