@@ -21,7 +21,7 @@ func TestMatch(t *testing.T) {
 	targes := []string{
 		"o", "w", "e", "n", "文", "❤", "欧文雪", "Owen",
 	}
-	fns := []func(string, string) int{BruteForce, RabinKarp, KMP, strings.Index}
+	fns := []func(string, string) int{BruteForce, RabinKarp, KMP, KMP2, KMP3, strings.Index}
 
 	for _, target := range targes {
 		for _, fn := range fns {
@@ -47,7 +47,12 @@ func TestMatchPerformance1(t *testing.T) {
 	testMatchPerformance(&src, &target, BruteForce)
 	testMatchPerformance(&src, &target, RabinKarp)
 	testMatchPerformance(&src, &target, KMP)
+	testMatchPerformance(&src, &target, KMP3)
+
+	// 处理中文返回的不是字符在字符串中的下标
 	testMatchPerformance(&src, &target, KMP2)
+
+	// 处理中文返回的不是字符在字符串中的下标
 	testMatchPerformance(&src, &target, strings.Index)
 }
 
@@ -71,5 +76,6 @@ func TestMatchPerformance2(t *testing.T) {
 	testMatchPerformance(&src, &target, RabinKarp)
 	testMatchPerformance(&src, &target, KMP)
 	testMatchPerformance(&src, &target, KMP2)
+	testMatchPerformance(&src, &target, KMP3)
 	testMatchPerformance(&src, &target, strings.Index)
 }

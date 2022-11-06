@@ -121,3 +121,35 @@ func getLPS2(s string) []int {
 
 	return lps
 }
+
+func KMP3(src string, target string) int {
+	if src == "" || target == "" {
+		panic("src & t can't be empty")
+	}
+
+	if len(src) < len(target) {
+		return -1
+	}
+
+	s, t := []rune(src), []rune(target)
+
+	lps := getLPS(t)
+
+	var i, j int
+
+	for i < len(s) {
+		if s[i] == t[j] {
+			i++
+			j++
+			if j == len(t) {
+				return i - len(t)
+			}
+		} else if j > 0 {
+			j = lps[j-1]
+		} else {
+			i++
+		}
+	}
+
+	return -1
+}
