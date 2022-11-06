@@ -63,6 +63,7 @@ func getLPS(s []rune) []int {
 }
 
 // KMP2 处理中文时返回的下标非目标字符串在字符串中的下标位置
+// 性能接近 golang 标准库
 func KMP2(s string, t string) int {
 	if s == "" || t == "" {
 		panic("src & t can't be empty")
