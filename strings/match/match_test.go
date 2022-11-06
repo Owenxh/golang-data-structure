@@ -19,9 +19,9 @@ import (
 func TestMatch(t *testing.T) {
 	src := "owen欧文雪儿❤"
 	targes := []string{
-		"o", "w", "e", "n", "文", "❤", "欧文雪", "Owen",
+		"o", "w", "e", "n", "欧文雪", "Owen",
 	}
-	fns := []func(string, string) int{BruteForce, RabinKarp, KMP, KMP2, KMP3, strings.Index}
+	fns := []func(string, string) int{BruteForce, RabinKarp, KMP, KMP2, KMPUtf8Bad, strings.Index}
 
 	for _, target := range targes {
 		for _, fn := range fns {
@@ -33,6 +33,38 @@ func TestMatch(t *testing.T) {
 			}
 		}
 	}
+
+	// 19 ??
+	fmt.Println(len(src))
+}
+
+func TestMatch2(t *testing.T) {
+	var sb strings.Builder
+	sb.WriteString("欧文owen欧文雪儿❤")
+	sb.WriteString("[欧文欧文雪儿]")
+	sb.WriteString("欧文雪儿❤雪儿欧文欧州雪儿❤")
+	sb.WriteString("雪儿❤")
+
+	src := sb.String()
+
+	targes := []string{
+		"欧文雪儿❤雪儿欧文欧州雪儿❤", "❤",
+	}
+	fns := []func(string, string) int{BruteForce, RabinKarp, KMP, KMP2, KMPUtf8Bad, strings.Index}
+
+	for _, target := range targes {
+		for _, fn := range fns {
+			index := fn(src, target)
+			if index >= 0 {
+				fmt.Printf("found [%v] at index [%v] use [%10v]\n", target, index, util.ResolveFuncName(fn))
+			} else {
+				fmt.Printf("can't find [%v]\n", target)
+			}
+		}
+	}
+
+	// 19 ??
+	fmt.Println(len(src))
 }
 
 func testMatchPerformance(src, target *string, fn func(string, string) int) {
@@ -47,12 +79,10 @@ func TestMatchPerformance1(t *testing.T) {
 	testMatchPerformance(&src, &target, BruteForce)
 	testMatchPerformance(&src, &target, RabinKarp)
 	testMatchPerformance(&src, &target, KMP)
-	testMatchPerformance(&src, &target, KMP3)
-
-	// 处理中文返回的不是字符在字符串中的下标
 	testMatchPerformance(&src, &target, KMP2)
 
 	// 处理中文返回的不是字符在字符串中的下标
+	testMatchPerformance(&src, &target, KMPUtf8Bad)
 	testMatchPerformance(&src, &target, strings.Index)
 }
 
@@ -76,6 +106,7 @@ func TestMatchPerformance2(t *testing.T) {
 	testMatchPerformance(&src, &target, RabinKarp)
 	testMatchPerformance(&src, &target, KMP)
 	testMatchPerformance(&src, &target, KMP2)
-	testMatchPerformance(&src, &target, KMP3)
+
+	testMatchPerformance(&src, &target, KMPUtf8Bad)
 	testMatchPerformance(&src, &target, strings.Index)
 }
