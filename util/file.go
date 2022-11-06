@@ -8,6 +8,7 @@ import (
 	"strings"
 )
 
+const RootDir = "/golang-data-structure"
 const PrideAndPrejudice = "/data/pride-and-prejudice.txt"
 
 func ReadFile(fileName string) (words []string) {
@@ -40,9 +41,9 @@ func GetPrideAndPrejudiceWords() []string {
 	if err != nil {
 		panic(err)
 	}
+	path = strings.ReplaceAll(path, "\\", "/")
 
-	filePath := path + PrideAndPrejudice
-	filePath = strings.ReplaceAll(filePath, "\\", "/")
+	filePath := path[:strings.Index(path, RootDir)+len(RootDir)+1] + PrideAndPrejudice
 
 	words := ReadFile(filePath)
 	for i, word := range words {

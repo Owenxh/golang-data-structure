@@ -1,13 +1,14 @@
 package util
 
 import (
-	"io.vava.datastructure/types"
 	"math/rand"
 	"reflect"
 	"runtime"
 	"strings"
 	"testing"
 	"time"
+
+	"io.vava.datastructure/types"
 )
 
 func RandomIntSlice(length int) []int {
@@ -60,13 +61,17 @@ func VerifyIsSorted[T types.Comparable](arr []T) {
 	}
 }
 
-type Sorter[E types.Comparable] func([]E)
-
-func (s Sorter[E]) Name() string {
-	res := runtime.FuncForPC(reflect.ValueOf(s).Pointer()).Name()
+func ResolveFuncName(fn interface{}) string {
+	res := runtime.FuncForPC(reflect.ValueOf(fn).Pointer()).Name()
 	index := strings.LastIndex(res, ".") + 1
 	res = string([]rune(res)[index:])
 	return res
+}
+
+type Sorter[E types.Comparable] func([]E)
+
+func (s Sorter[E]) Name() string {
+	return ResolveFuncName(s)
 }
 
 func TestSort[E types.Comparable](t *testing.T, sorter Sorter[E], data ...[]E) {
