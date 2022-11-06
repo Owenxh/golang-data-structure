@@ -2,30 +2,15 @@ package main
 
 import (
 	"fmt"
-	"os"
 	"sort"
-	"strings"
 	"time"
 
 	"io.vava.datastructure/tree"
-
-	"io.vava.datastructure/tree/util"
+	"io.vava.datastructure/util"
 )
 
 func main() {
-	path, err := os.Getwd()
-	if err != nil {
-		panic(err)
-	}
-
-	filePath := path + "/../data/pride-and-prejudice.txt"
-	filePath = strings.ReplaceAll(filePath, "\\", "/")
-
-	words := util.ReadFile(filePath)
-	for i, word := range words {
-		words[i] = strings.ToLower(word)
-	}
-	fmt.Printf("[Pride-And-Prejudice] words count: %d\n", len(words))
+	words := util.GetPrideAndPrejudiceWords()
 
 	sort.Slice(words, func(i, j int) bool {
 		return words[i] < words[j]

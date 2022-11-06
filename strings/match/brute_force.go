@@ -1,23 +1,23 @@
 package match
 
-func BruteForce(src string, t string) int {
-	if src == "" || t == "" {
-		panic("src & t can't be empty")
+func BruteForce(src string, target string) int {
+	if src == "" || target == "" {
+		panic("src & target can't be empty")
 	}
-	if len(t) > len(src) {
+	if len(target) > len(src) {
 		return -1
 	}
 
-	source, target := []rune(src), []rune(t)
-	for i := 0; i+len(target) <= len(source); i++ {
+	s, t := []rune(src), []rune(target)
+	for i := 0; i+len(t) <= len(s); i++ {
 		j := 0
-		for j < len(target) {
-			if target[j] != source[j+i] {
+		for j < len(t) {
+			if t[j] != s[j+i] {
 				break
 			}
 			j++
 		}
-		if j == len(target) {
+		if j == len(t) {
 			return i
 		}
 	}

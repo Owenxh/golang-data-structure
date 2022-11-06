@@ -2,11 +2,12 @@ package tree
 
 import (
 	"fmt"
-	"io.vava.datastructure/tree/util"
 	"os"
 	"strings"
 	"testing"
 	"time"
+
+	"io.vava.datastructure/util"
 )
 
 func wordsData() []string {
