@@ -2,24 +2,12 @@ package fake
 
 import (
 	"fmt"
-	"io.vava.datastructure/util"
 	"math/rand"
 	"testing"
 	"time"
-)
 
-func generateSortableData() [][]int {
-	return [][]int{
-		util.RandomIntSliceWithBound(100000, 100000),
-		util.RandomIntSliceWithBound(1000000, 1000000),
-		util.RandomIntSliceWithBound(2000000, 2000000),
-		util.RandomIntSliceWithBound(5000000, 5000000),
-		util.RandomIntSliceWithBound(10000000, 10000000),
-		util.RandomIntSlice(10000000),
-		util.OrderedIntSlice(10000000, 10000000),
-		util.RandomIntSliceWithBound(10000000, 1),
-	}
-}
+	"io.vava.datastructure/util"
+)
 
 func QuickSort3Ways(arr []int) {
 	quickSort3Ways(arr, 0, len(arr)-1)
@@ -135,7 +123,7 @@ func partition2Ways(arr []int, l, r int) int {
 }
 
 func MergeSort(arr []int) {
-	temp := make([]int, len(arr), len(arr))
+	temp := make([]int, len(arr))
 	util.RangeCopy(arr, 0, len(arr)-1, temp)
 	mergeSort(arr, 0, len(arr)-1, temp)
 }
@@ -267,7 +255,7 @@ func internalPrintAll(msg string, arr []int) {
 }
 
 func internalPrint(msg string, arr []int, l, r int) {
-	temp := make([]interface{}, len(arr), len(arr))
+	temp := make([]interface{}, len(arr))
 	for i := 0; i < len(arr); i++ {
 		if i < l || i > r {
 			temp[i] = "❤️"
