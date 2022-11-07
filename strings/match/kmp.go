@@ -44,7 +44,7 @@ func GetLPS(src string) []int {
 	return lps
 }
 
-// Knuth-Morris-Pratt
+// KMP Knuth-Morris-Pratt
 // KMP match
 func KMP(s string, t string) int {
 	if s == "" || t == "" {

@@ -18,12 +18,12 @@ import (
 
 func TestMatch(t *testing.T) {
 	src := "owen欧文雪儿❤"
-	targes := []string{
+	targets := []string{
 		"o", "w", "e", "n", "欧文雪", "Owen",
 	}
 	fns := []func(string, string) int{BruteForce, RabinKarp, KMP, KMP2, KMPUtf8Bad, strings.Index}
 
-	for _, target := range targes {
+	for _, target := range targets {
 		for _, fn := range fns {
 			index := fn(src, target)
 			if index >= 0 {
@@ -35,7 +35,7 @@ func TestMatch(t *testing.T) {
 	}
 
 	// 19 ??
-	fmt.Println(len(src))
+	fmt.Printf("length of %v is %v\n", src, len(src))
 }
 
 func TestMatch2(t *testing.T) {
@@ -47,12 +47,12 @@ func TestMatch2(t *testing.T) {
 
 	src := sb.String()
 
-	targes := []string{
+	targets := []string{
 		"欧文雪儿❤雪儿欧文欧州雪儿❤", "❤",
 	}
 	fns := []func(string, string) int{BruteForce, RabinKarp, KMP, KMP2, KMPUtf8Bad, strings.Index}
 
-	for _, target := range targes {
+	for _, target := range targets {
 		for _, fn := range fns {
 			index := fn(src, target)
 			if index >= 0 {
@@ -62,9 +62,6 @@ func TestMatch2(t *testing.T) {
 			}
 		}
 	}
-
-	// 19 ??
-	fmt.Println(len(src))
 }
 
 func testMatchPerformance(src, target *string, fn func(string, string) int) {
@@ -109,4 +106,5 @@ func TestMatchPerformance2(t *testing.T) {
 
 	testMatchPerformance(&src, &target, KMPUtf8Bad)
 	testMatchPerformance(&src, &target, strings.Index)
+
 }
