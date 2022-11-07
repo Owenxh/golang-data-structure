@@ -23,13 +23,13 @@ func NewWithCapacity[E any](capacity int) *Array[E] {
 		panic("MyArray capacity must > 0")
 	}
 	return &Array[E]{
-		elements: make([]E, capacity, capacity),
+		elements: make([]E, capacity),
 		size:     0,
 	}
 }
 
 func (array *Array[E]) resize(capacity int) {
-	arr := make([]E, capacity, capacity)
+	arr := make([]E, capacity)
 	for i := 0; i < array.size; i++ {
 		arr[i] = array.elements[i]
 	}
@@ -129,7 +129,7 @@ func (array *Array[E]) Get(index int) E {
 }
 
 func (array *Array[E]) GetAll() []E {
-	res := make([]E, array.size, array.size)
+	res := make([]E, array.size)
 	for i := 0; i < array.size; i++ {
 		res[i] = array.elements[i]
 	}
