@@ -51,8 +51,7 @@ func (g *AdjSet) String() string {
 	sb.WriteString(fmt.Sprintf("V = %v, E = %v\n", g.v, g.e))
 	for vertex := 0; vertex < g.v; vertex++ {
 		sb.WriteString(fmt.Sprintf("%v: ", vertex))
-		vertices := g.adj[vertex].Keys()
-		for _, w := range vertices {
+		for _, w := range g.adj[vertex].Keys() {
 			sb.WriteString(fmt.Sprintf("%v ", w))
 		}
 		sb.WriteString("\n")
