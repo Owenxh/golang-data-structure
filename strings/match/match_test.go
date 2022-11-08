@@ -67,7 +67,7 @@ func TestMatch2(t *testing.T) {
 func testMatchPerformance(src, target *string, fn func(string, string) int) {
 	start := time.Now()
 	index := fn(*src, *target)
-	fmt.Printf("found target string at index [%v] use [%10v] cost [%v]\n", index, util.ResolveFuncName(fn), time.Now().Sub(start))
+	fmt.Printf("found target string at index [%v] use [%10v] cost [%v]\n", index, util.ResolveFuncName(fn), time.Since(start))
 }
 
 func TestMatchPerformance1(t *testing.T) {

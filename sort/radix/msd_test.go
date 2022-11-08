@@ -2,13 +2,14 @@ package radix
 
 import (
 	"fmt"
-	"io.vava.datastructure/util"
 	"log"
 	"math/rand"
 	"reflect"
 	"runtime"
 	"testing"
 	"time"
+
+	"io.vava.datastructure/util"
 )
 
 func TestMSDSort(t *testing.T) {
@@ -25,7 +26,7 @@ func DoSortTests(sort func([]string), arr []string) {
 	log.Printf("sort slice(length %9d) using %16v\n", len(arr), sortFnName)
 	start := time.Now()
 	sort(arr)
-	cost := time.Now().Sub(start)
+	cost := time.Since(start)
 
 	log.Printf("sort slice(length %9d) using %16v cost %v\n", len(arr), sortFnName, cost)
 	util.VerifyIsSorted(arr)
