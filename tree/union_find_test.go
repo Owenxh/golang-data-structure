@@ -47,5 +47,5 @@ func testUF(t *testing.T, uf UF, m int) {
 		uf.IsConnected(a, b)
 	}
 
-	fmt.Printf("[%v] cost time:%v\n", reflect.TypeOf(uf), time.Now().Sub(start))
+	fmt.Printf("[%v] cost time:%v\n", reflect.TypeOf(uf), time.Since(start))
 }

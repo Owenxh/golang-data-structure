@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"fmt"
 	"os"
-	"regexp"
 	"strings"
 )
 
@@ -12,11 +11,6 @@ const RootDir = "/golang-data-structure"
 const PrideAndPrejudice = "/data/pride-and-prejudice.txt"
 
 func ReadFile(fileName string) (words []string) {
-	wordReg, err := regexp.Compile(`[a-zA-Z]+`)
-	if err != nil {
-		panic(err)
-	}
-
 	file, err := os.Open(fileName)
 	if err != nil {
 		panic(err)
@@ -29,9 +23,9 @@ func ReadFile(fileName string) (words []string) {
 	}()
 
 	scanner := bufio.NewScanner(file)
-	scanner.Split(bufio.ScanLines)
+	scanner.Split(bufio.ScanWords)
 	for scanner.Scan() {
-		words = append(words, wordReg.FindAllString(scanner.Text(), -1)...)
+		words = append(words, scanner.Text())
 	}
 	return
 }
@@ -64,4 +58,14 @@ func GetPrideAndPrejudiceAsString() string {
 	sb.WriteString(words[len(words)-1])
 
 	return sb.String()
+}
+
+func GetFileAbsolutePath(subPath string) string {
+	path, err := os.Getwd()
+	if err != nil {
+		panic(err)
+	}
+	path = strings.ReplaceAll(path, "\\", "/")
+
+	return path[:strings.Index(path, RootDir)+len(RootDir)+1] + subPath
 }

@@ -1,12 +1,13 @@
 package tree
 
 import (
-	"io.vava.datastructure/types"
 	"math"
+
+	"io.vava.datastructure/types"
 )
 
 // AVLTree implementation
-type AVLTree[K types.Comparable, V types.Comparable] struct {
+type AVLTree[K types.Comparable, V any] struct {
 	// The root of the tree
 	root *Node[K, V]
 	// The tree size
@@ -14,7 +15,7 @@ type AVLTree[K types.Comparable, V types.Comparable] struct {
 }
 
 // Node the node element of the AVL
-type Node[K types.Comparable, V types.Comparable] struct {
+type Node[K types.Comparable, V any] struct {
 	// The value
 	key K
 	// The value
@@ -146,14 +147,14 @@ func (t *AVLTree[K, V]) leftRightRotate(y *Node[K, V]) *Node[K, V] {
 	return t.rightRotate(y)
 }
 
-func getHeight[K types.Comparable, V types.Comparable](n *Node[K, V]) int {
+func getHeight[K types.Comparable, V any](n *Node[K, V]) int {
 	if n == nil {
 		return 0
 	}
 	return n.height
 }
 
-func getBalanceFactor[K types.Comparable, V types.Comparable](n *Node[K, V]) int {
+func getBalanceFactor[K types.Comparable, V any](n *Node[K, V]) int {
 	return getHeight(n.left) - getHeight(n.right)
 }
 
@@ -161,7 +162,7 @@ func (t *AVLTree[K, V]) IsValidBST() bool {
 	return isValidBST(t.root)
 }
 
-func isValidBST[K types.Comparable, V types.Comparable](n *Node[K, V]) bool {
+func isValidBST[K types.Comparable, V any](n *Node[K, V]) bool {
 	if n == nil {
 		return true
 	}
@@ -178,7 +179,7 @@ func (t *AVLTree[K, V]) IsBalanced() bool {
 	return isBalanced(t.root)
 }
 
-func isBalanced[K types.Comparable, V types.Comparable](n *Node[K, V]) bool {
+func isBalanced[K types.Comparable, V any](n *Node[K, V]) bool {
 	if n == nil {
 		return true
 	}
@@ -404,4 +405,18 @@ func (t *AVLTree[K, V]) removeMax(node *Node[K, V]) *Node[K, V] {
 	}
 	node.right = t.removeMax(node.right)
 	return node
+}
+
+func (t *AVLTree[K, V]) PreOrderFunc(fn func(k K, v V)) {
+	if t.root != nil {
+		t.preOrderFunc(t.root, fn)
+	}
+}
+
+func (t *AVLTree[K, V]) preOrderFunc(node *Node[K, V], fn func(k K, v V)) {
+	if node != nil {
+		fn(node.key, node.val)
+		t.preOrderFunc(node.left, fn)
+		t.preOrderFunc(node.right, fn)
+	}
 }

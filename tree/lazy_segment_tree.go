@@ -38,8 +38,8 @@ func NewLazySegmentTree(data []int) *LazySegmentTree {
 	sz := 2*int(math.Pow(2, h)) - 1
 
 	st := LazySegmentTree{
-		tree: make([]int, sz, sz),
-		lazy: make([]int, sz, sz),
+		tree: make([]int, sz),
+		lazy: make([]int, sz),
 		size: len(data),
 		merger: func(a int, b int) int {
 			return a + b

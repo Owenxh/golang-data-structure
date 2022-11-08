@@ -35,7 +35,7 @@ func TestTreePerformance(t *testing.T) {
 	bst := &BST[string, int]{}
 	start := time.Now()
 	testBST(bst, words)
-	fmt.Printf("[BST] cost time:%v\n", time.Now().Sub(start))
+	fmt.Printf("[BST] cost time:%v\n", time.Since(start))
 	fmt.Printf("Total different words:%v\n", bst.Size())
 	fmt.Printf("Frequency of PRIDE: %v\n", bst.Get("pride"))
 	fmt.Printf("Frequency of PREJUDICE: %v\n", bst.Get("prejudice"))
@@ -43,7 +43,7 @@ func TestTreePerformance(t *testing.T) {
 	avl := &AVLTree[string, int]{}
 	start = time.Now()
 	testAVLTree(avl, words)
-	fmt.Printf("[AVL] cost time:%v\n", time.Now().Sub(start))
+	fmt.Printf("[AVL] cost time:%v\n", time.Since(start))
 	fmt.Printf("Total different words:%v\n", avl.Size())
 	fmt.Printf("Frequency of PRIDE: %v\n", avl.Get("pride"))
 	fmt.Printf("Frequency of PREJUDICE: %v\n", avl.Get("prejudice"))
@@ -68,7 +68,7 @@ func TestTreePerformance(t *testing.T) {
 	m := make(map[string]int)
 	start = time.Now()
 	testMap(m, words)
-	fmt.Printf("[MAP] cost time:%v\n", time.Now().Sub(start))
+	fmt.Printf("[MAP] cost time:%v\n", time.Since(start))
 	fmt.Printf("Total different words:%v\n", len(m))
 	fmt.Printf("Frequency of PRIDE: %v\n", m["pride"])
 	fmt.Printf("Frequency of PREJUDICE: %v\n", m["prejudice"])
@@ -116,7 +116,7 @@ func TestTrie(t *testing.T) {
 	for _, word := range words {
 		bst.Contains(word)
 	}
-	fmt.Printf("[BST] cost time:%v\n", time.Now().Sub(start))
+	fmt.Printf("[BST] cost time:%v\n", time.Since(start))
 	fmt.Printf("Total different words:%v\n", bst.Size())
 
 	trie := NewTrie()
@@ -128,6 +128,6 @@ func TestTrie(t *testing.T) {
 	for _, word := range words {
 		trie.Contains(word)
 	}
-	fmt.Printf("[Trie] cost time:%v\n", time.Now().Sub(start))
+	fmt.Printf("[Trie] cost time:%v\n", time.Since(start))
 	fmt.Printf("Total different words:%v\n", trie.Size())
 }

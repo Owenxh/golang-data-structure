@@ -10,7 +10,7 @@ func TestMaxHeap_ExtractMax(t *testing.T) {
 	for i := 0; i < n; i++ {
 		h.Add(rand.Intn(10000))
 	}
-	res := make([]int, n, n)
+	res := make([]int, n)
 	for i := 0; i < n; i++ {
 		if v, err := h.ExtractMax(); err == nil {
 			res[i] = v
@@ -33,7 +33,7 @@ func TestMinHeap_ExtractMin(t *testing.T) {
 	for i := 0; i < n; i++ {
 		h.Add(rand.Intn(10000))
 	}
-	res := make([]int, n, n)
+	res := make([]int, n)
 	for i := 0; i < n; i++ {
 		if v, err := h.ExtractMin(); err == nil {
 			res[i] = v

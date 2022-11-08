@@ -1,22 +1,22 @@
-package main
+package tree
 
 import (
 	"fmt"
 	"sort"
+	"testing"
 	"time"
 
-	"io.vava.datastructure/tree"
 	"io.vava.datastructure/util"
 )
 
-func main() {
+func TestTreesPerformance(t *testing.T) {
 	words := util.GetPrideAndPrejudiceWords()
 
 	sort.Slice(words, func(i, j int) bool {
 		return words[i] < words[j]
 	})
 
-	bst := &tree.BST[string, int]{}
+	bst := &BST[string, int]{}
 	for _, word := range words {
 		bst.Add(word, 1)
 	}
@@ -25,9 +25,9 @@ func main() {
 	for _, word := range words {
 		bst.Contains(word)
 	}
-	fmt.Printf("[BST] cost time:%v\n", time.Now().Sub(start))
+	fmt.Printf("[BST] cost time:%v\n", time.Since(start))
 
-	avl := &tree.AVLTree[string, int]{}
+	avl := &AVLTree[string, int]{}
 	for _, word := range words {
 		avl.Add(word, 1)
 	}
@@ -38,7 +38,7 @@ func main() {
 	for _, word := range words {
 		avl.Contains(word)
 	}
-	fmt.Printf("[AVL] cost time:%v\n", time.Now().Sub(start))
+	fmt.Printf("[AVL] cost time:%v\n", time.Since(start))
 
 	m := make(map[string]int)
 	for _, word := range words {
@@ -47,7 +47,7 @@ func main() {
 
 	start = time.Now()
 	for _, word := range words {
-		_, _ = m[word]
+		_ = m[word]
 	}
-	fmt.Printf("[MAP] cost time:%v\n", time.Now().Sub(start))
+	fmt.Printf("[MAP] cost time:%v\n", time.Since(start))
 }

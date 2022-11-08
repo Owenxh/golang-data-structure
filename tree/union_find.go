@@ -18,7 +18,7 @@ type UnionFind1 struct {
 }
 
 func NewUnionFind1(size int) *UnionFind1 {
-	id := make([]int, size, size)
+	id := make([]int, size)
 
 	// 初始化, 每一个 id[i] 指向自己, 没有合并的元素
 	for i := 0; i < size; i++ {
@@ -64,7 +64,7 @@ type UnionFind2 struct {
 }
 
 func NewUnionFind2(size int) *UnionFind2 {
-	parent := make([]int, size, size)
+	parent := make([]int, size)
 
 	// 初始化时让每个节点的根结点指向自己
 	for i := 0; i < size; i++ {
@@ -111,8 +111,8 @@ type UnionFind3 struct {
 }
 
 func NewUnionFind3(size int) *UnionFind3 {
-	parent := make([]int, size, size)
-	sz := make([]int, size, size)
+	parent := make([]int, size)
+	sz := make([]int, size)
 
 	// 初始化时让每个节点的根结点指向自己
 	for i := 0; i < size; i++ {
@@ -170,8 +170,8 @@ type UnionFind4 struct {
 }
 
 func NewUnionFind4(size int) *UnionFind4 {
-	parent := make([]int, size, size)
-	rank := make([]int, size, size)
+	parent := make([]int, size)
+	rank := make([]int, size)
 
 	for i := 0; i < size; i++ {
 		parent[i] = i
@@ -229,8 +229,8 @@ type UnionFind5 struct {
 }
 
 func NewUnionFind5(size int) *UnionFind5 {
-	parent := make([]int, size, size)
-	rank := make([]int, size, size)
+	parent := make([]int, size)
+	rank := make([]int, size)
 
 	for i := 0; i < size; i++ {
 		parent[i] = i
@@ -293,8 +293,8 @@ type UnionFind6 struct {
 }
 
 func NewUnionFind6(size int) *UnionFind6 {
-	parent := make([]int, size, size)
-	rank := make([]int, size, size)
+	parent := make([]int, size)
+	rank := make([]int, size)
 
 	for i := 0; i < size; i++ {
 		parent[i] = i

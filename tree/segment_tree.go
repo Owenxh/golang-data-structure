@@ -2,6 +2,7 @@ package tree
 
 import (
 	"fmt"
+
 	"io.vava.datastructure/types"
 )
 
@@ -38,8 +39,8 @@ func (st *SegmentTree[E]) String() string {
 
 func NewSegmentTree[E types.Comparable](data []E, merger func(E, E) E) *SegmentTree[E] {
 	st := SegmentTree[E]{
-		data:   make([]E, len(data), len(data)),
-		tree:   make([]E, 4*len(data), 4*len(data)),
+		data:   make([]E, len(data)),
+		tree:   make([]E, 4*len(data)),
 		merger: merger,
 	}
 	copy(st.data, data)
