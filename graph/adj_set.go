@@ -52,18 +52,16 @@ func (g *AdjSet) String() string {
 	for vertex := 0; vertex < g.v; vertex++ {
 		sb.WriteString(fmt.Sprintf("%v: ", vertex))
 		vertices := g.adj[vertex].Keys()
-		if vertices != nil {
-			for _, w := range vertices {
-				sb.WriteString(fmt.Sprintf("%v ", w))
-			}
+		for _, w := range vertices {
+			sb.WriteString(fmt.Sprintf("%v ", w))
 		}
 		sb.WriteString("\n")
 	}
 	return sb.String()
 }
 
-func validateVertex(v int, V int) {
-	if v < 0 || v > V {
+func validateVertex(v int, max int) {
+	if v < 0 || v > max {
 		panic(fmt.Sprintf("vertex %v is invalid", v))
 	}
 }
@@ -79,7 +77,7 @@ func NewGraph(file string) Graph {
 		}
 	}()
 
-	reg := regexp.MustCompile("\\d")
+	reg := regexp.MustCompile(`\d`)
 	scanner := bufio.NewScanner(f)
 	scanner.Split(bufio.ScanLines)
 
