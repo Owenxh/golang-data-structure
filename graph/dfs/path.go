@@ -48,13 +48,14 @@ func (p *SingleSourcePath) Path(w int) []int {
 		return ret
 	}
 
-	//for x := w; p.pre[x] >= 0 && x != p.s; x = p.pre[x] {
+	// for x := w; p.pre[x] >= 0 && x != p.s; x = p.pre[x] {
 	//	ret = append(ret, x)
 	//}
 
 	for x := w; x != p.s; x = p.pre[x] {
 		ret = append(ret, x)
 	}
+	ret = append(ret, p.s)
 
 	// reverse slice
 	for i := 0; i < len(ret)/2; i++ {

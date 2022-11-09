@@ -30,6 +30,6 @@ func TestSingleSourcePath(t *testing.T) {
 		0, 1, 2, 3, 4, 5, 6,
 	}
 	for _, w := range vertices {
-		t.Logf("Path %v to %v: %v", v, w, p.Path(w))
+		t.Logf("Path %v → %v: %v", v, w, p.Path(w))
 	}
 }
