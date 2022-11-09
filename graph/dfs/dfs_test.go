@@ -6,14 +6,16 @@ import (
 	"testing"
 )
 
+const TestGraphPath = "/data/g.txt"
+
 func TestCC(t *testing.T) {
-	g := graph.FileAsGraph(util.GetFileAbsolutePath("/graph/data/g.txt"))
+	g := graph.FileAsGraph(util.GetFileAbsolutePath(TestGraphPath))
 	cc := NewCC(g)
 	t.Log("cc count:", cc.Count())
 }
 
 func TestCCDistributed(t *testing.T) {
-	g := graph.FileAsGraph(util.GetFileAbsolutePath("/graph/data/g.txt"))
+	g := graph.FileAsGraph(util.GetFileAbsolutePath(TestGraphPath))
 	cc := NewCCDistributed(g)
 	t.Log("connected components count:", cc.Count())
 	t.Logf("%v and %v is connected? %v", 1, 6, cc.IsConnected(1, 6))
@@ -22,7 +24,7 @@ func TestCCDistributed(t *testing.T) {
 }
 
 func TestSingleSourcePath(t *testing.T) {
-	g := graph.FileAsGraph(util.GetFileAbsolutePath("/graph/data/g.txt"))
+	g := graph.FileAsGraph(util.GetFileAbsolutePath(TestGraphPath))
 	v := 0
 	p := NewSingleSourcePath(g, v)
 
@@ -35,7 +37,7 @@ func TestSingleSourcePath(t *testing.T) {
 }
 
 func TestCycleDetection(t *testing.T) {
-	g1 := graph.FileAsGraph(util.GetFileAbsolutePath("/graph/data/g.txt"))
+	g1 := graph.FileAsGraph(util.GetFileAbsolutePath(TestGraphPath))
 	t.Log("Graph has cycle?", NewCycleDetection(g1).HasCycle())
 
 	text := `7 5
