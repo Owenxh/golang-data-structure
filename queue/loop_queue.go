@@ -18,7 +18,7 @@ func NewLoopQueue[E any]() *LoopQueue[E] {
 
 func NewLoopQueueWithCapacity[E any](c int) *LoopQueue[E] {
 	return &LoopQueue[E]{
-		array: make([]E, c, c),
+		array: make([]E, c),
 		size:  0,
 		head:  0,
 		tail:  0,
@@ -30,7 +30,7 @@ func (q *LoopQueue[E]) capacity() int {
 }
 
 func (q *LoopQueue[E]) resize(c int) {
-	newArr := make([]E, c, c)
+	newArr := make([]E, c)
 
 	for i := 0; i < q.size; i++ {
 		newArr[i] = q.array[(i+q.head)%q.capacity()]
@@ -84,9 +84,9 @@ func (q *LoopQueue[E]) IsEmpty() bool {
 
 func (q *LoopQueue[E]) String() string {
 	builder := strings.Builder{}
-	//index := q.head
+	// index := q.head
 	builder.WriteString("[")
-	//for ; index != q.tail; index = (index + 1) % q.capacity() {
+	// for ; index != q.tail; index = (index + 1) % q.capacity() {
 	//	v := q.array[index%q.capacity()]
 	//	builder.WriteString(strconv.Itoa(v))
 	//
