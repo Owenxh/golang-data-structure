@@ -5,10 +5,18 @@ import (
 )
 
 type Graph interface {
+	// V the vertex count
 	V() int
+	// E the edge count
 	E() int
+	// Adj adjacency of the vertex v
 	Adj(v int) []int
+	// AddEdge connect vertex v & w
 	AddEdge(v, w int)
+	// ValidateVertex validate whether v is valid vertex
+	ValidateVertex(v int)
+	// Degree returns the degree of vertex v
+	Degree(v int) int
 }
 
 type TreeSet interface {

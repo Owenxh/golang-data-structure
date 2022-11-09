@@ -16,7 +16,7 @@ type AdjSet struct {
 	adj []TreeSet
 }
 
-func (g *AdjSet) validate(v int) {
+func (g *AdjSet) ValidateVertex(v int) {
 	if v < 0 || v > g.v {
 		panic(fmt.Sprintf("vertex %v is invalid", v))
 	}
@@ -31,8 +31,8 @@ func (g *AdjSet) V() int {
 }
 
 func (g *AdjSet) AddEdge(v int, w int) {
-	g.validate(v)
-	g.validate(w)
+	g.ValidateVertex(v)
+	g.ValidateVertex(w)
 
 	if !g.adj[v].Contains(w) {
 		g.adj[v].Put(w)
@@ -42,8 +42,13 @@ func (g *AdjSet) AddEdge(v int, w int) {
 }
 
 func (g *AdjSet) Adj(v int) []int {
-	g.validate(v)
+	g.ValidateVertex(v)
 	return g.adj[v].Keys()
+}
+
+func (g *AdjSet) Degree(v int) int {
+	g.ValidateVertex(v)
+	return g.adj[v].Size()
 }
 
 func (g *AdjSet) String() string {
