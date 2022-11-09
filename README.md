@@ -47,9 +47,6 @@ $$
 * [MSD](./sort/radix/msd.go)
 * [桶排序](./sort/radix/bucket_sort.go)
 
-### 二分搜索 - Binary Search
-* [二分搜索](./search/binary_search.go)
-
 ### 动态数组 - Dynamic Array
 * [动态数组](./array/array.go)
 
@@ -99,4 +96,5 @@ $$
 * [广度优先遍历 - BFS](./graph/bfs/)
 
 ### 其他
-* [前缀和](./util/presum/)
+* [二分查找 Binay Search](./search/binary_search.go)
+* [前缀和 Pre-Sum](./util/presum/)
