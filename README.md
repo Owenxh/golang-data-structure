@@ -46,6 +46,9 @@ $$
 * [MSD](./sort/radix/msd.go)
 * [桶排序](./sort/radix/bucket_sort.go)
 
+### 二分搜索 - Binary Search
+* [二分搜索](./search/binary_search.go)
+
 ### 动态数组 - Dynamic Array
 * [动态数组](./array/array.go)
 
