@@ -18,7 +18,7 @@
 * [二路快排](./sort/quicksort2ways.go)
 * [三路速排](./sort/quicksort3ways.go)
 
-### 排序算法对比
+**排序算法对比**
 $$
 \begin{array}{|c|c|c|c|}
 \hline
@@ -65,6 +65,10 @@ $$
 * [最大堆](./tree/max_heap.go)
 * [最小堆](./tree/min_heap.go)
 
+### 二叉搜索树 - Binary Search Tree
+* [二叉搜索树](./tree/binary_search_tree.go)
+* [自平衡二叉树 AVL](./tree/avl_tree.go)
+
 ### 线段树 - Segment Tree
 * [线段树](./tree/segment_tree.go)
 * [懒更新线段树](./tree/lazy_segment_tree.go)
@@ -77,7 +81,6 @@ $$
 
 ### 树状数组 - Binary Indexed Tree
 * [树状数组](./tree/binary_indexed_tree.go)
-
 
 ### 字符匹配 - String Match
 * [暴力破解法](./strings/match/brute_force.go)
