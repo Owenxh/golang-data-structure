@@ -84,7 +84,7 @@ $$
 * [Rabin Karp](./strings/match/rabin_karp.go)
 * [KMP](./strings/match/kmp.go)
 
-### 图 Graph
+### 图 - Graph
 * [图的数据结构表示](./graph/)
 * [深度优先遍历 DFS](./graph/dfs/)
 * [广度优先遍历 BFS](./graph/bfs/)
