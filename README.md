@@ -85,9 +85,14 @@ $$
 * [KMP](./strings/match/kmp.go)
 
 ### 图 - Graph
+**无向无权图**
 * [图的数据结构表示](./graph/)
-* [深度优先遍历 DFS](./graph/dfs/)
-* [广度优先遍历 BFS](./graph/bfs/)
+* [深度优先遍历 - DFS](./graph/dfs/)
+* [连通分量](./graph/dfs/cc_count.go)
+* [单一路径](./graph/dfs/path.go)
+* [环检测](./graph/dfs/cycle_detection.go)
+* [二分图检测](./graph/dfs/bipartition_detection.go)
+* [广度优先遍历 - BFS](./graph/bfs/)
 
 ### 其他
 * [前缀和](./util/presum/)
