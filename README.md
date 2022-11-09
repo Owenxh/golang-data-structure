@@ -19,6 +19,7 @@
 * [三路速排](./sort/quicksort3ways.go)
 
 **排序算法对比**
+
 $$
 \begin{array}{|c|c|c|c|}
 \hline
