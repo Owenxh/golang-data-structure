@@ -14,9 +14,9 @@
 * [自底向上](./sort/mergesortbu.go)
 
 **快速排序**
-* [一路快速排序](./sort/quicksort1way.go)
-* [二路快速排序](./sort/quicksort2ways.go)
-* [三路速排序](./sort/quicksort3ways.go)
+* [一路快排](./sort/quicksort1way.go)
+* [二路快排](./sort/quicksort2ways.go)
+* [三路速排](./sort/quicksort3ways.go)
 
 ### 排序算法对比
 $$
