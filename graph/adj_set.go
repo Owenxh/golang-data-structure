@@ -2,7 +2,9 @@ package graph
 
 import (
 	"bufio"
+	"bytes"
 	"fmt"
+	"io"
 	"os"
 	"regexp"
 	"strconv"
@@ -70,7 +72,7 @@ func validateVertex(v int, max int) {
 	}
 }
 
-func NewGraph(file string) Graph {
+func FileAsGraph(file string) Graph {
 	f, err := os.Open(file)
 	if err != nil {
 		panic(err)
@@ -80,9 +82,20 @@ func NewGraph(file string) Graph {
 			fmt.Print(err)
 		}
 	}()
+	return ReadAsGraph(f)
+}
+
+func StringAsGraph(src string) Graph {
+	return ReadAsGraph(bytes.NewReader([]byte(src)))
+}
+
+func ReadAsGraph(r io.Reader) Graph {
+	if r == nil {
+		panic("invalid io.Reader")
+	}
 
 	reg := regexp.MustCompile(`\d`)
-	scanner := bufio.NewScanner(f)
+	scanner := bufio.NewScanner(r)
 	scanner.Split(bufio.ScanLines)
 
 	var V, E int

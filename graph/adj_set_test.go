@@ -7,6 +7,6 @@ import (
 )
 
 func TestAdjSet(t *testing.T) {
-	graph := NewGraph(util.GetFileAbsolutePath("/graph/data/g.txt"))
+	graph := FileAsGraph(util.GetFileAbsolutePath("/graph/data/g.txt"))
 	fmt.Println(graph)
 }

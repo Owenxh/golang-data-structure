@@ -1,6 +1,7 @@
 package graph
 
 import (
+	"bufio"
 	"io.vava.datastructure/tree"
 )
 
@@ -59,4 +60,18 @@ func NewTreeSet() TreeSet {
 	return &treeSet{
 		delegate: &tree.AVLTree[int, bool]{},
 	}
+}
+
+type Text struct {
+	bufio.Reader
+}
+
+func (t *Text) Read(p []byte) (n int, err error) {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (t *Text) Close() error {
+	//TODO implement me
+	panic("implement me")
 }
