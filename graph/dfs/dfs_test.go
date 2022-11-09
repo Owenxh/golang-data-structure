@@ -44,7 +44,7 @@ func TestCycleDetection(t *testing.T) {
 			 1 3
 			 1 4
 			 2 6`
-	g2 := graph.StringAsGraph(util.GetFileAbsolutePath(text))
+	g2 := graph.StringAsGraph(text)
 	t.Log("Graph has cycle?", NewCycleDetection(g2).HasCycle())
 
 	text = `4 4
@@ -54,4 +54,34 @@ func TestCycleDetection(t *testing.T) {
 			2 3`
 	g3 := graph.StringAsGraph(text)
 	t.Log("Graph has cycle?", NewCycleDetection(g3).HasCycle())
+}
+
+func TestBipartitionDetection(t *testing.T) {
+	text := `7 6
+			0 1
+			0 2
+			1 3
+			1 4
+			2 3
+			2 6`
+	g := graph.StringAsGraph(text)
+	t.Log("Graph is bipartite?", NewBipartitionDetection(g).IsBipartite())
+
+	text = `4 6
+			0 1
+			0 2
+			0 3
+			1 2
+			1 3
+			2 3`
+	g = graph.StringAsGraph(text)
+	t.Log("Graph is bipartite?", NewBipartitionDetection(g).IsBipartite())
+
+	text = `4 4
+			0 1
+			0 3
+			1 2
+			2 3`
+	g = graph.StringAsGraph(text)
+	t.Log("Graph is bipartite?", NewBipartitionDetection(g).IsBipartite())
 }
