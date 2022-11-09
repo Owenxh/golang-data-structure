@@ -72,6 +72,10 @@ $$
 ### 并查集 - Union Find
 * [Union Find](./tree/union_find.go)
 
+### 树状数组 - Binary Indexed Tree
+* [树状数组](./tree/binary_indexed_tree.go)
+
+
 ### 字符匹配 - String Match
 * [暴力破解法](./strings/match/brute_force.go)
 * [Rabin Karp](./strings/match/rabin_karp.go)
@@ -81,3 +85,6 @@ $$
 * [图的数据结构表示](./graph/)
 * [深度优先遍历 DFS](./graph/dfs/)
 * [广度优先遍历 BFS](./graph/bfs/)
+
+### 其他
+* [前缀和](./util/presum/)
