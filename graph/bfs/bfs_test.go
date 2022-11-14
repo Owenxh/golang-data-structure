@@ -67,9 +67,9 @@ func TestDegreesOfSeparation(t *testing.T) {
 	sName := "Boen, Earl"
 	p := NewBreadFirstPaths(sg.Graph, sg.Index(sName))
 
-	tName := "Danon, Leslie"
+	tName := "Aldrich, Mariska"
 	for _, v := range p.Path(sg.Index(tName)) {
-		fmt.Print(" ", sg.Name(v))
+		fmt.Println(" ", sg.Name(v))
 	}
 	fmt.Println()
 }
