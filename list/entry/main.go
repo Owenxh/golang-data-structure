@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"io.vava.datastructure/array"
+	"io.vava.datastructure/list"
 )
 
 const N int = 10
@@ -15,7 +15,7 @@ func applyFn(fn func(int)) {
 }
 
 func main() {
-	arr := array.NewWithCapacity[int](4)
+	arr := list.NewWithCapacity[int](4)
 	applyFn(func(i int) {
 		arr.AddLast(i)
 		fmt.Println(arr)

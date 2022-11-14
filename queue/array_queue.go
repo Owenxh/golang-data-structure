@@ -3,19 +3,19 @@ package queue
 import (
 	"fmt"
 
-	"io.vava.datastructure/array"
+	"io.vava.datastructure/list"
 )
 
 type ArrayQueue[E any] struct {
-	array *array.Array[E]
+	array *list.ArrayList[E]
 }
 
 func NewArrayQueue[E any]() *ArrayQueue[E] {
-	return &ArrayQueue[E]{array.New[E]()}
+	return &ArrayQueue[E]{list.New[E]()}
 }
 
 func NewArrayQueueWithCapacity[E any](capacity int) *ArrayQueue[E] {
-	return &ArrayQueue[E]{array.NewWithCapacity[E](capacity)}
+	return &ArrayQueue[E]{list.NewWithCapacity[E](capacity)}
 }
 
 func (q *ArrayQueue[E]) Enqueue(e E) {

@@ -3,19 +3,19 @@ package stack
 import (
 	"fmt"
 
-	"io.vava.datastructure/array"
+	"io.vava.datastructure/list"
 )
 
 type ArrayStack[E any] struct {
-	array *array.Array[E]
+	array *list.ArrayList[E]
 }
 
 func New[E any]() *ArrayStack[E] {
-	return &ArrayStack[E]{array.New[E]()}
+	return &ArrayStack[E]{list.New[E]()}
 }
 
 func NewWithCapacity[E any](capacity int) *ArrayStack[E] {
-	return &ArrayStack[E]{array.NewWithCapacity[E](capacity)}
+	return &ArrayStack[E]{list.NewWithCapacity[E](capacity)}
 }
 
 func (s *ArrayStack[E]) Push(e E) {

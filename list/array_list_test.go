@@ -1,4 +1,4 @@
-package array
+package list
 
 import (
 	"reflect"
@@ -7,7 +7,7 @@ import (
 
 const N int = 10
 
-func generateSequentialArray(size int) *Array[int] {
+func generateSequentialArray(size int) *ArrayList[int] {
 	if size <= 0 {
 		panic("MyArray size must > 0")
 	}

@@ -2,17 +2,18 @@ package tree
 
 import (
 	"errors"
+
 	"io.vava.datastructure/types"
 
-	"io.vava.datastructure/array"
+	"io.vava.datastructure/list"
 )
 
 type MaxHeap[E types.Comparable] struct {
-	arr *array.Array[E]
+	arr *list.ArrayList[E]
 }
 
 func NewMaxHeap[E types.Comparable]() *MaxHeap[E] {
-	return &MaxHeap[E]{arr: array.New[E]()}
+	return &MaxHeap[E]{arr: list.New[E]()}
 }
 
 func (h *MaxHeap[E]) get(i int) E {

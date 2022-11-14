@@ -2,16 +2,17 @@ package tree
 
 import (
 	"errors"
-	"io.vava.datastructure/array"
+
+	"io.vava.datastructure/list"
 	"io.vava.datastructure/types"
 )
 
 type MinHeap[E types.Comparable] struct {
-	arr *array.Array[E]
+	arr *list.ArrayList[E]
 }
 
 func NewMinHeap[E types.Comparable]() *MinHeap[E] {
-	return &MinHeap[E]{arr: array.New[E]()}
+	return &MinHeap[E]{arr: list.New[E]()}
 }
 
 func (h *MinHeap[E]) get(i int) E {
