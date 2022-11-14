@@ -59,3 +59,17 @@ func TestBFSVisitor(t *testing.T) {
 	})
 	fmt.Println()
 }
+
+func TestDegreesOfSeparation(t *testing.T) {
+	moviesURL := "https://introcs.cs.princeton.edu/java/data/movies-hero.txt"
+	sg := graph.URLAsSymbolGraph(moviesURL, "/")
+
+	sName := "Boen, Earl"
+	p := NewBreadFirstPaths(sg.Graph, sg.Index(sName))
+
+	tName := "Danon, Leslie"
+	for _, v := range p.Path(sg.Index(tName)) {
+		fmt.Print(" ", sg.Name(v))
+	}
+	fmt.Println()
+}

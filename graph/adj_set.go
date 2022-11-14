@@ -82,20 +82,20 @@ func FileAsGraph(file string) Graph {
 			fmt.Print(err)
 		}
 	}()
-	return ReadAsGraph(f)
+	return ReadGraph(f)
 }
 
 func StringAsGraph(src string) Graph {
-	return ReadAsGraph(bytes.NewReader([]byte(src)))
+	return ReadGraph(bytes.NewReader([]byte(src)))
 }
 
-func ReadAsGraph(r io.Reader) Graph {
-	if r == nil {
+func ReadGraph(src io.Reader) Graph {
+	if src == nil {
 		panic("invalid io.Reader")
 	}
 
 	reg := regexp.MustCompile(`\d`)
-	scanner := bufio.NewScanner(r)
+	scanner := bufio.NewScanner(src)
 	scanner.Split(bufio.ScanLines)
 
 	var V, E int

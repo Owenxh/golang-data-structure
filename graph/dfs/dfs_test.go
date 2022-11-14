@@ -1,9 +1,10 @@
 package dfs
 
 import (
+	"testing"
+
 	"io.vava.datastructure/graph"
 	"io.vava.datastructure/util"
-	"testing"
 )
 
 const TestGraphPath = "/data/g.txt"

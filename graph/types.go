@@ -1,7 +1,6 @@
 package graph
 
 import (
-	"bufio"
 	"io.vava.datastructure/tree"
 )
 
@@ -62,16 +61,10 @@ func NewTreeSet() TreeSet {
 	}
 }
 
-type Text struct {
-	bufio.Reader
-}
-
-func (t *Text) Read(p []byte) (n int, err error) {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (t *Text) Close() error {
-	//TODO implement me
-	panic("implement me")
+func NewTreeSets(c int) []TreeSet {
+	sets := make([]TreeSet, c)
+	for i := 0; i < c; i++ {
+		sets[i] = NewTreeSet()
+	}
+	return sets
 }
