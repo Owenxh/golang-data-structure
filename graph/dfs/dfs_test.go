@@ -88,3 +88,31 @@ func TestBipartitionDetection(t *testing.T) {
 	g = graph.StringAsGraph(text)
 	t.Log("Graph is bipartite?", NewBipartitionDetection(g).IsBipartite())
 }
+
+func TestFindCutPoints(t *testing.T) {
+	text := `7 8
+			0 1
+			0 2
+			1 3
+			2 3
+			3 5
+			4 5
+			4 6
+			5 6`
+	g := graph.StringAsGraph(text)
+	t.Log("Graph's cut points?", NewFindCutPoints(g).Result())
+}
+
+func TestFindBridges(t *testing.T) {
+	text := `7 8
+			0 1
+			0 2
+			1 3
+			2 3
+			3 5
+			4 5
+			4 6
+			5 6`
+	g := graph.StringAsGraph(text)
+	t.Log("Graph's bridges?", NewFindBridges(g).Result())
+}

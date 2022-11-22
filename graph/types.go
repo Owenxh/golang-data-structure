@@ -1,6 +1,7 @@
 package graph
 
 import (
+	"fmt"
 	"io.vava.datastructure/tree"
 )
 
@@ -17,6 +18,14 @@ type Graph interface {
 	ValidateVertex(v int)
 	// Degree returns the degree of vertex v
 	Degree(v int) int
+}
+
+type Edge struct {
+	V, W int
+}
+
+func (e Edge) String() string {
+	return fmt.Sprintf("%d-%d", e.V, e.W)
 }
 
 type TreeSet interface {
