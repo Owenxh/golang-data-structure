@@ -1,6 +1,9 @@
 package dfs
 
 import (
+	"fmt"
+	"strings"
+
 	"io.vava.datastructure/graph"
 )
 
@@ -10,26 +13,33 @@ type FindCutPoints struct {
 	count   int
 	order   []int
 	low     []int
-	res     map[int]struct{}
+	res     graph.TreeSet
 }
 
 func NewFindCutPoints(g graph.Graph) *FindCutPoints {
+	return NewFindCutPointsWithLog(g, false)
+}
+
+func NewFindCutPointsWithLog(g graph.Graph, verbose bool) *FindCutPoints {
 	f := &FindCutPoints{
 		Graph:   g,
 		visited: make([]bool, g.V()),
 		order:   make([]int, g.V()),
 		low:     make([]int, g.V()),
-		res:     make(map[int]struct{}),
+		res:     graph.NewTreeSet(),
 	}
 	for v := 0; v < g.V(); v++ {
 		if !f.visited[v] {
-			f.dfs(v, v)
+			if verbose {
+				f.dfsWithLog(v, v, 0)
+			} else {
+				f.dfs(v, v)
+			}
 		}
 	}
 	return f
 }
 
-// dfs Depth-First-Search
 func (f *FindCutPoints) dfs(v int, parent int) {
 	f.visited[v] = true
 	f.order[v] = f.count
@@ -38,34 +48,69 @@ func (f *FindCutPoints) dfs(v int, parent int) {
 	var child int
 	for _, w := range f.Graph.Adj(v) {
 		if !f.visited[w] {
-			// fmt.Printf("<start> parent:%d -> [v:%d -> w:%d] \n", parent, v, w)
 			f.dfs(w, v)
-			// fmt.Printf("<end> parent:%d -> [v:%d -> w:%d] \n", parent, v, w)
 			f.low[v] = min(f.low[v], f.low[w])
+			// vertex v is a cut point because its child can't reach its parents
 			if v != parent && f.low[w] >= f.order[v] {
-				f.res[v] = struct{}{}
-				// fmt.Printf("v:%d is cut point\n", v)
+				f.res.Put(v)
 			}
 			child++
-			// 根结点有多个孩子，则它是一个割点
+			// the start vertex is a cut point that has more than 1 children
 			if v == parent && child > 1 {
-				f.res[v] = struct{}{}
+				f.res.Put(v)
 			}
 		} else if w != parent {
-			f.low[v] = min(f.low[v], f.low[w])
+			// pay attention: compare with w's order[w] not low[w]
+			f.low[v] = min(f.low[v], f.order[w])
 		}
 	}
 }
 
 func (f *FindCutPoints) Result() []int {
-	if len(f.res) == 0 {
+	if f.res.Size() == 0 {
 		return nil
 	}
-	points := make([]int, len(f.res))
-	var i int
-	for k := range f.res {
-		points[i] = k
-		i++
+	return f.res.Keys()
+}
+
+// dfsWithLog print some log
+func (f *FindCutPoints) dfsWithLog(v int, parent int, level int) {
+	logPrefix := getLogPrefix(level)
+	fmt.Printf("%v=> [p:%d -> v:%d]\n", logPrefix, parent, v)
+
+	f.visited[v] = true
+	f.order[v] = f.count
+	f.low[v] = f.order[v]
+	f.count++
+	var child int
+	for _, w := range f.Graph.Adj(v) {
+		if !f.visited[w] {
+			fmt.Printf("%v=> [p:%d -> v:%d -> w:%d]\n", logPrefix, parent, v, w)
+			f.dfsWithLog(w, v, level+1)
+			fmt.Printf("%v<= [p:%d -> v:%d -> w:%d]\n", logPrefix, parent, v, w)
+
+			f.low[v] = min(f.low[v], f.low[w])
+			if v != parent && f.low[w] >= f.order[v] {
+				f.res.Put(v)
+				fmt.Printf("%v √ Find cut point:[%d]\n", logPrefix, v)
+			}
+			child++
+			if v == parent && child > 1 {
+				f.res.Put(v)
+				fmt.Printf("%v √ Find cut point:[%d]\n", logPrefix, v)
+			}
+		} else if w != parent {
+			f.low[v] = min(f.low[v], f.order[w])
+		}
+		fmt.Printf("%v low[%d] = %d\n", logPrefix, v, f.low[v])
 	}
-	return points
+	fmt.Printf("%v<= [p:%d -> v:%d]\n", logPrefix, parent, v)
+}
+
+func getLogPrefix(level int) string {
+	var res strings.Builder
+	for i := 0; i < level; i++ {
+		res.WriteString("  ")
+	}
+	return res.String()
 }

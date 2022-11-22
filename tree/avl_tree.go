@@ -420,3 +420,15 @@ func (t *AVLTree[K, V]) preOrderFunc(node *Node[K, V], fn func(k K, v V)) {
 		t.preOrderFunc(node.right, fn)
 	}
 }
+
+func (t *AVLTree[K, V]) InOrderFunc(fn func(k K, v V)) {
+	t.inOrderFunc(t.root, fn)
+}
+
+func (t *AVLTree[K, V]) inOrderFunc(node *Node[K, V], fn func(k K, v V)) {
+	if node != nil {
+		t.inOrderFunc(node.left, fn)
+		fn(node.key, node.val)
+		t.inOrderFunc(node.right, fn)
+	}
+}

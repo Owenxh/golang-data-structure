@@ -135,11 +135,26 @@ const (
 	3 4`
 )
 
-func TestFindBridgesAndCutPoints(t *testing.T) {
+func TestFindBridges(t *testing.T) {
+	graphTexts := []string{g1_text, g2_text, g3_text, tree_text}
+	for _, text := range graphTexts {
+		g := graph.StringAsGraph(text)
+		t.Log("Graph's bridges?", NewFindBridges(g).Result())
+	}
+}
+
+func TestFindCutPoints(t *testing.T) {
 	graphTexts := []string{g1_text, g2_text, g3_text, tree_text}
 	for _, text := range graphTexts {
 		g := graph.StringAsGraph(text)
 		t.Log("Graph's cut points?", NewFindCutPoints(g).Result())
-		t.Log("Graph's bridges?", NewFindBridges(g).Result())
+	}
+}
+
+func TestFindCutPointsVerbose(t *testing.T) {
+	graphTexts := []string{g3_text}
+	for _, text := range graphTexts {
+		g := graph.StringAsGraph(text)
+		t.Log("Graph's cut points?", NewFindCutPointsWithLog(g, true).Result())
 	}
 }

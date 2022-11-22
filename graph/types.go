@@ -2,6 +2,7 @@ package graph
 
 import (
 	"fmt"
+
 	"io.vava.datastructure/tree"
 )
 
@@ -46,7 +47,7 @@ func (t *treeSet) Size() int {
 
 func (t *treeSet) Keys() []int {
 	var keys []int
-	t.delegate.PreOrderFunc(func(k int, v bool) {
+	t.delegate.InOrderFunc(func(k int, v bool) {
 		keys = append(keys, k)
 	})
 	return keys
