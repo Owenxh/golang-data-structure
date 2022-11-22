@@ -1,6 +1,8 @@
 package dfs
 
-import "io.vava.datastructure/graph"
+import (
+	"io.vava.datastructure/graph"
+)
 
 type FindBridges struct {
 	graph.Graph
@@ -35,20 +37,23 @@ func (f *FindBridges) dfs(v int, parent int) {
 	for _, w := range f.Graph.Adj(v) {
 		if !f.visited[w] {
 			f.dfs(w, v)
-			if f.low[w] < f.low[v] {
-				f.low[v] = f.low[w]
-			}
+			f.low[v] = min(f.low[v], f.low[w])
 			// w 找不到第二条路回到 v
 			if f.low[w] > f.order[v] {
 				f.res = append(f.res, graph.Edge{V: v, W: w})
 			}
 		} else if w != parent {
 			// 回到了比访问 v 更早的顶点
-			if f.low[w] < f.low[v] {
-				f.low[v] = f.low[w]
-			}
+			f.low[v] = min(f.low[v], f.low[w])
 		}
 	}
+}
+
+func min(v, w int) int {
+	if v <= w {
+		return v
+	}
+	return w
 }
 
 func (f *FindBridges) Result() []graph.Edge {

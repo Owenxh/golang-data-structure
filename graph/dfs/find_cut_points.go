@@ -41,9 +41,7 @@ func (f *FindCutPoints) dfs(v int, parent int) {
 			// fmt.Printf("<start> parent:%d -> [v:%d -> w:%d] \n", parent, v, w)
 			f.dfs(w, v)
 			// fmt.Printf("<end> parent:%d -> [v:%d -> w:%d] \n", parent, v, w)
-			if f.low[w] < f.low[v] {
-				f.low[v] = f.low[w]
-			}
+			f.low[v] = min(f.low[v], f.low[w])
 			if v != parent && f.low[w] >= f.order[v] {
 				f.res[v] = struct{}{}
 				// fmt.Printf("v:%d is cut point\n", v)
@@ -54,9 +52,7 @@ func (f *FindCutPoints) dfs(v int, parent int) {
 				f.res[v] = struct{}{}
 			}
 		} else if w != parent {
-			if f.low[w] < f.low[v] {
-				f.low[v] = f.low[w]
-			}
+			f.low[v] = min(f.low[v], f.low[w])
 		}
 	}
 }
