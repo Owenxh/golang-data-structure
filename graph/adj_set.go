@@ -94,7 +94,7 @@ func ReadGraph(src io.Reader) Graph {
 		panic("invalid io.Reader")
 	}
 
-	reg := regexp.MustCompile(`\d`)
+	reg := regexp.MustCompile(`\d+`)
 	scanner := bufio.NewScanner(src)
 	scanner.Split(bufio.ScanLines)
 
@@ -103,7 +103,7 @@ func ReadGraph(src io.Reader) Graph {
 	for row := 0; scanner.Scan(); row++ {
 		tokens := reg.FindAllString(scanner.Text(), -1)
 		if len(tokens) != 2 {
-			panic(fmt.Sprintf("invalid data of row: %v", row))
+			panic(fmt.Sprintf("invalid data of row: %v, token count:%d", row, len(tokens)))
 		}
 		if row == 0 {
 			V, _ = strconv.Atoi(tokens[0])

@@ -1,7 +1,6 @@
 package dfs
 
 import (
-	"fmt"
 	"io.vava.datastructure/graph"
 )
 
@@ -15,7 +14,7 @@ type FindCutPoints struct {
 }
 
 func NewFindCutPoints(g graph.Graph) *FindCutPoints {
-	cp := &FindCutPoints{
+	f := &FindCutPoints{
 		Graph:   g,
 		visited: make([]bool, g.V()),
 		order:   make([]int, g.V()),
@@ -23,11 +22,11 @@ func NewFindCutPoints(g graph.Graph) *FindCutPoints {
 		res:     make(map[int]struct{}),
 	}
 	for v := 0; v < g.V(); v++ {
-		if !cp.visited[v] {
-			cp.dfs(v, v)
+		if !f.visited[v] {
+			f.dfs(v, v)
 		}
 	}
-	return cp
+	return f
 }
 
 // dfs Depth-First-Search
@@ -39,15 +38,15 @@ func (f *FindCutPoints) dfs(v int, parent int) {
 	var child int
 	for _, w := range f.Graph.Adj(v) {
 		if !f.visited[w] {
-			fmt.Printf("<start> parent:%d -> [v:%d -> w:%d] \n", parent, v, w)
+			// fmt.Printf("<start> parent:%d -> [v:%d -> w:%d] \n", parent, v, w)
 			f.dfs(w, v)
-			fmt.Printf("<end> parent:%d -> [v:%d -> w:%d] \n", parent, v, w)
+			// fmt.Printf("<end> parent:%d -> [v:%d -> w:%d] \n", parent, v, w)
 			if f.low[w] < f.low[v] {
 				f.low[v] = f.low[w]
 			}
 			if v != parent && f.low[w] >= f.order[v] {
 				f.res[v] = struct{}{}
-				fmt.Printf("v:%d is cut point\n", v)
+				// fmt.Printf("v:%d is cut point\n", v)
 			}
 			child++
 			// 根结点有多个孩子，则它是一个割点
