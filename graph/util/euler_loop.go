@@ -32,15 +32,15 @@ func (e *EulerLoop) HasEulerLoop() bool {
 }
 
 // Result Hierholzer Algorithm
-func (e *EulerLoop) Result() []int {
+func (e *EulerLoop) Result() (loop []int) {
 	if !e.HasEulerLoop() {
 		return nil
 	}
 
-	var res []int
 	g := graph.Clone(e.Graph)
 	s := stack.New[int]()
 	var v int
+	s.Push(v)
 	for !s.IsEmpty() {
 		if g.Degree(v) != 0 {
 			s.Push(v)
@@ -48,9 +48,9 @@ func (e *EulerLoop) Result() []int {
 			g.RemoveEdge(v, w)
 			v = w
 		} else {
-			res = append(res, v)
+			loop = append(loop, v)
 			v = s.Pop()
 		}
 	}
-	return res
+	return loop
 }
