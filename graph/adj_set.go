@@ -43,6 +43,13 @@ func (g *AdjSet) AddEdge(v int, w int) {
 	}
 }
 
+func (g *AdjSet) RemoveEdge(v int, w int) {
+	g.ValidateVertex(v)
+	g.ValidateVertex(w)
+	g.adj[v].Remove(w)
+	g.adj[w].Remove(v)
+}
+
 func (g *AdjSet) Adj(v int) []int {
 	g.ValidateVertex(v)
 	return g.adj[v].Keys()
@@ -130,6 +137,24 @@ func ReadGraph(src io.Reader) Graph {
 	return &AdjSet{
 		v:   V,
 		e:   E,
+		adj: adj,
+	}
+}
+
+func Clone(src Graph) Graph {
+	if src == nil {
+		return nil
+	}
+	adj := make([]TreeSet, src.V())
+	for v := 0; v < src.V(); v++ {
+		adj[v] = NewTreeSet()
+		for _, w := range src.Adj(v) {
+			adj[v].Put(w)
+		}
+	}
+	return &AdjSet{
+		v:   src.V(),
+		e:   src.E(),
 		adj: adj,
 	}
 }

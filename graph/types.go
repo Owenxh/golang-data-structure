@@ -15,6 +15,8 @@ type Graph interface {
 	Adj(v int) []int
 	// AddEdge connect vertex v & w
 	AddEdge(v, w int)
+	// RemoveEdge remove edge between vertex v & w
+	RemoveEdge(v, w int)
 	// ValidateVertex validate whether v is valid vertex
 	ValidateVertex(v int)
 	// Degree returns the degree of vertex v

@@ -1,0 +1,56 @@
+package util
+
+import (
+	"io.vava.datastructure/graph"
+	"io.vava.datastructure/graph/dfs"
+	"io.vava.datastructure/stack"
+)
+
+// EulerLoop - 欧拉回路
+type EulerLoop struct {
+	graph.Graph
+}
+
+func NewEulerLoop(g graph.Graph) *EulerLoop {
+	return &EulerLoop{
+		Graph: g,
+	}
+}
+
+// HasEulerLoop - 检查图是否存在欧拉回路
+func (e *EulerLoop) HasEulerLoop() bool {
+	cc := dfs.NewCC(e)
+	if cc.Count() > 1 {
+		return false
+	}
+	for v := 0; v < e.V(); v++ {
+		if len(e.Adj(v))%2 != 0 {
+			return false
+		}
+	}
+	return true
+}
+
+// Result Hierholzer Algorithm
+func (e *EulerLoop) Result() []int {
+	if !e.HasEulerLoop() {
+		return nil
+	}
+
+	var res []int
+	g := graph.Clone(e.Graph)
+	s := stack.New[int]()
+	var v int
+	for !s.IsEmpty() {
+		if g.Degree(v) != 0 {
+			s.Push(v)
+			w := g.Adj(v)[0]
+			g.RemoveEdge(v, w)
+			v = w
+		} else {
+			res = append(res, v)
+			v = s.Pop()
+		}
+	}
+	return res
+}
