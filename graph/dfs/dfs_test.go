@@ -90,7 +90,7 @@ func TestBipartitionDetection(t *testing.T) {
 }
 
 const (
-	g1_text = `7 8
+	g1Text = `7 8
 	0 1
 	0 2
 	1 3
@@ -100,7 +100,7 @@ const (
 	4 6
 	5 6`
 
-	g2_text = `12 16
+	g2Text = `12 16
 	0 1
 	0 2
 	1 3
@@ -118,7 +118,7 @@ const (
 	9 11
 	10 11`
 
-	g3_text = `5 6
+	g3Text = `5 6
 	0 1
 	0 2
 	1 2
@@ -126,7 +126,7 @@ const (
 	2 4
 	3 4`
 
-	tree_text = `7 6
+	treeText = `7 6
 	0 1
 	0 3
 	1 6
@@ -136,7 +136,7 @@ const (
 )
 
 func TestFindBridges(t *testing.T) {
-	graphTexts := []string{g1_text, g2_text, g3_text, tree_text}
+	graphTexts := []string{g1Text, g2Text, g3Text, treeText}
 	for _, text := range graphTexts {
 		g := graph.StringAsGraph(text)
 		t.Log("Graph's bridges?", NewFindBridges(g).Result())
@@ -144,7 +144,7 @@ func TestFindBridges(t *testing.T) {
 }
 
 func TestFindCutPoints(t *testing.T) {
-	graphTexts := []string{g1_text, g2_text, g3_text, tree_text}
+	graphTexts := []string{g1Text, g2Text, g3Text, treeText}
 	for _, text := range graphTexts {
 		g := graph.StringAsGraph(text)
 		t.Log("Graph's cut points?", NewFindCutPoints(g).Result())
@@ -152,7 +152,7 @@ func TestFindCutPoints(t *testing.T) {
 }
 
 func TestFindCutPointsVerbose(t *testing.T) {
-	graphTexts := []string{g3_text}
+	graphTexts := []string{g3Text}
 	for _, text := range graphTexts {
 		g := graph.StringAsGraph(text)
 		t.Log("Graph's cut points?", NewFindCutPointsWithLog(g, true).Result())
