@@ -99,8 +99,12 @@
 * [环检测](./graph/dfs/cycle_detection.go)
 * [二分图检测](./graph/dfs/bipartition_detection.go)
 * [广度优先遍历 - BFS](./graph/bfs/)
-* [哈密尔顿回路 - Hamilton Loop](graph/loop/hamilton_loop.go)
-* [欧拉回路 - Euler Loop](graph/loop/euler_loop.go)
+* [哈密尔顿回路 - Hamilton Loop](./graph/loop/hamilton_loop.go)
+* [欧拉回路 - Euler Loop](./graph/loop/euler_loop.go)
+
+**无向有权图**
+
+* [最小生成树 - Kruskal 算法](./graph/mst/kruskal.go)
 
 ### 其他
 
