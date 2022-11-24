@@ -60,17 +60,41 @@ func (g *AdjMap) Degree(v int) int {
 	return g.adj[v].Size()
 }
 
+func (g *AdjMap) GetWeight(v, w int) int {
+	g.ValidateVertex(v)
+	g.ValidateVertex(w)
+	return g.adj[v].Get(w)
+}
+
 func (g *AdjMap) String() string {
 	var sb strings.Builder
 	sb.WriteString(fmt.Sprintf("V = %v, E = %v\n", g.v, g.e))
 	for vertex := 0; vertex < g.v; vertex++ {
 		sb.WriteString(fmt.Sprintf("%v: ", vertex))
-		for _, w := range g.adj[vertex].Keys() {
-			sb.WriteString(fmt.Sprintf("%v ", w))
+		for _, entry := range g.adj[vertex].EntrySet() {
+			sb.WriteString(fmt.Sprintf("(%v: %v) ", entry.K, entry.V))
 		}
 		sb.WriteString("\n")
 	}
 	return sb.String()
+}
+
+func (g *AdjMap) Clone() Graph {
+	dstAdj := make([]TreeMap, g.V())
+	for v := 0; v < g.V(); v++ {
+		dstAdj[v] = NewTreeMap()
+		for _, entry := range g.adj[v].EntrySet() {
+			dstAdj[v].Put(entry.K, entry.V)
+		}
+	}
+
+	for v := 0; v < g.V(); v++ {
+	}
+	return &AdjMap{
+		v:   g.V(),
+		e:   g.E(),
+		adj: dstAdj,
+	}
 }
 
 func validateVertex(v int, max int) {
@@ -142,23 +166,5 @@ func ReadGraph(src io.Reader) Graph {
 		v:   V,
 		e:   E,
 		adj: adj,
-	}
-}
-
-func (g *AdjMap) Clone() Graph {
-	dstAdj := make([]TreeMap, g.V())
-	for v := 0; v < g.V(); v++ {
-		dstAdj[v] = NewTreeMap()
-		for _, entry := range g.adj[v].EntrySet() {
-			dstAdj[v].Put(entry.K, entry.V)
-		}
-	}
-
-	for v := 0; v < g.V(); v++ {
-	}
-	return &AdjMap{
-		v:   g.V(),
-		e:   g.E(),
-		adj: dstAdj,
 	}
 }
