@@ -37,7 +37,7 @@ func (e *EulerLoop) Result() (loop []int) {
 		return nil
 	}
 
-	g := graph.Clone(e.Graph)
+	g := e.Graph.Clone()
 	s := stack.New[int]()
 	var v int
 	s.Push(v)

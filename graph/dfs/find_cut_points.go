@@ -52,12 +52,12 @@ func (f *FindCutPoints) dfs(v int, parent int) {
 			f.low[v] = min(f.low[v], f.low[w])
 			// vertex v is a cut point because its child can't reach its parents
 			if v != parent && f.low[w] >= f.order[v] {
-				f.res.Put(v)
+				f.res.Add(v)
 			}
 			child++
 			// the start vertex is a cut point that has more than 1 children
 			if v == parent && child > 1 {
-				f.res.Put(v)
+				f.res.Add(v)
 			}
 		} else if w != parent {
 			// pay attention: compare with w's order[w] not low[w]
@@ -91,12 +91,12 @@ func (f *FindCutPoints) dfsWithLog(v int, parent int, level int) {
 
 			f.low[v] = min(f.low[v], f.low[w])
 			if v != parent && f.low[w] >= f.order[v] {
-				f.res.Put(v)
+				f.res.Add(v)
 				fmt.Printf("%v √ Find cut point:[%d]\n", logPrefix, v)
 			}
 			child++
 			if v == parent && child > 1 {
-				f.res.Put(v)
+				f.res.Add(v)
 				fmt.Printf("%v √ Find cut point:[%d]\n", logPrefix, v)
 			}
 		} else if w != parent {

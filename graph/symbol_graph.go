@@ -72,9 +72,9 @@ func ReadSymbolGraph(src io.Reader, delim string) *SymbolGraph {
 	}
 
 	// 构建图
-	g := &AdjSet{
+	g := &AdjMap{
 		v:   len(st),
-		adj: NewTreeSets(len(st)),
+		adj: NewTreeMaps(len(st)),
 	}
 
 	// 向图中添加边
