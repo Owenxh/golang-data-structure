@@ -1,4 +1,4 @@
-package util
+package loop
 
 import (
 	"io.vava.datastructure/graph"

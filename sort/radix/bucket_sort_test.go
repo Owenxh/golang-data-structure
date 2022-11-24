@@ -7,7 +7,7 @@ import (
 )
 
 func TestBucketSort(t *testing.T) {
-	// arr1 := util.RandomIntSliceWithBound(100, 1000)
+	// arr1 := loop.RandomIntSliceWithBound(100, 1000)
 	arr1 := util.RandomIntSlice(1_000_000)
 	arr2 := util.Copy(arr1)
 	arr3 := util.Copy(arr1)
