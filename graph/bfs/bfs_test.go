@@ -7,6 +7,8 @@ import (
 	"testing"
 )
 
+const MoviesURL = "https://introcs.cs.princeton.edu/java/data/movies-hero.txt"
+
 const TestGraphString = `7 7
 						 0 1
 						 0 2
@@ -61,8 +63,7 @@ func TestBFSVisitor(t *testing.T) {
 }
 
 func TestDegreesOfSeparation(t *testing.T) {
-	moviesURL := "https://introcs.cs.princeton.edu/java/data/movies-hero.txt"
-	sg := graph.URLAsSymbolGraph(moviesURL, "/")
+	sg := graph.URLAsSymbolGraph(MoviesURL, "/")
 
 	sName := "Boen, Earl"
 	p := NewBreadFirstPaths(sg.Graph, sg.Index(sName))
