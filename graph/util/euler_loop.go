@@ -31,7 +31,7 @@ func (e *EulerLoop) HasEulerLoop() bool {
 	return true
 }
 
-// Result Hierholzer Algorithm
+// Result - Hierholzer 算法求解欧拉回路
 func (e *EulerLoop) Result() (loop []int) {
 	if !e.HasEulerLoop() {
 		return nil
