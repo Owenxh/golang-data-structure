@@ -84,6 +84,8 @@
 * [环检测](./graph/dfs/cycle_detection.go)
 * [二分图检测](./graph/dfs/bipartition_detection.go)
 * [广度优先遍历 - BFS](./graph/bfs/)
+* [哈密尔顿回路 - Hamilton Loop](./graph/util/hamilton_loop.go)
+* [欧拉回路 - Euler Loop](./graph/util/euler_loop.go)
 
 ### 其他
 * [二分查找 Binay Search](./search/binary_search.go)
