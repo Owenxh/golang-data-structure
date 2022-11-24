@@ -3,6 +3,8 @@ package mst
 import (
 	"io.vava.datastructure/graph"
 	"io.vava.datastructure/graph/dfs"
+	"io.vava.datastructure/tree"
+	"sort"
 )
 
 // Kruskal 算法实现最小生成树 - Minimum Tree Spanning
@@ -12,17 +14,15 @@ type Kruskal struct {
 }
 
 func NewKruskal(g graph.WeightedGraph) *Kruskal {
-	kruskal := &Kruskal{
-		WeightedGraph: g,
-	}
-
 	// 图中所有顶点必须是连通的
 	cc := dfs.NewCC(g)
 	if cc.Count() > 1 {
-		return kruskal
+		return &Kruskal{
+			WeightedGraph: g,
+		}
 	}
 
-	var edges []graph.WeightedEdge
+	var edges graph.SortedWeightEdges
 	for v := 0; v < g.V(); v++ {
 		for _, w := range g.Adj(v) {
 			if v < w {
@@ -30,6 +30,23 @@ func NewKruskal(g graph.WeightedGraph) *Kruskal {
 			}
 		}
 	}
+	sort.Sort(edges)
 
-	return kruskal
+	var mst []graph.WeightedEdge
+	// 并查集
+	uf := tree.NewUnionFind5(g.V())
+	for _, edge := range edges {
+		if !uf.IsConnected(edge.V, edge.W) {
+			mst = append(mst, edge)
+			uf.UnionElements(edge.V, edge.W)
+		}
+	}
+	return &Kruskal{
+		WeightedGraph: g,
+		mst:           mst,
+	}
+}
+
+func (k *Kruskal) Result() []graph.WeightedEdge {
+	return k.mst
 }

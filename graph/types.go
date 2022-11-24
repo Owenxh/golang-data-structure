@@ -52,6 +52,20 @@ func (e WeightedEdge) String() string {
 	return fmt.Sprintf("(%d-%d: %d)", e.V, e.W, e.Weight)
 }
 
+type SortedWeightEdges []WeightedEdge
+
+func (s SortedWeightEdges) Len() int {
+	return len(s)
+}
+
+func (s SortedWeightEdges) Less(i, j int) bool {
+	return s[i].Weight-s[j].Weight <= 0
+}
+
+func (s SortedWeightEdges) Swap(i, j int) {
+	s[i], s[j] = s[j], s[i]
+}
+
 type TreeMap interface {
 	Size() int
 	Put(k, v int)

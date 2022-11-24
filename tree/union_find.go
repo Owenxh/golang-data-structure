@@ -260,13 +260,14 @@ func (u *UnionFind5) UnionElements(p int, q int) {
 	}
 
 	// 将 rank 数低的集合合并到 rank 较大的集合上
-	if u.rank[pRoot] < u.rank[qRoot] {
+	switch {
+	case u.rank[pRoot] < u.rank[qRoot]:
 		u.parent[pRoot] = qRoot
-	} else if u.rank[pRoot] > u.rank[qRoot] {
+	case u.rank[pRoot] > u.rank[qRoot]:
 		u.parent[qRoot] = pRoot
-	} else {
+	default:
 		u.parent[qRoot] = pRoot
-		u.rank[pRoot] += 1
+		u.rank[pRoot]++
 	}
 }
 

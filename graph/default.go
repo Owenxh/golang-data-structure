@@ -104,6 +104,10 @@ func validateVertex(v int, max int) {
 }
 
 func FileAsGraph(file string) Graph {
+	return FileAsWeightedGraph(file)
+}
+
+func FileAsWeightedGraph(file string) WeightedGraph {
 	f, err := os.Open(file)
 	if err != nil {
 		panic(err)
@@ -113,14 +117,26 @@ func FileAsGraph(file string) Graph {
 			fmt.Print(err)
 		}
 	}()
-	return ReadGraph(f)
+	return ReadWeightedGraph(f)
 }
 
 func StringAsGraph(src string) Graph {
-	return ReadGraph(bytes.NewReader([]byte(src)))
+	return StringAsWeightedGraph(src)
+}
+
+func StringAsWeightedGraph(src string) WeightedGraph {
+	return ReadWeightedGraph(bytes.NewReader([]byte(src)))
 }
 
 func ReadGraph(src io.Reader) Graph {
+	return readAdjMap(src)
+}
+
+func ReadWeightedGraph(src io.Reader) WeightedGraph {
+	return readAdjMap(src)
+}
+
+func readAdjMap(src io.Reader) *AdjMap {
 	if src == nil {
 		panic("invalid io.Reader")
 	}
@@ -131,36 +147,39 @@ func ReadGraph(src io.Reader) Graph {
 
 	var V, E int
 	var adj []TreeMap
-	for row := 0; scanner.Scan(); row++ {
+	if scanner.Scan() {
+		tokens := reg.FindAllString(scanner.Text(), -1)
+		if len(tokens) != 2 {
+			panic(fmt.Sprintf("read graph V & E faild at first row; required 2 tokens but got %d count", len(tokens)))
+		}
+		V, _ = strconv.Atoi(tokens[0])
+		E, _ = strconv.Atoi(tokens[1])
+		adj = make([]TreeMap, V)
+		for i := 0; i < len(adj); i++ {
+			adj[i] = NewTreeMap()
+		}
+	}
+	for row := 1; scanner.Scan(); row++ {
 		tokens := reg.FindAllString(scanner.Text(), -1)
 		if len(tokens) < 2 || len(tokens) > 3 {
-			panic(fmt.Sprintf("invalid data of row: %v, token count:%d", row, len(tokens)))
+			panic(fmt.Sprintf("read edge failed at row: %v; got %d tokens", row, len(tokens)))
 		}
-		if row == 0 {
-			V, _ = strconv.Atoi(tokens[0])
-			E, _ = strconv.Atoi(tokens[1])
-			adj = make([]TreeMap, V)
-			for i := 0; i < len(adj); i++ {
-				adj[i] = NewTreeMap()
-			}
-		} else {
-			v, _ := strconv.Atoi(tokens[0])
-			validateVertex(v, V)
-			w, _ := strconv.Atoi(tokens[1])
-			validateVertex(w, V)
-			if v == w {
-				panic("Self loop is detected!")
-			}
-			if adj[v].Contains(w) {
-				panic("Parallel edges detected!")
-			}
-			weight := 1
-			if len(tokens) == 3 {
-				weight, _ = strconv.Atoi(tokens[2])
-			}
-			adj[v].Put(w, weight)
-			adj[w].Put(v, weight)
+		v, _ := strconv.Atoi(tokens[0])
+		validateVertex(v, V)
+		w, _ := strconv.Atoi(tokens[1])
+		validateVertex(w, V)
+		if v == w {
+			panic("Self loop is detected!")
 		}
+		if adj[v].Contains(w) {
+			panic("Parallel edges detected!")
+		}
+		weight := 1
+		if len(tokens) == 3 {
+			weight, _ = strconv.Atoi(tokens[2])
+		}
+		adj[v].Put(w, weight)
+		adj[w].Put(v, weight)
 	}
 	return &AdjMap{
 		v:   V,
