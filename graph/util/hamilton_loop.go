@@ -71,7 +71,7 @@ func (h *HamiltonLoop) dfs(v, parent int) bool {
 
 // HasHamiltonLoop - 检查图是否存在哈密尔顿回路
 func (h *HamiltonLoop) HasHamiltonLoop() bool {
-	return h.pre[0] != -1
+	return h.pre[h.start] != -1
 }
 
 func (h *HamiltonLoop) Result() []int {
