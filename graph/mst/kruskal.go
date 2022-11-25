@@ -8,18 +8,11 @@ import (
 )
 
 // Kruskal 算法实现最小生成树 - Minimum Tree Spanning
-type Kruskal struct {
-	graph.WeightedGraph
-	mst []graph.WeightedEdge
-}
-
-func NewKruskal(g graph.WeightedGraph) *Kruskal {
+func Kruskal(g graph.WeightedGraph) ([]graph.WeightedEdge, bool) {
 	// 图中所有顶点必须是连通的
 	cc := dfs.NewCC(g)
 	if cc.Count() > 1 {
-		return &Kruskal{
-			WeightedGraph: g,
-		}
+		return nil, false
 	}
 
 	var edges graph.SortedWeightEdges
@@ -41,12 +34,5 @@ func NewKruskal(g graph.WeightedGraph) *Kruskal {
 			uf.UnionElements(edge.V, edge.W)
 		}
 	}
-	return &Kruskal{
-		WeightedGraph: g,
-		mst:           mst,
-	}
-}
-
-func (k *Kruskal) Result() []graph.WeightedEdge {
-	return k.mst
+	return mst, true
 }

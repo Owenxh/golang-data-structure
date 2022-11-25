@@ -59,11 +59,26 @@ func (s SortedWeightEdges) Len() int {
 }
 
 func (s SortedWeightEdges) Less(i, j int) bool {
-	return s[i].Weight-s[j].Weight <= 0
+	return s[i].Weight-s[j].Weight < 0
 }
 
 func (s SortedWeightEdges) Swap(i, j int) {
 	s[i], s[j] = s[j], s[i]
+}
+
+type WeightEdgesHeap struct {
+	SortedWeightEdges
+}
+
+func (s *WeightEdgesHeap) Push(x any) {
+	s.SortedWeightEdges = append(s.SortedWeightEdges, x.(WeightedEdge))
+}
+
+func (s *WeightEdgesHeap) Pop() any {
+	n := len(s.SortedWeightEdges)
+	x := s.SortedWeightEdges[n-1]
+	s.SortedWeightEdges = s.SortedWeightEdges[0 : n-1]
+	return &x
 }
 
 type TreeMap interface {
