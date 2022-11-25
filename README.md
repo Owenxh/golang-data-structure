@@ -90,9 +90,10 @@
 
 ### 图 - Graph
 
+* [图的数据结构表示](./graph/)
+
 **无向无权图**
 
-* [图的数据结构表示](./graph/)
 * [深度优先遍历 - DFS](./graph/dfs/)
 * [连通分量](./graph/dfs/cc_count.go)
 * [单一路径](./graph/dfs/path.go)
@@ -104,7 +105,8 @@
 
 **无向有权图**
 
-* [最小生成树 - Kruskal 算法](./graph/mst/kruskal.go)
+* [最小生成树 - Kruskal 算法](./graph/mst/kruskal.go) $O(ElogE)$
+* [最小生成树 - Prime 算法](./graph/mst/prime.go) $O(ElogE)$
 
 ### 其他
 
