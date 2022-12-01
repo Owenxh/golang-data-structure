@@ -111,4 +111,4 @@
 ### 其他
 
 * [二分查找 Binay Search](./search/binary_search.go)
-* [前缀和 Pre-Sum](./util/presum/)
+* [前缀和 Pre-Sum](./util/presum.go)

@@ -1,13 +1,12 @@
-package main
+package util
 
-import "fmt"
-
+// BuildPreSum 构建前缀和
 // preSum[i] 为 nums[0..i-1] 的区间和
 // nums[i, j] 的区间和为 preSum[j+1] - preSum[i]
 //
 // 例：nums[2, 3] 的区间和为 preSum[4] - preSum[2]
 // 即 nums[0, 3] 的区间和减去 nums[0, 1] 的区间和
-func buildPreSum(nums []int) []int {
+func BuildPreSum(nums []int) []int {
 	preSum := make([]int, len(nums)+1)
 
 	for i, v := range nums {
@@ -17,9 +16,9 @@ func buildPreSum(nums []int) []int {
 	return preSum
 }
 
-// 求解 nums 中区间和为 k 的子 slice 个数
-func rangeSumCountBad(nums []int, k int) int {
-	preSum := buildPreSum(nums)
+// RangeSumCountBad 求解 nums 中区间和为 k 的子 slice 个数
+func RangeSumCountBad(nums []int, k int) int {
+	preSum := BuildPreSum(nums)
 
 	var cnt int
 	for i := 1; i < len(preSum); i++ {
@@ -33,8 +32,8 @@ func rangeSumCountBad(nums []int, k int) int {
 	return cnt
 }
 
-// 求解 nums 中区间和为 k 的子 slice 个数
-func rangeSumCount(nums []int, k int) int {
+// RangeSumCount 求解 nums 中区间和为 k 的子 slice 个数
+func RangeSumCount(nums []int, k int) int {
 	var cnt int
 
 	// 保存前缀和与出现次数的映射
@@ -49,20 +48,7 @@ func rangeSumCount(nums []int, k int) int {
 		if c, ok := ht[preSum-k]; ok {
 			cnt += c
 		}
-		ht[preSum] += 1
+		ht[preSum]++
 	}
 	return cnt
-}
-
-func main() {
-	nums := []int{-2, 0, 2}
-
-	fmt.Println(buildPreSum(nums))
-
-	fmt.Println(rangeSumCount(nums, 0))
-	fmt.Println(rangeSumCount(nums, -2))
-
-	fmt.Println(rangeSumCountBad(nums, 0))
-	fmt.Println(rangeSumCountBad(nums, -2))
-
 }
