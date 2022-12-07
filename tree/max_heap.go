@@ -90,7 +90,7 @@ func (h *MaxHeap[E]) siftDown(i int) {
 	for leftChild(i) < h.arr.Size() {
 		j := leftChild(i)
 		if j+1 < h.Size() && h.get(j+1) > h.get(j) {
-			j += 1
+			j++
 		}
 		if h.get(i) > h.get(j) {
 			break
