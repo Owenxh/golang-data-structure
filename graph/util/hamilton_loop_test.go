@@ -1,4 +1,4 @@
-package loop
+package util
 
 import (
 	"io.vava.datastructure/graph"
@@ -48,9 +48,9 @@ func TestHamiltonLoop(t *testing.T) {
 	for _, text := range graphTexts {
 		g := graph.StringAsGraph(text)
 		hl := NewHamiltonLoop(g)
-		t.Log("Graph has hamilton loop?", hl.HasHamiltonLoop())
+		t.Log("Graph has hamilton util?", hl.HasHamiltonLoop())
 		if hl.HasHamiltonLoop() {
-			t.Log("Graph's hamilton loop: ", hl.Result())
+			t.Log("Graph's hamilton util: ", hl.Result())
 		}
 	}
 }

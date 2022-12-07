@@ -25,7 +25,7 @@ func quickSort3Ways(arr []int, l, r int) {
 	quickSort3Ways(arr, gt, r)
 }
 
-// loop invariant
+// util invariant
 // ① arr[l] 标定点元素
 // ② arr[l+1, lt] < v && arr[lt+1, i-1] == v && [gt, r] > v
 // ③ [i, gt-1] 待处理的区间
@@ -79,7 +79,7 @@ func quickSort2Ways(arr []int, l, r int) {
 	quickSort2Ways(arr, p+1, r)
 }
 
-// loop invariant
+// util invariant
 // ① arr[l] 标定点元素
 // ② arr[l+1, i-1] < v && [j+1, r] > v
 // ③ i <= j
@@ -173,7 +173,7 @@ func BubbleSort(arr []int) {
 				sorted = false
 			}
 		}
-		internalPrintAll("after loop", arr)
+		internalPrintAll("after util", arr)
 	}
 }
 
@@ -188,7 +188,7 @@ func SelectSort(arr []int) {
 			}
 		}
 		arr[i], arr[p] = arr[p], arr[i]
-		internalPrintAll("after loop", arr)
+		internalPrintAll("after util", arr)
 	}
 }
 
@@ -208,7 +208,7 @@ func InsertSort(arr []int) {
 		// 找到 p 在排序后的数组中的位置
 		arr[p] = v
 
-		internalPrintAll("after loop", arr)
+		internalPrintAll("after util", arr)
 	}
 }
 
@@ -226,7 +226,7 @@ func quickSort(arr []int, l, r int) {
 	quickSort(arr, p+1, r)
 }
 
-// loop invariant
+// util invariant
 // [l+1, p] < v && [p + 1, i-1] > v
 // [i, r] 待处理的区间
 func partition(arr []int, l, r int) int {

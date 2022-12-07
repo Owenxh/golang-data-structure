@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"io"
+	"io.vava.datastructure/util"
 	"net/http"
 	"net/url"
 	"os"
@@ -74,7 +75,7 @@ func ReadSymbolGraph(src io.Reader, delim string) *SymbolGraph {
 	// 构建图
 	g := &AdjMap{
 		v:   len(st),
-		adj: NewTreeMaps(len(st)),
+		adj: util.NewTreeMaps(len(st)),
 	}
 
 	// 向图中添加边

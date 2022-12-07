@@ -1,4 +1,4 @@
-package loop
+package util
 
 import (
 	"io.vava.datastructure/graph"
@@ -35,9 +35,9 @@ func TestEulerLoop(t *testing.T) {
 	for _, text := range graphTexts {
 		g := graph.StringAsGraph(text)
 		hl := NewEulerLoop(g)
-		t.Log("Graph has euler loop?", hl.HasEulerLoop())
+		t.Log("Graph has euler util?", hl.HasEulerLoop())
 		if hl.HasEulerLoop() {
-			t.Log("Graph's euler loop: ", hl.Result())
+			t.Log("Graph's euler util: ", hl.Result())
 		}
 	}
 }

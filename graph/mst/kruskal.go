@@ -15,7 +15,7 @@ func Kruskal(g graph.WeightedGraph) ([]graph.WeightedEdge, bool) {
 		return nil, false
 	}
 
-	var edges graph.SortedWeightEdges
+	var edges []graph.WeightedEdge
 	for v := 0; v < g.V(); v++ {
 		for _, w := range g.Adj(v) {
 			if v < w {
@@ -23,7 +23,9 @@ func Kruskal(g graph.WeightedGraph) ([]graph.WeightedEdge, bool) {
 			}
 		}
 	}
-	sort.Sort(edges)
+	sort.Slice(edges, func(i, j int) bool {
+		return graph.LessWeightedEdge(edges[i], edges[j])
+	})
 
 	var mst []graph.WeightedEdge
 	// 并查集

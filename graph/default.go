@@ -5,6 +5,7 @@ import (
 	"bytes"
 	"fmt"
 	"io"
+	"io.vava.datastructure/util"
 	"os"
 	"regexp"
 	"strconv"
@@ -15,7 +16,7 @@ import (
 type AdjMap struct {
 	v   int
 	e   int
-	adj []TreeMap
+	adj []util.TreeMap
 }
 
 func (g *AdjMap) ValidateVertex(v int) {
@@ -80,9 +81,9 @@ func (g *AdjMap) String() string {
 }
 
 func (g *AdjMap) Clone() Graph {
-	dstAdj := make([]TreeMap, g.V())
+	dstAdj := make([]util.TreeMap, g.V())
 	for v := 0; v < g.V(); v++ {
-		dstAdj[v] = NewTreeMap()
+		dstAdj[v] = util.NewTreeMap()
 		for _, entry := range g.adj[v].EntrySet() {
 			dstAdj[v].Put(entry.K, entry.V)
 		}
@@ -146,7 +147,7 @@ func readAdjMap(src io.Reader) *AdjMap {
 	scanner.Split(bufio.ScanLines)
 
 	var V, E int
-	var adj []TreeMap
+	var adj []util.TreeMap
 	if scanner.Scan() {
 		tokens := reg.FindAllString(scanner.Text(), -1)
 		if len(tokens) != 2 {
@@ -154,9 +155,9 @@ func readAdjMap(src io.Reader) *AdjMap {
 		}
 		V, _ = strconv.Atoi(tokens[0])
 		E, _ = strconv.Atoi(tokens[1])
-		adj = make([]TreeMap, V)
+		adj = make([]util.TreeMap, V)
 		for i := 0; i < len(adj); i++ {
-			adj[i] = NewTreeMap()
+			adj[i] = util.NewTreeMap()
 		}
 	}
 	for row := 1; scanner.Scan(); row++ {
@@ -169,7 +170,7 @@ func readAdjMap(src io.Reader) *AdjMap {
 		w, _ := strconv.Atoi(tokens[1])
 		validateVertex(w, V)
 		if v == w {
-			panic("Self loop is detected!")
+			panic("Self util is detected!")
 		}
 		if adj[v].Contains(w) {
 			panic("Parallel edges detected!")
