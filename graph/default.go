@@ -89,8 +89,6 @@ func (g *AdjMap) Clone() Graph {
 		}
 	}
 
-	for v := 0; v < g.V(); v++ {
-	}
 	return &AdjMap{
 		v:   g.V(),
 		e:   g.E(),

@@ -1,38 +1,8 @@
 package util
 
-import "io.vava.datastructure/tree"
-
-type Heap[T any] struct {
-	Slice  []T
-	IsLess func(a, b T) bool
-}
-
-func NewHeap[T any](less func(a, b T) bool) *Heap[T] {
-	return &Heap[T]{IsLess: less}
-}
-
-func (h *Heap[T]) Len() int {
-	return len(h.Slice)
-}
-
-func (h *Heap[T]) Less(i, j int) bool {
-	return h.IsLess(h.Slice[i], h.Slice[j])
-}
-
-func (h *Heap[T]) Swap(i, j int) {
-	h.Slice[i], h.Slice[j] = h.Slice[j], h.Slice[i]
-}
-
-func (h *Heap[T]) Push(x any) {
-	h.Slice = append(h.Slice, x.(T))
-}
-
-func (h *Heap[T]) Pop() any {
-	n := len(h.Slice)
-	x := h.Slice[n-1]
-	h.Slice = h.Slice[0 : n-1]
-	return &x
-}
+import (
+	"io.vava.datastructure/tree"
+)
 
 type TreeMap interface {
 	Size() int

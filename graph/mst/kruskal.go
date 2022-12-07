@@ -15,11 +15,11 @@ func Kruskal(g graph.WeightedGraph) ([]graph.WeightedEdge, bool) {
 		return nil, false
 	}
 
-	var edges []graph.WeightedEdge
+	var edges []*graph.WeightedEdge
 	for v := 0; v < g.V(); v++ {
 		for _, w := range g.Adj(v) {
 			if v < w {
-				edges = append(edges, graph.WeightedEdge{V: v, W: w, Weight: g.GetWeight(v, w)})
+				edges = append(edges, &graph.WeightedEdge{V: v, W: w, Weight: g.GetWeight(v, w)})
 			}
 		}
 	}
@@ -32,7 +32,7 @@ func Kruskal(g graph.WeightedGraph) ([]graph.WeightedEdge, bool) {
 	uf := tree.NewUnionFind5(g.V())
 	for _, edge := range edges {
 		if !uf.IsConnected(edge.V, edge.W) {
-			mst = append(mst, edge)
+			mst = append(mst, *edge)
 			uf.UnionElements(edge.V, edge.W)
 		}
 	}

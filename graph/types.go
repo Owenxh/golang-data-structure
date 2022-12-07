@@ -46,7 +46,7 @@ type WeightedEdge struct {
 	Weight int
 }
 
-func LessWeightedEdge(a, b WeightedEdge) bool {
+func LessWeightedEdge(a, b *WeightedEdge) bool {
 	return a.Weight-b.Weight < 0
 }
 
@@ -59,6 +59,6 @@ type Node struct {
 	Dis int // Dis 距离
 }
 
-func LessNode(a, b Node) bool {
+func LessNode(a, b *Node) bool {
 	return a.Dis-b.Dis < 0
 }
