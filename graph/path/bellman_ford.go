@@ -14,10 +14,10 @@ type BellmanFord struct {
 	S int
 	// 起点 S 至各顶点的距离
 	Dis []int
-	// 标记顶点是否已经求得最短距离
-	Visited []bool
 	// 从起点到顶点的最短路径上的前一个顶点
 	Pre []int
+	// 不能有负权环
+	HasNegCycle bool
 }
 
 func NewBellmanFord(g graph.WeightedGraph, s int) *BellmanFord {
@@ -31,30 +31,35 @@ func NewBellmanFord(g graph.WeightedGraph, s int) *BellmanFord {
 	}
 	// 起点的距离到自己为 0
 	dis[s] = 0
-	visited := make([]bool, g.V())
+
 	pre := make([]int, g.V())
+	for v := 0; v < g.V(); v++ {
+		pre[v] = -1
+	}
 
-	// 使用最小堆存储各顶点与起点间的距离
-	pq := util.NewPriorityQueue[*graph.Node](graph.LessNode)
-	pq.Push(&graph.Node{V: s, Dis: dis[s]})
+	var hasNegCycle bool
 
-	for !pq.IsEmpty() {
-		cur := pq.Pop().V
-
-		// 跳过已经求得出短距离的顶点
-		if visited[cur] {
-			continue
+	// 最多做 V-1 轮松弛（Relaxation）操作，但可能在没有做完 V-1 次松弛操作就已经求得所有点的最短路
+	// 对所有的边做一次松驰操作，则求出了所有的点，经过的边数最多为 1 的最短路
+	// 对所有的边再做一次松驰操作，则求出了所有的点，经过的边数最多为 2 的最短路
+	// 对所有的边做 V-1 次松驰操作，则求出了所有的点，经过的边数最多为 V-1 的最短路
+	for pass := 1; pass < g.V(); pass++ {
+		for v := 0; v < g.V(); v++ {
+			for _, w := range g.Adj(v) {
+				if dis[v] != math.MaxInt32 && dis[v]+g.GetWeight(v, w) < dis[w] {
+					dis[w] = dis[v] + g.GetWeight(v, w)
+					pre[w] = v
+				}
+			}
 		}
+	}
 
-		// 堆中取的第一个顶点，当前计算出的该顶点与起点间的距离即为起点到它的最短距离；
-		// 因为如果从其他顶点回到该顶点求得的距离肯定大于当前计算结果，不可能得到更小的值了
-		visited[cur] = true
-
-		for _, w := range g.Adj(cur) {
-			if dis[cur]+g.GetWeight(cur, w) < dis[w] {
-				dis[w] = dis[cur] + g.GetWeight(cur, w)
-				pq.Push(&graph.Node{V: w, Dis: dis[w]})
-				pre[w] = cur
+	// 再做一轮弛操作，如果某个点的最短路还能变得更小，则说明存在负权环
+	// 对存在负权环的图求解最短路是没有意义的
+	for v := 0; v < g.V(); v++ {
+		for _, w := range g.Adj(v) {
+			if dis[v] != math.MaxInt32 && dis[v]+g.GetWeight(v, w) < dis[w] {
+				hasNegCycle = true
 			}
 		}
 	}
@@ -63,7 +68,32 @@ func NewBellmanFord(g graph.WeightedGraph, s int) *BellmanFord {
 		WeightedGraph: g,
 		S:             s,
 		Dis:           dis,
-		Visited:       visited,
 		Pre:           pre,
+		HasNegCycle:   hasNegCycle,
 	}
+}
+
+func (d *BellmanFord) IsConnectedTo(v int) bool {
+	d.ValidateVertex(v)
+	return d.Dis[v] != math.MaxInt32
+}
+
+func (d *BellmanFord) DistTo(v int) int {
+	d.ValidateVertex(v)
+	return d.Dis[v]
+}
+
+func (d *BellmanFord) Path(t int) []int {
+	if !d.IsConnectedTo(t) {
+		return nil
+	}
+
+	var paths []int
+	for cur := t; cur != d.S; cur = d.Pre[cur] {
+		paths = append(paths, cur)
+	}
+	paths = append(paths, d.S)
+
+	util.ReverseSlice(paths)
+	return paths
 }

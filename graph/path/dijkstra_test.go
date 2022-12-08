@@ -25,5 +25,6 @@ func TestDijkstra(t *testing.T) {
 			fmt.Printf("Distance %d -> %d is %d, ", dij.S, v, dij.DistTo(v))
 			fmt.Printf("paths are %d\n", dij.Path(v))
 		}
+		fmt.Println()
 	}
 }

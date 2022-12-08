@@ -1,6 +1,7 @@
 package util
 
 import (
+	"math"
 	"math/rand"
 	"reflect"
 	"runtime"
@@ -12,15 +13,17 @@ import (
 )
 
 func RandomIntSlice(length int) []int {
-	res := make([]int, length, length)
+	rand.Seed(time.Now().UnixNano())
+	res := make([]int, length)
 	for i := 0; i < length; i++ {
-		res[i] = rand.Intn(1<<31 - 1)
+		res[i] = rand.Intn(math.MaxInt32)
 	}
 	return res
 }
 
 func RandomIntSliceWithBound(length, bound int) []int {
-	res := make([]int, length, length)
+	rand.Seed(time.Now().UnixNano())
+	res := make([]int, length)
 	for i := 0; i < length; i++ {
 		res[i] = rand.Intn(bound)
 	}
@@ -28,7 +31,7 @@ func RandomIntSliceWithBound(length, bound int) []int {
 }
 
 func ReversedIntSlice(length int) []int {
-	res := make([]int, length, length)
+	res := make([]int, length)
 	for i := 0; i < length; i++ {
 		res[i] = length - i - 1
 	}
@@ -36,7 +39,7 @@ func ReversedIntSlice(length int) []int {
 }
 
 func OrderedIntSlice(length, bound int) []int {
-	res := make([]int, length, length)
+	res := make([]int, length)
 	for i := 0; i < length; i++ {
 		res[i] = i
 	}
@@ -44,9 +47,9 @@ func OrderedIntSlice(length, bound int) []int {
 }
 
 func RandomIntSlices(sizes ...int) [][]int {
-	var data [][]int
-	for _, size := range sizes {
-		data = append(data, RandomIntSliceWithBound(size, size))
+	data := make([][]int, len(sizes))
+	for i, size := range sizes {
+		data[i] = RandomIntSliceWithBound(size, size)
 	}
 	return data
 }
@@ -80,7 +83,7 @@ func TestSort[E types.Comparable](t *testing.T, sorter Sorter[E], data ...[]E) {
 		t.Logf("sort slice(length %9d) using %16v", len(arr), name)
 		start := time.Now()
 		sorter(arr)
-		cost := time.Now().Sub(start)
+		cost := time.Since(start)
 
 		t.Logf("sort slice(length %9d) using %16v cost %v", len(arr), name, cost)
 		VerifyIsSorted(arr)
@@ -92,16 +95,16 @@ func TestSortWithName[E types.Comparable](t *testing.T, name string, sorter func
 		t.Logf("sort slice(length %9d) using %16v", len(arr), name)
 		start := time.Now()
 		sorter(arr)
-		cost := time.Now().Sub(start)
+		cost := time.Since(start)
 		t.Logf("sort slice(length %9d) using %16v cost %v", len(arr), name, cost)
 		VerifyIsSorted(arr)
 	}
 }
 
 func Swap[E any](arr []E, i, j int) {
-	//t := arr[i]
-	//arr[i] = arr[j]
-	//arr[j] = t
+	// t := arr[i]
+	// arr[i] = arr[j]
+	// arr[j] = t
 	arr[i], arr[j] = arr[j], arr[i]
 }
 
