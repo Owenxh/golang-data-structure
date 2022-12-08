@@ -1,4 +1,4 @@
-package util
+package path
 
 import (
 	"fmt"
@@ -22,7 +22,7 @@ func TestDijkstra(t *testing.T) {
 		g := graph.StringAsWeightedGraph(text)
 		dij := NewDijkstra(g, 0)
 		for v := 0; v < g.V(); v++ {
-			fmt.Printf("Distance from %d to %d is %d, ", dij.S, v, dij.DistTo(v))
+			fmt.Printf("Distance %d -> %d is %d, ", dij.S, v, dij.DistTo(v))
 			fmt.Printf("paths are %d\n", dij.Path(v))
 		}
 	}

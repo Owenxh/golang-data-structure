@@ -168,7 +168,7 @@ func readAdjMap(src io.Reader) *AdjMap {
 		w, _ := strconv.Atoi(tokens[1])
 		validateVertex(w, V)
 		if v == w {
-			panic("Self util is detected!")
+			panic("Self path is detected!")
 		}
 		if adj[v].Contains(w) {
 			panic("Parallel edges detected!")

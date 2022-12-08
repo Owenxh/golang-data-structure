@@ -1,4 +1,4 @@
-package util
+package path
 
 import (
 	"io.vava.datastructure/graph"
