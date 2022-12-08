@@ -107,6 +107,7 @@
 
 * [最小生成树 - Kruskal 算法](./graph/mst/kruskal.go) $O(ElogE)$
 * [最小生成树 - Prime 算法](./graph/mst/prime.go) $O(ElogE)$
+* [迪杰斯特拉 - Dijkstra 算法](./graph/mst/prime.go) $O(ElogE)$
 
 ### 其他
 
