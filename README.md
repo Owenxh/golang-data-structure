@@ -100,8 +100,8 @@
 * [环检测](./graph/dfs/cycle_detection.go)
 * [二分图检测](./graph/dfs/bipartition_detection.go)
 * [广度优先遍历 - BFS](./graph/bfs/)
-* [哈密尔顿回路 - Hamilton Loop](graph/path/hamilton_loop.go)
-* [欧拉回路 - Euler Loop](graph/path/euler_loop.go)
+* [哈密尔顿回路 - 回溯](graph/path/hamilton_loop.go)
+* [欧拉回路 - Hierholzer 算法](graph/path/euler_loop.go)
 
 **无向有权图**
 
