@@ -23,6 +23,9 @@ type Graph interface {
 	ValidateVertex(v int)
 	// Degree returns the degree of vertex v
 	Degree(v int) int
+	// IsDirected returns true if directed graph
+	IsDirected() bool
+	// Cloneable graph
 	Cloneable[Graph]
 }
 
