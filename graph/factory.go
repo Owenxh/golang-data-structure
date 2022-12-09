@@ -29,14 +29,14 @@ func FileAsWeightedGraph(file string, weighted bool, directed bool) *AdjMap {
 }
 
 func TextAsGraph(src string) Graph {
-	return TextAsAdjMap(src, false, false)
+	return ParseGraph(src, false, false)
 }
 
 func TextAsWeightedGraph(src string) WeightedGraph {
-	return TextAsAdjMap(src, true, false)
+	return ParseGraph(src, true, false)
 }
 
-func TextAsAdjMap(src string, weighted bool, directed bool) *AdjMap {
+func ParseGraph(src string, weighted bool, directed bool) *AdjMap {
 	return buildAdjMap(bytes.NewReader([]byte(src)), weighted, directed)
 }
 
