@@ -6,8 +6,8 @@ import (
 	"testing"
 )
 
-func TestBellmanFord_DistTo(t *testing.T) {
-	graphTexts := []string{DijkstraGText}
+func TestBellmanFord(t *testing.T) {
+	graphTexts := []string{DijkstraGraphText}
 	for _, text := range graphTexts {
 		g := graph.StringAsWeightedGraph(text)
 		bf := NewBellmanFord(g, 0)

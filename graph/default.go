@@ -140,7 +140,7 @@ func readAdjMap(src io.Reader) *AdjMap {
 		panic("invalid io.Reader")
 	}
 
-	reg := regexp.MustCompile(`\d+`)
+	reg := regexp.MustCompile(`-?\d+`)
 	scanner := bufio.NewScanner(src)
 	scanner.Split(bufio.ScanLines)
 

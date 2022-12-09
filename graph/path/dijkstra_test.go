@@ -1,12 +1,11 @@
 package path
 
 import (
-	"fmt"
 	"io.vava.datastructure/graph"
 	"testing"
 )
 
-const DijkstraGText = `5 8
+const DijkstraGraphText = `5 8
 					0 1 4
 					0 2 2
 					1 2 1
@@ -17,14 +16,12 @@ const DijkstraGText = `5 8
 					3 4 1`
 
 func TestDijkstra(t *testing.T) {
-	graphTexts := []string{DijkstraGText}
+	graphTexts := []string{DijkstraGraphText}
 	for _, text := range graphTexts {
 		g := graph.StringAsWeightedGraph(text)
 		dij := NewDijkstra(g, 0)
 		for v := 0; v < g.V(); v++ {
-			fmt.Printf("Distance %d -> %d is %d, ", dij.S, v, dij.DistTo(v))
-			fmt.Printf("paths are %d\n", dij.Path(v))
+			t.Logf("Distance %d -> %d is %d, paths: %v ", dij.S, v, dij.DistTo(v), dij.Path(v))
 		}
-		fmt.Println()
 	}
 }

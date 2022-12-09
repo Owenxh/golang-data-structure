@@ -97,3 +97,7 @@ func (d *BellmanFord) Path(t int) []int {
 	util.ReverseSlice(paths)
 	return paths
 }
+
+func (d *BellmanFord) HasNegativeCycle() bool {
+	return d.HasNegCycle
+}
