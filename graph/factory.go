@@ -12,14 +12,10 @@ import (
 )
 
 func FileAsGraph(file string) Graph {
-	return FileAsWeightedGraph(file, false)
+	return FileAsWeightedGraph(file, false, false)
 }
 
-func FileAsDirectedGraph(file string) Graph {
-	return FileAsWeightedGraph(file, true)
-}
-
-func FileAsWeightedGraph(file string, directed bool) WeightedGraph {
+func FileAsWeightedGraph(file string, weighted bool, directed bool) *AdjMap {
 	f, err := os.Open(file)
 	if err != nil {
 		panic(err)
@@ -29,30 +25,22 @@ func FileAsWeightedGraph(file string, directed bool) WeightedGraph {
 			fmt.Print(err)
 		}
 	}()
-	return ReadWeightedGraph(f, directed)
+	return buildAdjMap(f, weighted, directed)
 }
 
-func StringAsGraph(src string) Graph {
-	return StringAsWeightedGraph(src, false)
+func TextAsGraph(src string) Graph {
+	return TextAsAdjMap(src, false, false)
 }
 
-func StringAsDirectedGraph(src string) Graph {
-	return StringAsWeightedGraph(src, true)
+func TextAsWeightedGraph(src string) WeightedGraph {
+	return TextAsAdjMap(src, true, false)
 }
 
-func StringAsWeightedGraph(src string, directed bool) WeightedGraph {
-	return ReadWeightedGraph(bytes.NewReader([]byte(src)), directed)
+func TextAsAdjMap(src string, weighted bool, directed bool) *AdjMap {
+	return buildAdjMap(bytes.NewReader([]byte(src)), weighted, directed)
 }
 
-func ReadGraph(src io.Reader) Graph {
-	return readAdjMap(src, false)
-}
-
-func ReadWeightedGraph(src io.Reader, directed bool) WeightedGraph {
-	return readAdjMap(src, directed)
-}
-
-func readAdjMap(src io.Reader, directed bool) *AdjMap {
+func buildAdjMap(src io.Reader, weighted bool, directed bool) *AdjMap {
 	if src == nil {
 		panic("invalid io.Reader")
 	}
@@ -77,9 +65,13 @@ func readAdjMap(src io.Reader, directed bool) *AdjMap {
 	}
 	for row := 1; scanner.Scan(); row++ {
 		tokens := reg.FindAllString(scanner.Text(), -1)
-		if len(tokens) < 2 || len(tokens) > 3 {
-			panic(fmt.Sprintf("read edge failed at row: %v; got %d tokens", row, len(tokens)))
+		cnt := len(tokens)
+		if weighted && cnt != 3 {
+			panic(fmt.Sprintf("read weighted edge failed at row: %v; got %d tokens", row, cnt))
+		} else if !weighted && cnt != 2 {
+			panic(fmt.Sprintf("read unweighted edge failed at row: %v; got %d tokens", row, cnt))
 		}
+
 		v, _ := strconv.Atoi(tokens[0])
 		validateVertex(v, V)
 		w, _ := strconv.Atoi(tokens[1])
@@ -91,7 +83,7 @@ func readAdjMap(src io.Reader, directed bool) *AdjMap {
 			panic("Parallel edges detected!")
 		}
 		weight := 1
-		if len(tokens) == 3 {
+		if weighted {
 			weight, _ = strconv.Atoi(tokens[2])
 		}
 		adj[v].Put(w, weight)

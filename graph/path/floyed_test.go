@@ -19,7 +19,7 @@ const NegCycleGraphText = `5 8
 func TestFloyed(t *testing.T) {
 	texts := []string{DijkstraGraphText}
 	for _, text := range texts {
-		g := graph.StringAsWeightedGraph(text)
+		g := graph.TextAsWeightedGraph(text)
 		f := NewFloyed(g)
 		if f.HasNegativeCycle() {
 			log.Fatal("Negative cycle exist")
@@ -33,7 +33,7 @@ func TestFloyed(t *testing.T) {
 }
 
 func TestFloyed_HasNegativeCycle(t *testing.T) {
-	g := graph.StringAsWeightedGraph(NegCycleGraphText)
+	g := graph.TextAsWeightedGraph(NegCycleGraphText)
 	f := NewFloyed(g)
 	if !f.HasNegativeCycle() {
 		t.Fatal("Negative cycle not identified")

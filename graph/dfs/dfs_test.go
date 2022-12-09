@@ -47,7 +47,7 @@ func TestCycleDetection(t *testing.T) {
 			 1 3
 			 1 4
 			 2 6`
-	g2 := graph.StringAsGraph(text)
+	g2 := graph.TextAsGraph(text)
 	t.Log("Graph has cycle?", NewCycleDetection(g2).HasCycle())
 
 	text = `4 4
@@ -55,7 +55,7 @@ func TestCycleDetection(t *testing.T) {
 			0 3
 			1 2
 			2 3`
-	g3 := graph.StringAsGraph(text)
+	g3 := graph.TextAsGraph(text)
 	t.Log("Graph has cycle?", NewCycleDetection(g3).HasCycle())
 }
 
@@ -67,7 +67,7 @@ func TestBipartitionDetection(t *testing.T) {
 			1 4
 			2 3
 			2 6`
-	g := graph.StringAsGraph(text)
+	g := graph.TextAsGraph(text)
 	t.Log("Graph is bipartite?", NewBipartitionDetection(g).IsBipartite())
 
 	text = `4 6
@@ -77,7 +77,7 @@ func TestBipartitionDetection(t *testing.T) {
 			1 2
 			1 3
 			2 3`
-	g = graph.StringAsGraph(text)
+	g = graph.TextAsGraph(text)
 	t.Log("Graph is bipartite?", NewBipartitionDetection(g).IsBipartite())
 
 	text = `4 4
@@ -85,7 +85,7 @@ func TestBipartitionDetection(t *testing.T) {
 			0 3
 			1 2
 			2 3`
-	g = graph.StringAsGraph(text)
+	g = graph.TextAsGraph(text)
 	t.Log("Graph is bipartite?", NewBipartitionDetection(g).IsBipartite())
 }
 
@@ -138,7 +138,7 @@ const (
 func TestFindBridges(t *testing.T) {
 	graphTexts := []string{g1Text, g2Text, g3Text, treeText}
 	for _, text := range graphTexts {
-		g := graph.StringAsGraph(text)
+		g := graph.TextAsGraph(text)
 		t.Log("Graph's bridges?", NewFindBridges(g).Result())
 	}
 }
@@ -146,7 +146,7 @@ func TestFindBridges(t *testing.T) {
 func TestFindCutPoints(t *testing.T) {
 	graphTexts := []string{g1Text, g2Text, g3Text, treeText}
 	for _, text := range graphTexts {
-		g := graph.StringAsGraph(text)
+		g := graph.TextAsGraph(text)
 		t.Log("Graph's cut points?", NewFindCutPoints(g).Result())
 	}
 }
@@ -154,7 +154,7 @@ func TestFindCutPoints(t *testing.T) {
 func TestFindCutPointsVerbose(t *testing.T) {
 	graphTexts := []string{g3Text}
 	for _, text := range graphTexts {
-		g := graph.StringAsGraph(text)
+		g := graph.TextAsGraph(text)
 		t.Log("Graph's cut points?", NewFindCutPointsWithLog(g, true).Result())
 	}
 }

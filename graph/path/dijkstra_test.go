@@ -18,7 +18,7 @@ const DijkstraGraphText = `5 8
 func TestDijkstra(t *testing.T) {
 	graphTexts := []string{DijkstraGraphText}
 	for _, text := range graphTexts {
-		g := graph.StringAsWeightedGraph(text)
+		g := graph.TextAsWeightedGraph(text)
 		dij := NewDijkstra(g, 0)
 		for v := 0; v < g.V(); v++ {
 			t.Logf("Distance %d -> %d is %d, paths: %v ", dij.S, v, dij.DistTo(v), dij.Path(v))

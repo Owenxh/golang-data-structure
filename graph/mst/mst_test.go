@@ -21,7 +21,7 @@ const MstGText = `7 12
 				4 6 7`
 
 func TestKruskal(t *testing.T) {
-	g := graph.StringAsWeightedGraph(MstGText)
+	g := graph.TextAsWeightedGraph(MstGText)
 	fmt.Println(g)
 	edges, ok := Kruskal(g)
 	if !ok {
@@ -31,7 +31,7 @@ func TestKruskal(t *testing.T) {
 }
 
 func TestPrime(t *testing.T) {
-	g := graph.StringAsWeightedGraph(MstGText)
+	g := graph.TextAsWeightedGraph(MstGText)
 	fmt.Println(g)
 	edges, ok := Prime(g)
 	if !ok {

@@ -46,7 +46,7 @@ const HamiltonG2Text = `20 30
 func TestHamiltonLoop(t *testing.T) {
 	graphTexts := []string{HamiltonG1Text, HamiltonG2Text}
 	for _, text := range graphTexts {
-		g := graph.StringAsGraph(text)
+		g := graph.TextAsGraph(text)
 		hl := NewHamiltonLoop(g)
 		t.Log("Graph has hamilton path?", hl.HasHamiltonLoop())
 		if hl.HasHamiltonLoop() {

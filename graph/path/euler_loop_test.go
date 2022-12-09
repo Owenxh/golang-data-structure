@@ -33,7 +33,7 @@ const EulerG2Text = `11 15
 func TestEulerLoop(t *testing.T) {
 	graphTexts := []string{EulerG1Text, EulerG2Text}
 	for _, text := range graphTexts {
-		g := graph.StringAsGraph(text)
+		g := graph.TextAsGraph(text)
 		hl := NewEulerLoop(g)
 		t.Log("Graph has euler path?", hl.HasEulerLoop())
 		if hl.HasEulerLoop() {

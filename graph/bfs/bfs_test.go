@@ -55,7 +55,7 @@ func (b *BFSVisitor) bfs(s int) {
 }
 
 func TestBFSVisitor(t *testing.T) {
-	g := graph.StringAsGraph(TestGraphString)
+	g := graph.TextAsGraph(TestGraphString)
 	BFS(g, func(v int) {
 		fmt.Print(v, " ")
 	})
