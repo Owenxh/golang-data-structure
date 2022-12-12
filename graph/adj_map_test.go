@@ -2,8 +2,9 @@ package graph
 
 import (
 	"fmt"
-	"io.vava.datastructure/util"
 	"testing"
+
+	"io.vava.datastructure/util"
 )
 
 func TestAdjSet(t *testing.T) {

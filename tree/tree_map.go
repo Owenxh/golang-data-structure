@@ -1,8 +1,4 @@
-package util
-
-import (
-	"io.vava.datastructure/tree"
-)
+package tree
 
 type TreeMap interface {
 	Size() int
@@ -20,7 +16,7 @@ type Entry struct {
 }
 
 type treeMap struct {
-	delegate *tree.AVLTree[int, int]
+	delegate *AVLTree[int, int]
 }
 
 func (t *treeMap) Size() int {
@@ -77,7 +73,7 @@ func (t *treeSet) Add(k int) {
 
 func NewTreeMap() TreeMap {
 	return &treeMap{
-		delegate: &tree.AVLTree[int, int]{},
+		delegate: &AVLTree[int, int]{},
 	}
 }
 

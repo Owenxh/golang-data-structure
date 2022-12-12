@@ -5,10 +5,11 @@ import (
 	"bytes"
 	"fmt"
 	"io"
-	"io.vava.datastructure/util"
 	"os"
 	"regexp"
 	"strconv"
+
+	"io.vava.datastructure/tree"
 )
 
 func FileAsGraph(file string) Graph {
@@ -50,7 +51,7 @@ func buildAdjMap(src io.Reader, weighted bool, directed bool) *AdjMap {
 	scanner.Split(bufio.ScanLines)
 
 	var V, E int
-	var adj []util.TreeMap
+	var adj []tree.TreeMap
 	if scanner.Scan() {
 		tokens := reg.FindAllString(scanner.Text(), -1)
 		if len(tokens) != 2 {
@@ -58,9 +59,9 @@ func buildAdjMap(src io.Reader, weighted bool, directed bool) *AdjMap {
 		}
 		V, _ = strconv.Atoi(tokens[0])
 		E, _ = strconv.Atoi(tokens[1])
-		adj = make([]util.TreeMap, V)
+		adj = make([]tree.TreeMap, V)
 		for i := 0; i < len(adj); i++ {
-			adj[i] = util.NewTreeMap()
+			adj[i] = tree.NewTreeMap()
 		}
 	}
 	for row := 1; scanner.Scan(); row++ {

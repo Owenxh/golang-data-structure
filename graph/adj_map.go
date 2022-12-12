@@ -2,15 +2,16 @@ package graph
 
 import (
 	"fmt"
-	"io.vava.datastructure/util"
 	"strings"
+
+	"io.vava.datastructure/tree"
 )
 
 // AdjMap Adjacency Tree Map
 type AdjMap struct {
 	v        int
 	e        int
-	adj      []util.TreeMap
+	adj      []tree.TreeMap
 	directed bool
 }
 
@@ -86,9 +87,9 @@ func (g *AdjMap) String() string {
 }
 
 func (g *AdjMap) Clone() Graph {
-	dstAdj := make([]util.TreeMap, g.V())
+	dstAdj := make([]tree.TreeMap, g.V())
 	for v := 0; v < g.V(); v++ {
-		dstAdj[v] = util.NewTreeMap()
+		dstAdj[v] = tree.NewTreeMap()
 		for _, entry := range g.adj[v].EntrySet() {
 			dstAdj[v].Put(entry.K, entry.V)
 		}

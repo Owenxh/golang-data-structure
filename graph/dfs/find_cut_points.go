@@ -2,8 +2,9 @@ package dfs
 
 import (
 	"fmt"
-	"io.vava.datastructure/util"
 	"strings"
+
+	"io.vava.datastructure/tree"
 
 	"io.vava.datastructure/graph"
 )
@@ -14,7 +15,7 @@ type FindCutPoints struct {
 	count   int
 	order   []int
 	low     []int
-	res     util.TreeSet
+	res     tree.TreeSet
 }
 
 func NewFindCutPoints(g graph.Graph) *FindCutPoints {
@@ -27,7 +28,7 @@ func NewFindCutPointsWithLog(g graph.Graph, verbose bool) *FindCutPoints {
 		visited: make([]bool, g.V()),
 		order:   make([]int, g.V()),
 		low:     make([]int, g.V()),
-		res:     util.NewTreeSet(),
+		res:     tree.NewTreeSet(),
 	}
 	for v := 0; v < g.V(); v++ {
 		if !f.visited[v] {

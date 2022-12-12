@@ -4,12 +4,13 @@ import (
 	"bufio"
 	"fmt"
 	"io"
-	"io.vava.datastructure/util"
 	"net/http"
 	"net/url"
 	"os"
 	"strings"
 	"time"
+
+	"io.vava.datastructure/tree"
 )
 
 type SymbolGraph struct {
@@ -75,7 +76,7 @@ func ReadSymbolGraph(src io.Reader, delim string) *SymbolGraph {
 	// 构建图
 	g := &AdjMap{
 		v:   len(st),
-		adj: util.NewTreeMaps(len(st)),
+		adj: tree.NewTreeMaps(len(st)),
 	}
 
 	// 向图中添加边
