@@ -2,18 +2,18 @@ package dfs
 
 import "io.vava.datastructure/graph"
 
-type CycleDetection struct {
+type DirectedCycleDetection struct {
 	graph.Graph
 	visited  []bool
 	hasCycle bool
 }
 
-func NewCycleDetection(g graph.Graph) *CycleDetection {
-	if g.IsDirected() {
-		panic("CycleDetection only works in undirected graph.")
+func NewDirectedCycleDetection(g graph.Graph) *DirectedCycleDetection {
+	if !g.IsDirected() {
+		panic("CycleDetection only works in directed graph.")
 	}
 
-	res := &CycleDetection{
+	res := &DirectedCycleDetection{
 		Graph:   g,
 		visited: make([]bool, g.V()),
 	}
@@ -28,7 +28,7 @@ func NewCycleDetection(g graph.Graph) *CycleDetection {
 
 // dfs 从顶点 v 开始判断是否有环
 // 从 0 → 1 后再从 1 → 0 不能算环
-func (c *CycleDetection) dfs(v int, parent int) bool {
+func (c *DirectedCycleDetection) dfs(v int, parent int) bool {
 	c.visited[v] = true
 	for _, w := range c.Graph.Adj(v) {
 		if !c.visited[w] {
@@ -42,6 +42,6 @@ func (c *CycleDetection) dfs(v int, parent int) bool {
 	return false
 }
 
-func (c *CycleDetection) HasCycle() bool {
+func (c *DirectedCycleDetection) HasCycle() bool {
 	return c.hasCycle
 }

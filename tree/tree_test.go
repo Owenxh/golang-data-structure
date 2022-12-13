@@ -2,7 +2,6 @@ package tree
 
 import (
 	"fmt"
-	"os"
 	"strings"
 	"testing"
 	"time"
@@ -11,12 +10,7 @@ import (
 )
 
 func wordsData() []string {
-	path, err := os.Getwd()
-	if err != nil {
-		panic(err)
-	}
-
-	filePath := path + "/data/pride-and-prejudice.txt"
+	filePath := util.GetFileAbsolutePath("/data/pride-and-prejudice.txt")
 	words := util.ReadFile(filePath)
 	for i, word := range words {
 		words[i] = strings.ToLower(word)
