@@ -60,14 +60,14 @@ func (g *AdjMap) RemoveEdge(v int, w int) {
 }
 
 func (g *AdjMap) Adj(v int) []int {
-	if g.directed {
-		panic("degree only works on undirected graph")
-	}
 	g.ValidateVertex(v)
 	return g.adj[v].Keys()
 }
 
 func (g *AdjMap) Degree(v int) int {
+	if g.directed {
+		panic("degree only works on undirected graph")
+	}
 	g.ValidateVertex(v)
 	return g.adj[v].Size()
 }

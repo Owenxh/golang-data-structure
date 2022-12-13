@@ -52,6 +52,9 @@ func buildAdjMap(src io.Reader, weighted bool, directed bool) *AdjMap {
 
 	var V, E int
 	var adj []tree.TreeMap
+	var indegrees []int
+	var outdegrees []int
+
 	if scanner.Scan() {
 		tokens := reg.FindAllString(scanner.Text(), -1)
 		if len(tokens) != 2 {
@@ -60,6 +63,8 @@ func buildAdjMap(src io.Reader, weighted bool, directed bool) *AdjMap {
 		V, _ = strconv.Atoi(tokens[0])
 		E, _ = strconv.Atoi(tokens[1])
 		adj = make([]tree.TreeMap, V)
+		indegrees = make([]int, V)
+		outdegrees = make([]int, V)
 		for i := 0; i < len(adj); i++ {
 			adj[i] = tree.NewTreeMap()
 		}
@@ -88,14 +93,19 @@ func buildAdjMap(src io.Reader, weighted bool, directed bool) *AdjMap {
 			weight, _ = strconv.Atoi(tokens[2])
 		}
 		adj[v].Put(w, weight)
-		if !directed {
+		if directed {
+			indegrees[v]++
+			outdegrees[w]++
+		} else {
 			adj[w].Put(v, weight)
 		}
 	}
 	return &AdjMap{
-		v:        V,
-		e:        E,
-		adj:      adj,
-		directed: directed,
+		v:          V,
+		e:          E,
+		adj:        adj,
+		directed:   directed,
+		indegrees:  indegrees,
+		outdegrees: outdegrees,
 	}
 }
