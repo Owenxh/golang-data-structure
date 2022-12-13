@@ -9,10 +9,12 @@ import (
 
 // AdjMap Adjacency Tree Map
 type AdjMap struct {
-	v        int
-	e        int
-	adj      []tree.TreeMap
-	directed bool
+	v          int
+	e          int
+	adj        []tree.TreeMap
+	directed   bool
+	indegrees  []int
+	outdegrees []int
 }
 
 func (g *AdjMap) ValidateVertex(v int) {
@@ -58,6 +60,9 @@ func (g *AdjMap) RemoveEdge(v int, w int) {
 }
 
 func (g *AdjMap) Adj(v int) []int {
+	if g.directed {
+		panic("degree only works on undirected graph")
+	}
 	g.ValidateVertex(v)
 	return g.adj[v].Keys()
 }
@@ -65,6 +70,22 @@ func (g *AdjMap) Adj(v int) []int {
 func (g *AdjMap) Degree(v int) int {
 	g.ValidateVertex(v)
 	return g.adj[v].Size()
+}
+
+func (g *AdjMap) Indegree(v int) int {
+	if !g.directed {
+		panic("Indegree only works on directed graph")
+	}
+	g.ValidateVertex(v)
+	return g.indegrees[v]
+}
+
+func (g *AdjMap) Outdegree(v int) int {
+	if !g.directed {
+		panic("Outdegree only works on directed graph")
+	}
+	g.ValidateVertex(v)
+	return g.outdegrees[v]
 }
 
 func (g *AdjMap) GetWeight(v, w int) int {
@@ -95,10 +116,18 @@ func (g *AdjMap) Clone() Graph {
 		}
 	}
 
+	dstIndegrees := make([]int, g.V())
+	copy(dstIndegrees, g.indegrees)
+
+	dstOutdegrees := make([]int, g.V())
+	copy(dstOutdegrees, g.outdegrees)
+
 	return &AdjMap{
-		v:   g.V(),
-		e:   g.E(),
-		adj: dstAdj,
+		v:          g.V(),
+		e:          g.E(),
+		adj:        dstAdj,
+		indegrees:  dstIndegrees,
+		outdegrees: dstOutdegrees,
 	}
 }
 

@@ -2,46 +2,37 @@ package dfs
 
 import "io.vava.datastructure/graph"
 
-type DirectedCycleDetection struct {
-	graph.Graph
-	visited  []bool
-	hasCycle bool
-}
-
-func NewDirectedCycleDetection(g graph.Graph) *DirectedCycleDetection {
+func DirectedCycleDetection(g graph.Graph) bool {
 	if !g.IsDirected() {
 		panic("CycleDetection only works in directed graph.")
 	}
 
-	res := &DirectedCycleDetection{
-		Graph:   g,
-		visited: make([]bool, g.V()),
-	}
-	for v := 0; v < g.V(); v++ {
-		if !res.visited[v] && res.dfs(v, v) {
-			res.hasCycle = true
-			break
-		}
-	}
-	return res
-}
+	visited := make([]bool, g.V())
+	onPath := make([]bool, g.V())
 
-// dfs 从顶点 v 开始判断是否有环
-// 从 0 → 1 后再从 1 → 0 不能算环
-func (c *DirectedCycleDetection) dfs(v int, parent int) bool {
-	c.visited[v] = true
-	for _, w := range c.Graph.Adj(v) {
-		if !c.visited[w] {
-			if c.dfs(w, v) {
+	// 定义 dfs 函数
+	var dfs func(int, int) bool
+	dfs = func(v int, parent int) bool {
+		visited[v] = true
+		onPath[v] = true
+		for _, w := range g.Adj(v) {
+			if !visited[w] {
+				if dfs(w, v) {
+					return true
+				}
+			} else if onPath[w] { // can't check w != parent
 				return true
 			}
-		} else if w != parent {
+		}
+		// 回溯
+		onPath[v] = false
+		return false
+	}
+
+	for v := 0; v < g.V(); v++ {
+		if !visited[v] && dfs(v, v) {
 			return true
 		}
 	}
 	return false
-}
-
-func (c *DirectedCycleDetection) HasCycle() bool {
-	return c.hasCycle
 }
