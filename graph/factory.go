@@ -94,8 +94,8 @@ func buildAdjMap(src io.Reader, weighted bool, directed bool) *AdjMap {
 		}
 		adj[v].Put(w, weight)
 		if directed {
-			indegrees[v]++
-			outdegrees[w]++
+			outdegrees[v]++
+			indegrees[w]++
 		} else {
 			adj[w].Put(v, weight)
 		}

@@ -7,27 +7,27 @@ import (
 )
 
 // EulerLoop - 欧拉回路
-type EulerLoop struct {
+type DirectedEulerLoop struct {
 	graph.Graph
 }
 
-func NewEulerLoop(g graph.Graph) *EulerLoop {
-	if g.IsDirected() {
-		panic("EulerLoop only works on undirected graph")
+func NewDirectedEulerLoop(g graph.Graph) *DirectedEulerLoop {
+	if !g.IsDirected() {
+		panic("DirectedEulerLoop only works on directed graph")
 	}
-	return &EulerLoop{
+	return &DirectedEulerLoop{
 		Graph: g,
 	}
 }
 
 // HasEulerLoop - 检查图是否存在欧拉回路
-func (e *EulerLoop) HasEulerLoop() bool {
+func (e *DirectedEulerLoop) HasEulerLoop() bool {
 	cc := dfs.NewCC(e)
 	if cc.Count() > 1 {
 		return false
 	}
 	for v := 0; v < e.V(); v++ {
-		if len(e.Adj(v))%2 != 0 {
+		if e.Indegree(v) != e.Outdegree(v) {
 			return false
 		}
 	}
@@ -35,7 +35,7 @@ func (e *EulerLoop) HasEulerLoop() bool {
 }
 
 // Result - Hierholzer 算法求解欧拉回路
-func (e *EulerLoop) Result() (loop []int) {
+func (e *DirectedEulerLoop) Result() (loop []int) {
 	if !e.HasEulerLoop() {
 		return nil
 	}
@@ -45,7 +45,7 @@ func (e *EulerLoop) Result() (loop []int) {
 	var v int
 	s.Push(v)
 	for !s.IsEmpty() {
-		if g.Degree(v) != 0 {
+		if g.Outdegree(v) != 0 {
 			s.Push(v)
 			w := g.Adj(v)[0]
 			g.RemoveEdge(v, w)

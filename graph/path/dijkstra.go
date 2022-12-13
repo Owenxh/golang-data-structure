@@ -1,9 +1,10 @@
 package path
 
 import (
+	"math"
+
 	"io.vava.datastructure/graph"
 	"io.vava.datastructure/util"
-	"math"
 )
 
 // Dijkstra 算法实现求解有权图单源最小路径
@@ -35,7 +36,7 @@ func NewDijkstra(g graph.WeightedGraph, s int) *Dijkstra {
 	pre := make([]int, g.V())
 
 	// 使用最小堆存储各顶点与起点间的距离
-	pq := util.NewPriorityQueue[*graph.Node](graph.LessNode)
+	pq := util.NewPriorityQueue(graph.LessNode)
 	pq.Push(&graph.Node{V: s, Dis: dis[s]})
 
 	for !pq.IsEmpty() {

@@ -4,7 +4,7 @@ import "io.vava.datastructure/graph"
 
 func DirectedCycleDetection(g graph.Graph) bool {
 	if !g.IsDirected() {
-		panic("CycleDetection only works in directed graph.")
+		panic("CycleDetection only works on directed graph")
 	}
 
 	visited := make([]bool, g.V())

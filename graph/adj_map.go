@@ -53,6 +53,14 @@ func (g *AdjMap) AddEdge(v int, w int) {
 func (g *AdjMap) RemoveEdge(v int, w int) {
 	g.ValidateVertex(v)
 	g.ValidateVertex(w)
+
+	if g.adj[v].Contains(w) {
+		g.e--
+		if g.directed {
+			g.outdegrees[v]--
+			g.indegrees[w]--
+		}
+	}
 	g.adj[v].Remove(w)
 	if !g.directed {
 		g.adj[w].Remove(v)
@@ -126,6 +134,7 @@ func (g *AdjMap) Clone() Graph {
 		v:          g.V(),
 		e:          g.E(),
 		adj:        dstAdj,
+		directed:   g.directed,
 		indegrees:  dstIndegrees,
 		outdegrees: dstOutdegrees,
 	}

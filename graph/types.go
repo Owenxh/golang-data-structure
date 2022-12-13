@@ -27,6 +27,7 @@ type Graph interface {
 	IsDirected() bool
 	// Indegree
 	Indegree(int) int
+	// Outdegree
 	Outdegree(int) int
 	// Cloneable graph
 	Cloneable[Graph]
